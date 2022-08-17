@@ -9,7 +9,7 @@ export default function App() {
         alignItems: "center",
       }}
     >
-      <Text>Universal React with Better Late than Never</Text>
+      <Text>Universal React with Better Late than Never 2</Text>
     </View>
   );
 }
