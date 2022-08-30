@@ -6,22 +6,24 @@ import {
   View,
   Image,
   TextInput,
+  Button,
   TouchableOpacity,
 } from "react-native";
 
-function LoginScreen() {
+export default function LoginScreen({navigation}) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   return (
     <View style={styles.container}>
-      <Image
-        style={styles.image}
-        source={require("../assets/images/logo.png")}
-      />
-
+    <Text
+          onPress={() => navigation.navigate('Home')}
+          style={{ fontSize: 26, fontWeight: 'bold'}}>Login</Text>
+        
+ 
       <StatusBar style="auto" />
       <View style={styles.inputView}>
+      
         <TextInput
           style={styles.TextInput}
           placeholder="Email"
@@ -48,25 +50,22 @@ function LoginScreen() {
         <Text style={styles.loginText}>LOGIN</Text>
       </TouchableOpacity>
     </View>
-  );
+  )
 }
-
-export default LoginScreen;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "column",
     backgroundColor: "#7bb2be",
     alignItems: "center",
     justifyContent: "center",
   },
 
-  image: {
-    marginBottom: 40,
-    height: 300,
-    width: 300,
-  },
+  // image: {
+  //   marginBottom: 40,
+  //   height: 300,
+  //   width: 300,
+  // },
 
   inputView: {
     backgroundColor: "#fff",
@@ -83,7 +82,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
     marginLeft: 20,
-    width: "100%",
   },
 
   forgot_button: {
