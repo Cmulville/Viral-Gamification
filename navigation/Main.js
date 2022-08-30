@@ -10,6 +10,7 @@ import SettingsScreen from './screens/settingsScreen';
 import MapScreen from './screens/mapScreen';
 import LoginScreen from './screens/loginScreen';
 import DetailScreen from './screens/detailScreen';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 
 // Screen names
@@ -20,6 +21,7 @@ const loginName = 'Login'
 const detailName = 'Details'
 
 const Tab = createBottomTabNavigator();
+const topTab = createMaterialTopTabNavigator();
 
 export default function Main(){
     return (
@@ -37,10 +39,10 @@ export default function Main(){
                             iconName = focused ? 'settings' : 'settings-outline'
                         } else if (rn === mapName) {
                             iconName = focused ? 'map' : 'map-outline'
-                        } else if (rn === loginName) {
-                            iconName = focused ? 'log-in' : 'log-in-outline'
-                        } if (rn === detailName) {
-                            iconName = focused ? 'person-circle' : 'person-circle-outline'
+                        // } else if (rn === loginName) {
+                        //     iconName = focused ? 'log-in' : 'log-in-outline'
+                        // } if (rn === detailName) {
+                        //     iconName = focused ? 'person-circle' : 'person-circle-outline'
                         }
 
                         return <Ionicons name={iconName} size={size} color={color}/>
@@ -50,8 +52,8 @@ export default function Main(){
                 <Tab.Screen name={homeName} component={HomeScreen}/>
                 <Tab.Screen name={settingsName} component={SettingsScreen}/>
                 <Tab.Screen name={mapName} component={MapScreen}/>
-                <Tab.Screen name={loginName} component={LoginScreen}/>
-                <Tab.Screen name={detailName} component={DetailScreen}/>
+                {/* <Tab.Screen name={loginName} component={LoginScreen}/>
+                <Tab.Screen name={detailName} component={DetailScreen}/> */}
 
             </Tab.Navigator>
 
