@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-import RegisterScreen from "./screens/RegisterScreen.js";
+import RegisterScreen from "./screens/LoginScreen.js";
 
 export default function App() {
   return <RegisterScreen />;

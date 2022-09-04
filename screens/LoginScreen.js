@@ -1,5 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
+import Axios from "axios";
 import {
   StyleSheet,
   Text,
@@ -7,11 +8,40 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
+  Alert
 } from "react-native";
 
 function LoginScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const errorAlert = () => {
+      Alert.alert(
+          "Invalid Login",
+          "Login details did not exist",
+          [{text: "Cancel", style: "cancel"}, {text: "OK"}]
+      );
+  }
+
+   const validAlert = () => {
+      Alert.alert(
+          "Valid Login",
+          "User exists",
+          [{text: "Cancel", style: "cancel"}, {text: "OK"}]
+      );
+  }
+               
+  const login = () => {
+    Axios.post('https://deco3801-betterlatethannever.uqcloud.net/login', {
+	email: email,
+	password: password
+    }).then((response) => {
+        if (response.data.message) {
+            errorAlert();
+        } else {
+            validAlert();
+        }
+    });
+  };
 
   return (
     <View style={styles.container}>
@@ -39,12 +69,12 @@ function LoginScreen() {
         />
       </View>
 
-      <TouchableOpacity onPress={() => {this.props.navigation.navigate('RegisterScreen')}}>
+      <TouchableOpacity>
         <Text></Text>
         <Text style={styles.forgot_button}>Don't have an account? Sign up</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.loginBtn}>
+      <TouchableOpacity style={styles.loginBtn} onPress={login}>
         <Text style={styles.loginText}>LOGIN</Text>
       </TouchableOpacity>
     </View>
