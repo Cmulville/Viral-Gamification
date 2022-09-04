@@ -10,20 +10,18 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-
 function RegisterScreen() {
-
   const [emailReg, setEmail] = useState("");
   const [usernameReg, setUsername] = useState("");
   const [passwordReg, setPassword] = useState("");
 
   const register = () => {
-    Axios.post('https://deco3801-betterlatethannever.uqcloud.net/register', {
-	username: usernameReg,
-	email: emailReg,
-	password: passwordReg
+    Axios.post("https://deco3801-betterlatethannever.uqcloud.net/register", {
+      username: usernameReg,
+      email: emailReg,
+      password: passwordReg,
     }).then((response) => {
-        console.log(response);
+      console.log(response);
     });
   };
 
@@ -31,7 +29,7 @@ function RegisterScreen() {
     <View style={styles.container}>
       <Image
         style={styles.image}
-        source={require("../assets/images/logo.png")}
+        source={require("../../assets/images/logo.png")}
       />
 
       <StatusBar style="auto" />
@@ -53,7 +51,6 @@ function RegisterScreen() {
         />
       </View>
 
-
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
@@ -65,7 +62,9 @@ function RegisterScreen() {
 
       <TouchableOpacity>
         <Text></Text>
-        <Text style={styles.forgot_button}>Already have an account? Login!</Text>
+        <Text style={styles.forgot_button}>
+          Already have an account? Login!
+        </Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.loginBtn} onPress={register}>
@@ -73,7 +72,6 @@ function RegisterScreen() {
       </TouchableOpacity>
     </View>
   );
-
 }
 
 export default RegisterScreen;

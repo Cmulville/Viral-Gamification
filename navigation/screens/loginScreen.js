@@ -9,38 +9,36 @@ import {
   TextInput,
   Button,
   TouchableOpacity,
-  Alert
+  Alert,
 } from "react-native";
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const errorAlert = () => {
-      Alert.alert(
-          "Invalid Login",
-          "Login details did not exist",
-          [{text: "Cancel", style: "cancel"}, {text: "OK"}]
-      );
-  }
+    Alert.alert("Invalid Login", "Login details did not exist", [
+      { text: "Cancel", style: "cancel" },
+      { text: "OK" },
+    ]);
+  };
 
-   const validAlert = () => {
-      Alert.alert(
-          "Valid Login",
-          "User exists",
-          [{text: "Cancel", style: "cancel"}, {text: "OK"}]
-      );
-  }
-               
+  const validAlert = () => {
+    Alert.alert("Valid Login", "User exists", [
+      { text: "Cancel", style: "cancel" },
+      { text: "OK" },
+    ]);
+  };
+
   const login = () => {
-    Axios.post('https://deco3801-betterlatethannever.uqcloud.net/login', {
-	email: email,
-	password: password
+    Axios.post("https://deco3801-betterlatethannever.uqcloud.net/login", {
+      email: email,
+      password: password,
     }).then((response) => {
-        if (response.data.message) {
-            errorAlert();
-        } else {
-            validAlert();
-        }
+      if (response.data.message) {
+        errorAlert();
+      } else {
+        validAlert();
+      }
     });
   };
 
@@ -70,8 +68,7 @@ export default function LoginScreen({ navigation }) {
         />
       </View>
 
-      <TouchableOpacity>
-        <Text></Text>
+      <TouchableOpacity onPress={() => navigation.navigate("RegisterScreen")}>
         <Text style={styles.forgot_button}>Don't have an account? Sign up</Text>
       </TouchableOpacity>
 
@@ -79,7 +76,7 @@ export default function LoginScreen({ navigation }) {
         style={styles.loginBtn}
         onPress={() => navigation.navigate("MainScreen")}
       >
-      {/* <TouchableOpacity style={styles.loginBtn} onPress={login}> */}
+        {/* <TouchableOpacity style={styles.loginBtn} onPress={login}> */}
         <Text style={styles.loginText}>LOGIN</Text>
       </TouchableOpacity>
     </View>

@@ -1,7 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import * as React from "react";
 
-import RegisterScreen from "./screens/LoginScreen.js";
 import RootStackScreen from "./navigation/RootStackScreen";
 import {
   StyleSheet,
@@ -25,10 +24,5 @@ export default function App() {
     </>
   );
 }
-
-
-
-
-
 
 const styles = StyleSheet.create({});
