@@ -1,8 +1,7 @@
-
 import { StatusBar } from "expo-status-bar";
-import React, { useState } from "react";
-import * as React from 'react';
-import Main from './navigation/Main';
+import * as React from "react";
+
+import RootStackScreen from "./navigation/RootStackScreen";
 import {
   StyleSheet,
   Text,
@@ -12,13 +11,17 @@ import {
   Button,
   TouchableOpacity,
 } from "react-native";
-
-import LoginScreen from "./screens/LoginScreen.js";
+import { NavigationContainer } from "@react-navigation/native";
 
 export default function App() {
-  return <Main/>;
+  return (
+    <>
+      <StatusBar style="dark" />
+      <NavigationContainer>
+        <RootStackScreen />
+      </NavigationContainer>
+    </>
+  );
 }
 
 const styles = StyleSheet.create({});
-
-

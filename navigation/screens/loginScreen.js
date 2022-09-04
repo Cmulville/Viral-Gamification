@@ -8,22 +8,22 @@ import {
   TextInput,
   Button,
   TouchableOpacity,
+  Pressable,
 } from "react-native";
 
-export default function LoginScreen({navigation}) {
+export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   return (
     <View style={styles.container}>
-    <Text
-          onPress={() => navigation.navigate('Home')}
-          style={{ fontSize: 26, fontWeight: 'bold'}}>Login</Text>
-        
- 
-      <StatusBar style="auto" />
+      <Image
+        style={styles.image}
+        source={require("../../assets/images/logo.png")}
+      />
+
+      <StatusBar style="dark" />
       <View style={styles.inputView}>
-      
         <TextInput
           style={styles.TextInput}
           placeholder="Email"
@@ -46,11 +46,14 @@ export default function LoginScreen({navigation}) {
         <Text style={styles.forgot_button}>Don't have an account? Sign up</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.loginBtn}>
+      <TouchableOpacity
+        style={styles.loginBtn}
+        onPress={() => navigation.navigate("MainScreen")}
+      >
         <Text style={styles.loginText}>LOGIN</Text>
       </TouchableOpacity>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -61,11 +64,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 
-  // image: {
-  //   marginBottom: 40,
-  //   height: 300,
-  //   width: 300,
-  // },
+  image: {
+    marginBottom: 40,
+    height: 300,
+    width: 300,
+  },
 
   inputView: {
     backgroundColor: "#fff",
