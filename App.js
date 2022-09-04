@@ -1,6 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import * as React from "react";
 
+import RegisterScreen from "./screens/LoginScreen.js";
 import RootStackScreen from "./navigation/RootStackScreen";
 import {
   StyleSheet,
@@ -11,6 +12,7 @@ import {
   Button,
   TouchableOpacity,
 } from "react-native";
+
 import { NavigationContainer } from "@react-navigation/native";
 
 export default function App() {
@@ -23,5 +25,10 @@ export default function App() {
     </>
   );
 }
+
+
+
+
+
 
 const styles = StyleSheet.create({});
