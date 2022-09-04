@@ -10,10 +10,10 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-import LoginScreen from "./screens/LoginScreen.js";
+import RegisterScreen from "./screens/RegisterScreen.js";
 
 export default function App() {
-  return <LoginScreen />;
+  return <RegisterScreen />;
 }
 
 const styles = StyleSheet.create({});

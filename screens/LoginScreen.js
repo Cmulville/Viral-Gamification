@@ -39,7 +39,7 @@ function LoginScreen() {
         />
       </View>
 
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => {this.props.navigation.navigate('RegisterScreen')}}>
         <Text></Text>
         <Text style={styles.forgot_button}>Don't have an account? Sign up</Text>
       </TouchableOpacity>
