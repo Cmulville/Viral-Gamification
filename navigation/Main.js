@@ -12,6 +12,7 @@ import SettingsScreen from './screens/settingsScreen';
 import MapScreen from './screens/mapScreen';
 import LoginScreen from './screens/loginScreen';
 import DetailScreen from './screens/detailScreen';
+import InventoryScreen from './screens/inventoryScreen';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 
@@ -22,6 +23,7 @@ const settingsName = 'Settings'
 const mapName = 'Map'
 const loginName = 'Login'
 const detailName = 'Details'
+const inventoryName = 'Inventory'
 
 // Player status
 const status = 'Cured'
@@ -65,7 +67,7 @@ export default function Main(){
                     },
                     headerStyle: {
                       backgroundColor: screenColors,
-                      alignItems: 'center'
+                    //   alignItems: 'center'
                       },
                     headerRight: () => (
                       <Button
@@ -90,7 +92,9 @@ export default function Main(){
                     }}/>
                     
                 
-                {/*<Tab.Screen name={detailName} component={DetailScreen}/> */}
+                <Tab.Screen name={inventoryName} component={InventoryScreen}
+                    options = {{tabBarLabel: inventoryName}}
+                />
 
             </Tab.Navigator>
         </NavigationContainer>
