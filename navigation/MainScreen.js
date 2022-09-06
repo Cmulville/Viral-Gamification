@@ -13,11 +13,9 @@ import DetailScreen from "./screens/detailScreen";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
 // Screen names
-const homeName = "Home";
-const settingsName = "Settings";
+const settingsName = "Inventory";
 const mapName = "Map";
-const loginName = "Login";
-const detailName = "Details";
+const friendList = "Friends List";
 
 const Tab = createBottomTabNavigator();
 const topTab = createMaterialTopTabNavigator();
@@ -31,24 +29,21 @@ export default function MainScreen({ navigation }) {
           let iconName;
           let rn = route.name;
 
-          if (rn === homeName) {
-            iconName = focused ? "home" : "home-outline";
+          if (rn === mapName) {
+            iconName = focused ? "navigate" : "navigate-outline";
           } else if (rn === settingsName) {
-            iconName = focused ? "settings" : "settings-outline";
-          } else if (rn === mapName) {
-            iconName = focused ? "map" : "map-outline";
-
-            // } if (rn === detailName) {
-            //     iconName = focused ? 'person-circle' : 'person-circle-outline'
+            iconName = focused ? "briefcase" : "briefcase-outline";
+          } else if (rn == friendList) {
+            iconName = focused ? "people" : "people-outline";
           }
 
           return <Ionicons name={iconName} size={size} color={color} />;
         },
       })}
     >
-      <Tab.Screen name={homeName} component={HomeScreen} />
-      <Tab.Screen name={settingsName} component={SettingsScreen} />
       <Tab.Screen name={mapName} component={MapScreen} />
+      <Tab.Screen name={settingsName} component={SettingsScreen} />
+      <Tab.Screen name={friendList} component={SettingsScreen} />
 
       {/* <Tab.Screen name={detailName} component={DetailScreen}/> */}
     </Tab.Navigator>
