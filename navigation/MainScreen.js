@@ -15,7 +15,7 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 // Screen names
 const settingsName = "Inventory";
 const mapName = "Map";
-const friendList = "Friends List";
+const friendList = "Friends";
 
 const Tab = createBottomTabNavigator();
 const topTab = createMaterialTopTabNavigator();

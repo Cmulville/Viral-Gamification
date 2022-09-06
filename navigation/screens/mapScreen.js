@@ -1,6 +1,6 @@
 import * as React from "react";
 import MapView, { Callout, Circle, Marker } from "react-native-maps";
-import { StyleSheet, Text, View, Dimensions } from "react-native";
+import { StyleSheet, Text, View, Dimensions, Image, icon } from "react-native";
 import * as Location from "expo-location";
 
 export default function MapScreen() {
@@ -34,15 +34,6 @@ export default function MapScreen() {
   return (
     <View style={styles.container}>
       <MapView
-        style={styles.map}
-        // where the map will hover when opened Location is brisbane CBD
-        initialRegion={{
-          latitude: -27.470125,
-          longitude: 153.021072,
-          latitudeDelta: 0.5,
-          longitudeDelta: 0.5,
-        }}
-        showsUserLocation={true}
         //method that will update the location of user when it changes
         onUserLocationChange={(e) => {
           console.log("location changed", e.nativeEvent.coordinate);
@@ -51,21 +42,35 @@ export default function MapScreen() {
             longitude: e.nativeEvent.coordinate.longitude,
           });
         }}
+        style={styles.map}
+        // where the map will hover when opened Location is brisbane CBD
+        // initialRegion={{
+        //   latitude: -27.470125,
+        //   longitude: 153.021072,
+        //   latitudeDelta: 0.5,
+        //   longitudeDelta: 0.5,
+        // }}
+        region={{
+          latitude: pin.latitude,
+          longitude: pin.longitude,
+          latitudeDelta: 0.00922,
+          longitudeDelta: 0.00421,
+        }}
+        zoomEnabled={false}
+        // pitchEnabled={false}
+        // rotateEnabled={false}
+        scrollEnabled={false}
+        showsUserLocation={false}
+        scrollDuringRotateOrZoomEnabled={true}
       >
-        <Marker
-          // marker that shows Birsbane and says Brisbane when hovered
-          coordinate={{ latitude: -27.470125, longitude: 153.021072 }}
-          pinColor="blue"
-        >
-          <Callout>
-            <Text>Brisbane</Text>
-          </Callout>
-        </Marker>
         <Marker
           // marker that shows the user location and is on top of the user icon from the MapView
           coordinate={pin}
-          pinColor="red"
         >
+          <Image
+            source={require("../../assets/images/marker.png")}
+            style={{ height: 150, width: 150 }}
+          />
           <Callout>
             <Text>Marker linked to User Location</Text>
           </Callout>
