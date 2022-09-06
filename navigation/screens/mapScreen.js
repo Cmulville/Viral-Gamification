@@ -15,11 +15,11 @@ export default function MapScreen() {
         console.log('Permission to access location was denied');
         return;
       } else {
-        console.log('Permission to access locaion was approved')
+        console.log('Permission to access location was approved')
       }
 
       let location = await Location.getCurrentPositionAsync({});
-      console.log(location);
+      //console.log(location);
 
       // set Pin being used to change the pin
       setPin({
@@ -40,7 +40,7 @@ export default function MapScreen() {
                 showsUserLocation = {true}
                 //method that will update the location of user when it changes
                 onUserLocationChange = {(e) => {
-                  console.log("location changed", e.nativeEvent.coordinate);
+                  //console.log("location changed", e.nativeEvent.coordinate);
                   setPin({
                     latitude: e.nativeEvent.coordinate.latitude,
                     longitude: e.nativeEvent.coordinate.longitude,
