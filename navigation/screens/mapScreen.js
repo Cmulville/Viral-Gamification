@@ -69,12 +69,12 @@ export default function MapScreen() {
                 <Callout>
 						      <Text>St Lucia</Text>
 					      </Callout>
+                
           </Marker>
 
           <Marker
             coordinate = {{latitude: -27.496,
                           longitude: 153.0137,}}
-            pinColor = "#00FF00"
             >
                 <Callout>
 						      <Text>Mask</Text>
@@ -100,6 +100,8 @@ export default function MapScreen() {
 					    </Callout>
           </Marker>
         
+          <Circle //circle that is around the user, maybe can be used as the infection radius
+          center={pin} radius={100}/>
           <Circle //circle that is around the user, maybe can be used as the infection radius
           center={pin} radius={100}/>
       </MapView>
