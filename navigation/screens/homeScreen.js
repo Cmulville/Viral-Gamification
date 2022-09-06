@@ -23,7 +23,7 @@ export default function HomeScreen({navigation}) {
         }
       }
       else {
-        return value
+        return parseInt(value)
       }
     } catch(e) {
     // error reading value

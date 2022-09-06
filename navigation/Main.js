@@ -26,7 +26,7 @@ const detailName = 'Details'
 const inventoryName = 'Inventory'
 
 // Player status
-const status = 'Cured'
+const status = 'Immune'
 const points = 0
 const statusColours = {
   'Cured': '#05cf02',

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, Text, View, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, Button } from 'react-native';
 // import EncryptedStorage from 'react-native-encrypted-storage';
 
 // async function retrieveUserSession() {
@@ -21,31 +21,57 @@ export default function InventoryScreen({navigation}) {
     //session = retrieveUserSession();
     //Session should include a username/email which will be used to access these inventory stats 
     sumSanitizer = 0
-    santizerGoal = 100
+    santizerGoal = 33
     sumGloves = 0
-    gloveGoal = 100
+    gloveGoal = 53
     sumFaceMask = 0
-    faceMaskGoal = 100
+    faceMaskGoal = 9
     return (
         <View style={styles.container}>
-            <Text style={{alignItems: 'center', fontSize: 26, fontWeight: 'bold'}}>Inventory </Text>
-            <Text style={{alignItems: 'baseline', fontSize: 14}}>Sanitizer : {sumSanitizer}/{santizerGoal} </Text>
-            <Text style={{alignItems: 'baseline', fontSize: 14}}>Gloves: {sumGloves}/{gloveGoal} </Text>
-            <Text style={{alignItems: 'baseline', fontSize: 14}}>Face mask: {sumFaceMask}/{faceMaskGoal} </Text>
+            <View style={styles.header}>
+            <Text style={styles.header}>Inventory </Text>
+            </View>
+            <View style={styles.items}>
+                <Button title='Santitizer' />   
+                <Text style={{fontSize: 22}}>{sumSanitizer}/{santizerGoal} </Text>
+            </View>
+                 
+            <View style={styles.items}>
+                <Button title='Gloves' />
+                <Text style={{fontSize: 22}}>{sumGloves}/{gloveGoal} </Text>
+            </View>    
+
+            <View style={styles.items}>
+                <Button title='Face Masks' />       
+                <Text style={{fontSize: 22}}>{sumFaceMask}/{faceMaskGoal} </Text>
+            </View>
         </View>
     )
 } 
 
 const styles = StyleSheet.create({
     container: {
-        display: 'flex',
         flex: 1,
         backgroundColor: '#fff',
+        
+    },
+    button: {
+    
+    },
+    item_container: {
+        flexDirection: 'column',
+    },
+    header: {
         alignItems: 'center',
         justifyContent: 'center',
+        marginBottom: 58,
+        fontSize: 32,
+        fontWeight: 'bold'
     },
-    map: {
-      width: Dimensions.get('window').width,
-      height: Dimensions.get('window').height,
-    },
+    items: {
+        marginBottom: 30,
+        alignItems: 'center',
+        justifyContent: 'center',
+    }
+
   });
