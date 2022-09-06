@@ -7,6 +7,9 @@ export default function MapScreen() {
   // constant that stores a pin and method (setpin) that changes it. values are just dummy data
   const [pin, setPin] = React.useState({latitude: -27.470125,
                                         longitude: 153.021072,});
+
+  const [distance ] = React.useState(0)
+
   // event that get asks for permission then gets the users inital location
   React.useEffect(() => {
     (async () => {
@@ -55,6 +58,36 @@ export default function MapScreen() {
             >
                 <Callout>
 						      <Text>Brisbane</Text>
+					      </Callout>
+          </Marker>
+          <Marker 
+            // marker that shows UQ st lucia
+            coordinate = {{latitude: -27.4975,
+                          longitude: 153.0137,}}
+            pinColor = "#0000FF"
+            >
+                <Callout>
+						      <Text>St Lucia</Text>
+					      </Callout>
+          </Marker>
+
+          <Marker
+            coordinate = {{latitude: -27.496,
+                          longitude: 153.0137,}}
+            pinColor = "#00FF00"
+            >
+                <Callout>
+						      <Text>Mask</Text>
+					      </Callout>
+          </Marker>
+
+          <Marker
+            coordinate = {{latitude: -27.497,
+                          longitude: 153.012,}}
+            pinColor = "#00FF00"
+            >
+                <Callout>
+						      <Text>Gloves</Text>
 					      </Callout>
           </Marker>
           <Marker
