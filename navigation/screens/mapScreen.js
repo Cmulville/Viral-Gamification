@@ -33,8 +33,8 @@ export default function MapScreen() {
     <View style={styles.container}>
       <MapView style={styles.map}
               // where the map will hover when opened Location is brisbane CBD
-              initialRegion = {{latitude: -27.470125,
-                                longitude: 153.021072,
+              initialRegion = {{latitude: pin.latitude,
+                                longitude: pin.longitude,
                                 latitudeDelta: 0.5,
                                 longitudeDelta: 0.5}}
                 showsUserLocation = {true}
