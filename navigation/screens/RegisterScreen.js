@@ -7,38 +7,21 @@ import {
   View,
   Image,
   TextInput,
-  Button,
   TouchableOpacity,
-  Alert,
 } from "react-native";
 
-export default function LoginScreen({ navigation }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const errorAlert = () => {
-    Alert.alert("Invalid Login", "Login details did not exist", [
-      { text: "Cancel", style: "cancel" },
-      { text: "OK" },
-    ]);
-  };
+function RegisterScreen() {
+  const [emailReg, setEmail] = useState("");
+  const [usernameReg, setUsername] = useState("");
+  const [passwordReg, setPassword] = useState("");
 
-  const validAlert = () => {
-    Alert.alert("Valid Login", "User exists", [
-      { text: "Cancel", style: "cancel" },
-      { text: "OK" },
-    ]);
-  };
-
-  const login = () => {
-    Axios.post("https://deco3801-betterlatethannever.uqcloud.net/login", {
-      email: email,
-      password: password,
+  const register = () => {
+    Axios.post("https://deco3801-betterlatethannever.uqcloud.net/register", {
+      username: usernameReg,
+      email: emailReg,
+      password: passwordReg,
     }).then((response) => {
-      if (response.data.message) {
-        errorAlert();
-      } else {
-        validAlert();
-      }
+      console.log(response);
     });
   };
 
@@ -49,13 +32,22 @@ export default function LoginScreen({ navigation }) {
         source={require("../../assets/images/logo.png")}
       />
 
-      <StatusBar style="dark" />
+      <StatusBar style="auto" />
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
           placeholder="Email"
           placeholderTextColor="#003f5c"
-          onChangeText={(email) => setEmail(email)}
+          onChangeText={(emailReg) => setEmail(emailReg)}
+        />
+      </View>
+
+      <View style={styles.inputView}>
+        <TextInput
+          style={styles.TextInput}
+          placeholder="Username"
+          placeholderTextColor="#003f5c"
+          onChangeText={(usernameReg) => setUsername(usernameReg)}
         />
       </View>
 
@@ -64,28 +56,29 @@ export default function LoginScreen({ navigation }) {
           style={styles.TextInput}
           placeholder="Password"
           placeholderTextColor="#003f5c"
-          onChangeText={(password) => setPassword(password)}
+          onChangeText={(passwordReg) => setPassword(passwordReg)}
         />
       </View>
 
-      <TouchableOpacity onPress={() => navigation.navigate("RegisterScreen")}>
-        <Text style={styles.forgot_button}>Don't have an account? Sign up</Text>
+      <TouchableOpacity>
+        <Text></Text>
+        <Text style={styles.forgot_button}>
+          Already have an account? Login!
+        </Text>
       </TouchableOpacity>
 
-      <TouchableOpacity
-        style={styles.loginBtn}
-        onPress={() => navigation.navigate("MainScreen")}
-      >
-        {/* <TouchableOpacity style={styles.loginBtn} onPress={login}> */}
-        <Text style={styles.loginText}>LOGIN</Text>
+      <TouchableOpacity style={styles.loginBtn} onPress={register}>
+        <Text style={styles.loginText}>SIGN UP</Text>
       </TouchableOpacity>
     </View>
   );
 }
 
+export default RegisterScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: "column",
     backgroundColor: "#7bb2be",
     alignItems: "center",
     justifyContent: "center",
@@ -112,6 +105,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
     marginLeft: 20,
+    width: "100%",
   },
 
   forgot_button: {

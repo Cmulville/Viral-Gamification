@@ -1,10 +1,28 @@
-import * as React from 'react';
-import Main from './navigation/Main';
+import { StatusBar } from "expo-status-bar";
+import * as React from "react";
 
-function App() {
+import RootStackScreen from "./navigation/RootStackScreen";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TextInput,
+  Button,
+  TouchableOpacity,
+} from "react-native";
+
+import { NavigationContainer } from "@react-navigation/native";
+
+export default function App() {
   return (
-    <Main/>
+    <>
+      <StatusBar style="dark" />
+      <NavigationContainer>
+        <RootStackScreen />
+      </NavigationContainer>
+    </>
   );
 }
 
-export default App;
+const styles = StyleSheet.create({});
