@@ -10,7 +10,7 @@ const RootStack = createStackNavigator();
 
 const RootStackScreen = ({ navigation }) => {
   return (
-    <RootStack.Navigator headerMode="false">
+    <RootStack.Navigator headerMode="true">
       <RootStack.Screen name="LoginScreen" component={LoginScreen} />
       <RootStack.Screen name="MainScreen" component={MainScreen} />
       <RootStack.Screen name="RegisterScreen" component={RegisterScreen} />

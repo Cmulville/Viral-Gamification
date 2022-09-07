@@ -41,7 +41,11 @@ export default function MainScreen({ navigation }) {
         },
       })}
     >
-      <Tab.Screen name={mapName} component={MapScreen} />
+      <Tab.Screen
+        name={mapName}
+        component={MapScreen}
+        options={{ headerStyle: { height: 100 } }}
+      />
       <Tab.Screen name={settingsName} component={SettingsScreen} />
       <Tab.Screen name={friendList} component={SettingsScreen} />
 
