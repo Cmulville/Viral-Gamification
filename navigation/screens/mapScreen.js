@@ -17,11 +17,11 @@ export default function MapScreen() {
         console.log("Permission to access location was denied");
         return;
       } else {
-        console.log("Permission to access locaion was approved");
+        console.log('Permission to access location was approved')
       }
 
       let location = await Location.getCurrentPositionAsync({});
-      console.log(location);
+      //console.log(location);
 
       // set Pin being used to change the pin
       setPin({
