@@ -11,6 +11,21 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const getData = async () => {
+  try {
+    const value = await AsyncStorage.getItem('username')
+    if(value != null) {
+      // value previously stored
+      return value
+    } else {
+      return null
+    }
+  } catch(e) {
+  // error reading value
+}
+}
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
@@ -37,6 +52,14 @@ export default function LoginScreen({ navigation }) {
       if (response.data.message) {
         errorAlert();
       } else {
+        const storeData = async (email) => {
+          try {
+            const jsonValue = JSON.stringify(email)
+            await AsyncStorage.setItem('username', jsonValue)
+          } catch (e) {
+            // saving error
+          }
+        }
         validAlert();
       }
     });
