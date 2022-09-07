@@ -1,7 +1,7 @@
-import * as React from 'react';
-import MapView, { Callout, Circle, Marker } from 'react-native-maps';
-import { StyleSheet, Text, View, Dimensions } from 'react-native';
-import * as Location from "expo-location"
+import * as React from "react";
+import MapView, { Callout, Circle, Marker } from "react-native-maps";
+import { StyleSheet, Text, View, Dimensions, Image, icon } from "react-native";
+import * as Location from "expo-location";
 
 export default function MapScreen() {
   // constant that stores a pin and method (setpin) that changes it. values are just dummy data
@@ -36,10 +36,10 @@ export default function MapScreen() {
     <View style={styles.container}>
       <MapView style={styles.map}
               // where the map will hover when opened Location is brisbane CBD
-              initialRegion = {{latitude: pin.latitude,
-                                longitude: pin.longitude,
-                                latitudeDelta: 0.5,
-                                longitudeDelta: 0.5}}
+              initialRegion = {{latitude: -27.4975,
+                                longitude: 153.0137,
+                                latitudeDelta: 0.005,
+                                longitudeDelta: 0.005}}
                 showsUserLocation = {true}
                 //method that will update the location of user when it changes
                 onUserLocationChange = {(e) => {
@@ -76,6 +76,10 @@ export default function MapScreen() {
             coordinate = {{latitude: -27.496,
                           longitude: 153.0137,}}
             >
+              <Image
+              source={require("../../assets/mask.jpg")}
+              style={{ height: 50, width: 50 }}
+              />
                 <Callout>
 						      <Text>Mask</Text>
 					      </Callout>
@@ -86,6 +90,10 @@ export default function MapScreen() {
                           longitude: 153.012,}}
             pinColor = "#00FF00"
             >
+              <Image
+              source={require("../../assets/gloves.jpg")}
+              style={{ height: 50, width: 50 }}
+              />
                 <Callout>
 						      <Text>Gloves</Text>
 					      </Callout>
