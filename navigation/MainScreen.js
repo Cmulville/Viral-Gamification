@@ -51,9 +51,9 @@ export default function MainScreen({ navigation }) {
 
           return <Ionicons name={iconName} size={size} color={screenColors} />;
         },
+
         headerStyle: {
           backgroundColor: screenColors,
-          height: 100,
 
           //   alignItems: 'center'
         },
