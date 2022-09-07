@@ -35,7 +35,7 @@ export default function MapScreen() {
   return (
     <View style={styles.container}>
       <MapView style={styles.map}
-              // where the map will hover when opened Location is brisbane CBD
+              // where the map will hover when opened Location is St Lucia
               initialRegion = {{latitude: -27.4975,
                                 longitude: 153.0137,
                                 latitudeDelta: 0.005,
@@ -73,6 +73,7 @@ export default function MapScreen() {
           </Marker>
 
           <Marker
+            //item marker for mask
             coordinate = {{latitude: -27.496,
                           longitude: 153.0137,}}
             >
@@ -86,6 +87,7 @@ export default function MapScreen() {
           </Marker>
 
           <Marker
+              // Item marker for gloves
             coordinate = {{latitude: -27.497,
                           longitude: 153.012,}}
             pinColor = "#00FF00"
@@ -98,6 +100,7 @@ export default function MapScreen() {
 						      <Text>Gloves</Text>
 					      </Callout>
           </Marker>
+
           <Marker
             // marker that shows the user location and is on top of the user icon from the MapView 
             coordinate = {pin}
@@ -108,8 +111,6 @@ export default function MapScreen() {
 					    </Callout>
           </Marker>
         
-          <Circle //circle that is around the user, maybe can be used as the infection radius
-          center={pin} radius={100}/>
           <Circle //circle that is around the user, maybe can be used as the infection radius
           center={pin} radius={100}/>
       </MapView>
