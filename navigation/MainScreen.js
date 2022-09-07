@@ -53,7 +53,7 @@ export default function MainScreen({ navigation }) {
           },
           headerStyle: {
                         backgroundColor: screenColors,
-                        height: 100,
+                  
   
                       //   alignItems: 'center'
         },
