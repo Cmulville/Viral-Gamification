@@ -60,6 +60,7 @@ export default function MapScreen() {
 						      <Text>Brisbane</Text>
 					      </Callout>
           </Marker>
+          
           <Marker 
             // marker that shows UQ st lucia
             coordinate = {{latitude: -27.4975,
