@@ -16,15 +16,7 @@ export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const errorAlert = () => {
-    Alert.alert("Invalid Login", "Login details did not exist", [
-      { text: "Cancel", style: "cancel" },
-      { text: "OK" },
-    ]);
-  };
-
-  const validAlert = () => {
-    Alert.alert("Valid Login", "User exists", [
-      { text: "Cancel", style: "cancel" },
+    Alert.alert("Login failed", "Your email or password is incorrect. Please try again", [
       { text: "OK" },
     ]);
   };
@@ -37,7 +29,7 @@ export default function LoginScreen({ navigation }) {
       if (response.data.message) {
         errorAlert();
       } else {
-        validAlert();
+        navigation.navigate("MainScreen")
       }
     });
   };
@@ -74,7 +66,8 @@ export default function LoginScreen({ navigation }) {
 
       <TouchableOpacity
         style={styles.loginBtn}
-        onPress={() => navigation.navigate("MainScreen")}
+        onPress={login}
+
       >
         {/* <TouchableOpacity style={styles.loginBtn} onPress={login}> */}
         <Text style={styles.loginText}>LOGIN</Text>
