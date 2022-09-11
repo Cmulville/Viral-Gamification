@@ -19,8 +19,8 @@ export default function MapScreen() {
     let R = 6371000; // metres
     let phi1 = birsbane.latitude * Math.PI/180; // φ, λ in radians
     let phi2 = uq.latitude * Math.PI/180;
-    let deltaphi = (uq.latitude - birsbane.lat) * Math.PI/180;
-    let deltalambda = (uq.longitude - uq.longitude) * Math.PI/180;
+    let deltaphi = (uq.latitude - birsbane.latitude) * Math.PI/180;
+    let deltalambda = (uq.longitude - birsbane.longitude) * Math.PI/180;
 
     let a = Math.sin(deltaphi/2) * Math.sin(deltaphi/2) +
               Math.cos(phi1) * Math.cos(phi2) *
