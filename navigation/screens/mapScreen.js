@@ -5,9 +5,31 @@ import * as Location from "expo-location";
 
 export default function MapScreen() {
   // constant that stores a pin and method (setpin) that changes it. values are just dummy data
+  const birsbane = {latitude: -27.4705,
+                    longitude: 153.0260};
+  const uq = {latitude: -27.4975,
+              longitude: 153.0137};
   const [pin, setPin] = React.useState({latitude: -27.470125,
                                         longitude: 153.021072,});
-  const [distance, setDist ] = React.useState(0);
+  const [distance, setDistance] = React.useState({thing: 0});
+
+  const calcualteDistance = () => {
+    //birsbane is lat 1
+    //uq lat 2
+    let R = 6371000; // metres
+    let phi1 = birsbane.latitude * Math.PI/180; // φ, λ in radians
+    let phi2 = uq.latitude * Math.PI/180;
+    let deltaphi = (uq.latitude - birsbane.lat) * Math.PI/180;
+    let deltalambda = (uq.longitude - uq.longitude) * Math.PI/180;
+
+    let a = Math.sin(deltaphi/2) * Math.sin(deltaphi/2) +
+              Math.cos(phi1) * Math.cos(phi2) *
+              Math.sin(deltalambda/2) * Math.sin(deltalambda/2);
+    let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+    let d = R * c; // in metres
+    return(d);
+  };
 
   const errorAlert = () => {
     Alert.alert("Invalid Login", "Login details did not exist", [
@@ -22,7 +44,7 @@ export default function MapScreen() {
       { text: "OK" },
     ]);
   };
-  
+
   const location = () => {
     Axios.post("https://deco3801-betterlatethannever.uqcloud.net/location", {
       latitude: pin.latitude,
@@ -48,7 +70,6 @@ export default function MapScreen() {
       }
 
       let location = await Location.getCurrentPositionAsync({});
-      console.log(location);
 
       // set Pin being used to change the pin
       setPin({
@@ -56,9 +77,10 @@ export default function MapScreen() {
           longitude: location.coords.longitude,
       });
 
-      setDist(
-        cos(1)
+      setDistance(
+        {thing: calcualteDistance()}
       )
+
     })();
     }, []);
  
@@ -73,11 +95,15 @@ export default function MapScreen() {
                 showsUserLocation = {true}
                 //method that will update the location of user when it changes
                 onUserLocationChange = {(e) => {
-                  console.log("location changed", e.nativeEvent.coordinate);
+                  //console.log("location changed", e.nativeEvent.coordinate);
                   setPin({
                     latitude: e.nativeEvent.coordinate.latitude,
                     longitude: e.nativeEvent.coordinate.longitude,
                 });
+                  setDistance({
+                    thing: calcualteDistance()
+                  })
+                  console.log("distance changed", calcualteDistance())
                 }}
                 >
           <Marker 
@@ -98,7 +124,7 @@ export default function MapScreen() {
             pinColor = "#0000FF"
             >
                 <Callout>
-						      <Text>St Lucia</Text>
+						      <Text>UQ distance from brisbane:{distance.thing}</Text>
 					      </Callout>
                 
           </Marker>
