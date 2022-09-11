@@ -13,21 +13,23 @@ export default function MapScreen() {
                                         longitude: 153.021072,});
   const [distance, setDistance] = React.useState({thing: 0});
 
-  const calcualteDistance = () => {
+  const calcualteDistance = (lat1, long1, lat2, long2) => {
     //birsbane is lat 1
     //uq lat 2
     let R = 6371000; // metres
-    let phi1 = birsbane.latitude * Math.PI/180; // φ, λ in radians
-    let phi2 = uq.latitude * Math.PI/180;
-    let deltaphi = (uq.latitude - birsbane.latitude) * Math.PI/180;
-    let deltalambda = (uq.longitude - birsbane.longitude) * Math.PI/180;
+    let phi1 = lat1 * Math.PI/180; // φ, λ in radians
+    let phi2 = lat2 * Math.PI/180;
+    let deltaphi = (lat2 - lat1) * Math.PI/180;
+    let deltalambda = (long2 - long1) * Math.PI/180;
 
     let a = Math.sin(deltaphi/2) * Math.sin(deltaphi/2) +
               Math.cos(phi1) * Math.cos(phi2) *
               Math.sin(deltalambda/2) * Math.sin(deltalambda/2);
+
     let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 
     let d = R * c; // in metres
+    
     return(d);
   };
 
@@ -77,10 +79,6 @@ export default function MapScreen() {
           longitude: location.coords.longitude,
       });
 
-      setDistance(
-        {thing: calcualteDistance()}
-      )
-
     })();
     }, []);
  
@@ -101,9 +99,8 @@ export default function MapScreen() {
                     longitude: e.nativeEvent.coordinate.longitude,
                 });
                   setDistance({
-                    thing: calcualteDistance()
-                  })
-                  console.log("distance changed", calcualteDistance())
+                    thing: calcualteDistance(pin.latitude, pin.longitude, uq.latitude, uq.longitude)
+                  });
                 }}
                 >
           <Marker 
@@ -124,7 +121,7 @@ export default function MapScreen() {
             pinColor = "#0000FF"
             >
                 <Callout>
-						      <Text>UQ distance from brisbane:{distance.thing}</Text>
+						      <Text>UQ Campus</Text>
 					      </Callout>
                 
           </Marker>
@@ -164,7 +161,7 @@ export default function MapScreen() {
             pinColor = "red"
             >
               <Callout>
-						    <Text>Marker linked to User Location</Text>
+						    <Text>User is {distance.thing} metres away</Text>
 					    </Callout>
           </Marker>
         
