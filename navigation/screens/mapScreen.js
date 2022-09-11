@@ -7,8 +7,34 @@ export default function MapScreen() {
   // constant that stores a pin and method (setpin) that changes it. values are just dummy data
   const [pin, setPin] = React.useState({latitude: -27.470125,
                                         longitude: 153.021072,});
+  const [distance, setDist ] = React.useState(0);
 
-  const [distance ] = React.useState(0)
+  const errorAlert = () => {
+    Alert.alert("Invalid Login", "Login details did not exist", [
+      { text: "Cancel", style: "cancel" },
+      { text: "OK" },
+    ]);
+  };
+
+  const validAlert = () => {
+    Alert.alert("Valid Login", "User exists", [
+      { text: "Cancel", style: "cancel" },
+      { text: "OK" },
+    ]);
+  };
+  
+  const location = () => {
+    Axios.post("https://deco3801-betterlatethannever.uqcloud.net/location", {
+      latitude: pin.latitude,
+      longitude: pin.longitude,
+    }).then((response) => {
+      if (response.data.message) {
+        errorAlert();
+      } else {
+        validAlert();
+      }
+    });
+  };
 
   // event that get asks for permission then gets the users inital location
   React.useEffect(() => {
@@ -29,6 +55,10 @@ export default function MapScreen() {
           latitude: location.coords.latitude,
           longitude: location.coords.longitude,
       });
+
+      setDist(
+        cos(1)
+      )
     })();
     }, []);
  
