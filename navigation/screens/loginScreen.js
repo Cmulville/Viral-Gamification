@@ -22,30 +22,25 @@ export default function LoginScreen({navigation}) {
         
  
       <StatusBar style="auto" />
-      <View style={styles.inputView}>
-      
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Email"
-          placeholderTextColor="#003f5c"
-          onChangeText={(email) => setEmail(email)}
-        />
-      </View>
-
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Password"
-          placeholderTextColor="#003f5c"
-          onChangeText={(password) => setPassword(password)}
-        />
-      </View>
 
       <TouchableOpacity>
-        <Text></Text>
         <Text style={styles.forgot_button}>Don't have an account? Sign up</Text>
       </TouchableOpacity>
+      
+      <TextInput
+        style={styles.TextInput}
+        onChangeText={setEmail}
+        placeholderTextColor="#003f5c"
+        placeholder = "Email"
+      />
 
+      <TextInput
+        style={styles.TextInput}
+        onChangeText={setPassword}
+        placeholderTextColor="#003f5c"
+        placeholder = "Password"
+      />
+      
       <TouchableOpacity style={styles.loginBtn}>
         <Text style={styles.loginText}>LOGIN</Text>
       </TouchableOpacity>
@@ -59,6 +54,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#7bb2be",
     alignItems: "center",
     justifyContent: "center",
+  },
+
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
   },
 
   // image: {
