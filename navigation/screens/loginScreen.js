@@ -50,19 +50,19 @@ export default function LoginScreen({ navigation }) {
       />
 
       <StatusBar style="dark" />
-      
+
       <TextInput
         style={styles.TextInput}
         onChangeText={setEmail}
         placeholderTextColor="#003f5c"
-        placeholder = "Email"
+        placeholder="Email"
       />
 
       <TextInput
         style={styles.TextInput}
         onChangeText={setPassword}
         placeholderTextColor="#003f5c"
-        placeholder = "Password"
+        placeholder="Password"
       />
 
       <TouchableOpacity onPress={() => navigation.navigate("RegisterScreen")}>
