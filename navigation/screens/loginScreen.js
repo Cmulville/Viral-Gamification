@@ -73,23 +73,20 @@ export default function LoginScreen({ navigation }) {
       />
 
       <StatusBar style="dark" />
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Email"
-          placeholderTextColor="#003f5c"
-          onChangeText={(email) => setEmail(email)}
-        />
-      </View>
 
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Password"
-          placeholderTextColor="#003f5c"
-          onChangeText={(password) => setPassword(password)}
-        />
-      </View>
+      <TextInput
+        style={styles.TextInput}
+        onChangeText={setEmail}
+        placeholderTextColor="#003f5c"
+        placeholder="Email"
+      />
+
+      <TextInput
+        style={styles.TextInput}
+        onChangeText={setPassword}
+        placeholderTextColor="#003f5c"
+        placeholder="Password"
+      />
 
       <TouchableOpacity onPress={() => navigation.navigate("RegisterScreen")}>
         <Text style={styles.forgot_button}>Don't have an account? Sign up</Text>
