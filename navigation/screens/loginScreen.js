@@ -11,21 +11,21 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const getData = async () => {
   try {
-    const value = await AsyncStorage.getItem('username')
-    if(value != null) {
+    const value = await AsyncStorage.getItem("username");
+    if (value != null) {
       // value previously stored
-      return value
+      return value;
     } else {
-      return null
+      return null;
     }
-  } catch(e) {
-  // error reading value
-}
-}
+  } catch (e) {
+    // error reading value
+  }
+};
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
@@ -54,13 +54,13 @@ export default function LoginScreen({ navigation }) {
       } else {
         const storeData = async (email) => {
           try {
-            const jsonValue = JSON.stringify(email)
-            await AsyncStorage.setItem('username', jsonValue)
+            const jsonValue = JSON.stringify(email);
+            await AsyncStorage.setItem("username", jsonValue);
           } catch (e) {
             // saving error
           }
-        }
-        validAlert();
+        };
+        navigation.navigate("MainScreen");
       }
     });
   };
@@ -95,11 +95,7 @@ export default function LoginScreen({ navigation }) {
         <Text style={styles.forgot_button}>Don't have an account? Sign up</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity
-        style={styles.loginBtn}
-        onPress={() => navigation.navigate("MainScreen")}
-      >
-        {/* <TouchableOpacity style={styles.loginBtn} onPress={login}> */}
+      <TouchableOpacity style={styles.loginBtn} onPress={login}>
         <Text style={styles.loginText}>LOGIN</Text>
       </TouchableOpacity>
     </View>

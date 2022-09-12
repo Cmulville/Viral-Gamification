@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-function RegisterScreen() {
+function RegisterScreen({ navigation }) {
   const [emailReg, setEmail] = useState("");
   const [usernameReg, setUsername] = useState("");
   const [passwordReg, setPassword] = useState("");
@@ -22,6 +22,7 @@ function RegisterScreen() {
       password: passwordReg,
     }).then((response) => {
       console.log(response);
+      navigation.navigate("LoginScreen");
     });
   };
 
