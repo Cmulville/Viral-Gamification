@@ -60,7 +60,7 @@ export default function LoginScreen({ navigation }) {
             // saving error
           }
         }
-        validAlert();
+        navigation.navigate("MainScreen");
       }
     });
   };
@@ -95,11 +95,7 @@ export default function LoginScreen({ navigation }) {
         <Text style={styles.forgot_button}>Don't have an account? Sign up</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity
-        style={styles.loginBtn}
-        onPress={() => navigation.navigate("MainScreen")}
-      >
-        {/* <TouchableOpacity style={styles.loginBtn} onPress={login}> */}
+     <TouchableOpacity style={styles.loginBtn} onPress={login}>
         <Text style={styles.loginText}>LOGIN</Text>
       </TouchableOpacity>
     </View>
