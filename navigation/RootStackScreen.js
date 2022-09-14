@@ -11,6 +11,11 @@ const RootStack = createStackNavigator();
 const RootStackScreen = ({ navigation }) => {
   return (
     <RootStack.Navigator>
+      {/* <RootStack.Screen
+        name="MainScreen"
+        component={MainScreen}
+        options={{ headerShown: false }}
+      /> */}
       <RootStack.Screen
         name="LoginScreen"
         component={LoginScreen}
@@ -21,10 +26,10 @@ const RootStackScreen = ({ navigation }) => {
         component={MainScreen}
         options={{ headerShown: false }}
       />
-      <RootStack.Screen 
-        name="RegisterScreen" 
-        component={RegisterScreen} 
-        options={{ headerShown: false}}
+      <RootStack.Screen
+        name="RegisterScreen"
+        component={RegisterScreen}
+        options={{ headerShown: false }}
       />
     </RootStack.Navigator>
   );

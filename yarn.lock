@@ -1285,9 +1285,9 @@
     "resolve-from" "^5.0.0"
     "sucrase" "^3.20.0"
 
-"@expo/ngrok-bin-linux-x64@2.3.40":
-  "integrity" "sha512-yOuwpOmMe6RGnk9ninlM7Zg1EiF81ptFOcFmT61PDOA4gK8/ttZKTMkDQiq0DZdcXUyE0HCr83EglJZTnHIzPA=="
-  "resolved" "https://registry.npmjs.org/@expo/ngrok-bin-linux-x64/-/ngrok-bin-linux-x64-2.3.40.tgz"
+"@expo/ngrok-bin-darwin-arm64@2.3.40":
+  "integrity" "sha512-Zij81v/bIsVBvgXgYS71xbi/3lqKfVEfr7rId8BsHO3Ec1nQcp/I+729W3KX9PUHzWlXCLxOKZ3uF4jL/TcNbg=="
+  "resolved" "https://registry.npmjs.org/@expo/ngrok-bin-darwin-arm64/-/ngrok-bin-darwin-arm64-2.3.40.tgz"
   "version" "2.3.40"
 
 "@expo/ngrok-bin@2.3.40":
@@ -3646,6 +3646,11 @@
   "resolved" "https://registry.npmjs.org/fs.realpath/-/fs.realpath-1.0.0.tgz"
   "version" "1.0.0"
 
+"fsevents@^2.3.2":
+  "integrity" "sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA=="
+  "resolved" "https://registry.npmjs.org/fsevents/-/fsevents-2.3.2.tgz"
+  "version" "2.3.2"
+
 "function-bind@^1.1.1":
   "integrity" "sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A=="
   "resolved" "https://registry.npmjs.org/function-bind/-/function-bind-1.1.1.tgz"
@@ -5848,10 +5853,10 @@
     "@types/geojson" "^7946.0.7"
     "deprecated-react-native-prop-types" "^2.3.0"
 
-"react-native-pager-view@*", "react-native-pager-view@^5.4.25", "react-native-pager-view@>= 4.0.0":
-  "integrity" "sha512-3drrYwaLat2fYszymZe3nHMPASJ4aJMaxiejfA1V5SK3OygYmdtmV2u5prX7TnjueJzGSyyaCYEr2JlrRt4YPg=="
-  "resolved" "https://registry.npmjs.org/react-native-pager-view/-/react-native-pager-view-5.4.25.tgz"
-  "version" "5.4.25"
+"react-native-pager-view@*", "react-native-pager-view@>= 4.0.0", "react-native-pager-view@5.4.15":
+  "integrity" "sha512-5NssD840wFCuOL4B1ZRiRADvt+Vx2Dgify4SmAUqHXCx03yiGPnRWmFjYXyQeK6gq/8VY+gPGE4bTy9ahzBbDw=="
+  "resolved" "https://registry.npmjs.org/react-native-pager-view/-/react-native-pager-view-5.4.15.tgz"
+  "version" "5.4.15"
 
 "react-native-reanimated@~2.8.0":
   "integrity" "sha512-kJvf/UWLBMaGCs9X66MKq5zdFMgwx8D0nHnolbHR7s8ZnbLdb7TlQ/yuzIXqn/9wABfnwtNRI3CyaP1aHWMmZg=="
@@ -6941,8 +6946,7 @@
     "source-map" "~0.6.1"
 
 "undefined@react-navigation/native":
-  "integrity" "sha512-PfoBFH1YCAoE+SF14CkuvyBq0+8Q74OCvm54G7ECNnJ28Vb4P+CwZqCHab++YJezyeFT3WBLEo5yQg5TQNtdRw=="
-  "resolved" "https://codeload.github.com/react-navigation/native/tar.gz/6bd839725f1be1313c43c1e393abe167af6fe70b"
+  "resolved" "git+ssh://git@github.com/react-navigation/native.git#6bd839725f1be1313c43c1e393abe167af6fe70b"
   "version" "3.6.5"
   dependencies:
     "hoist-non-react-statics" "^3.3.2"
