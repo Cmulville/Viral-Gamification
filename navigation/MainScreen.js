@@ -69,6 +69,7 @@ export default function MainScreen({ navigation }) {
           
         })}
       >
+      <Tab.Screen name='Home' component={HomeScreen} />
         <Tab.Screen name={mapName} component={MapScreen}
         options={{ 
                       tabBarLabel: mapName,
