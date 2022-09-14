@@ -31,15 +31,7 @@ export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const errorAlert = () => {
-    Alert.alert("Invalid Login", "Login details did not exist", [
-      { text: "Cancel", style: "cancel" },
-      { text: "OK" },
-    ]);
-  };
-
-  const validAlert = () => {
-    Alert.alert("Valid Login", "User exists", [
-      { text: "Cancel", style: "cancel" },
+    Alert.alert("Login failed", "Your email or password is incorrect. Please try again", [
       { text: "OK" },
     ]);
   };
@@ -52,6 +44,7 @@ export default function LoginScreen({ navigation }) {
       if (response.data.message) {
         errorAlert();
       } else {
+<<<<<<< HEAD
         const storeData = async (email) => {
           try {
             const jsonValue = JSON.stringify(email)
@@ -61,6 +54,9 @@ export default function LoginScreen({ navigation }) {
           }
         }
         navigation.navigate("MainScreen");
+=======
+        navigation.navigate("MainScreen")
+>>>>>>> 3a8201b288d17d78a37edb2b1bff947ed9632149
       }
     });
   };
@@ -73,29 +69,35 @@ export default function LoginScreen({ navigation }) {
       />
 
       <StatusBar style="dark" />
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Email"
-          placeholderTextColor="#003f5c"
-          onChangeText={(email) => setEmail(email)}
-        />
-      </View>
+      
+      <TextInput
+        style={styles.TextInput}
+        onChangeText={setEmail}
+        placeholderTextColor="#003f5c"
+        placeholder = "Email"
+      />
 
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Password"
-          placeholderTextColor="#003f5c"
-          onChangeText={(password) => setPassword(password)}
-        />
-      </View>
+      <TextInput
+        style={styles.TextInput}
+        onChangeText={setPassword}
+        placeholderTextColor="#003f5c"
+        placeholder = "Password"
+      />
 
       <TouchableOpacity onPress={() => navigation.navigate("RegisterScreen")}>
         <Text style={styles.forgot_button}>Don't have an account? Sign up</Text>
       </TouchableOpacity>
 
+<<<<<<< HEAD
      <TouchableOpacity style={styles.loginBtn} onPress={login}>
+=======
+      <TouchableOpacity
+        style={styles.loginBtn}
+        onPress={login}
+
+      >
+        {/* <TouchableOpacity style={styles.loginBtn} onPress={login}> */}
+>>>>>>> 3a8201b288d17d78a37edb2b1bff947ed9632149
         <Text style={styles.loginText}>LOGIN</Text>
       </TouchableOpacity>
     </View>
