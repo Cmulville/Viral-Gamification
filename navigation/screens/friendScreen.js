@@ -44,11 +44,13 @@ export default function FriendScreen({ navigation }) {
   return (
     //Will need to get friends list from the screen
     <View>
-      <TextInput
-        placeholder="Add User"
-        placeholderTextColor="#003f5c"
-        onChangeText={(addUser) => setAddUser(addUser)}
-      />
+      <View style={styles.container}>
+        <TextInput
+            placeholder="Add User"
+            placeholderTextColor="#003f5c"
+            onChangeText={(addUser) => setAddUser(addUser)}
+        />
+      </View>
       <Button title="Add Friend" onPress={logFriends} />
 
       <View style={styles.friendView}>
@@ -76,6 +78,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 
+  container: {
+    width: '100%',
+    height: 50,
+    backgroundColor: 'grey',
+    borderRadius: 8
+  },
+  
   friendView: {
     borderRadius: 50,
     alignItems: "center",
