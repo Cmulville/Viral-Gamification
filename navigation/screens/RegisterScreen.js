@@ -8,24 +8,42 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 
 function RegisterScreen({ navigation }) {
   const [emailReg, setEmail] = useState("");
   const [usernameReg, setUsername] = useState("");
   const [passwordReg, setPassword] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [confirmPasswordReg, setConfirmPassword] = useState("");
+  const [firstNameReg, setFirstName] = useState("");
+  const [lastNameReg, setLastName] = useState("");
 
   const register = () => {
-    Axios.post("https://deco3801-betterlatethannever.uqcloud.net/register", {
-      username: usernameReg,
-      email: emailReg,
-      password: passwordReg,
-    }).then((response) => {
-      console.log(response);
-      navigation.navigate("LoginScreen");
-    });
+    if (confirmPasswordReg != passwordReg) {
+      Alert.alert("Password Error", "Passwords entered must match", [
+        { text: "OK" },
+      ]);
+    } else {
+      Axios.post("https://deco3801-betterlatethannever.uqcloud.net/register", {
+        firstName: firstNameReg,
+        lastName: lastNameReg,
+        username: usernameReg,
+        email: emailReg,
+        password: passwordReg,
+      }).then((response) => {
+        console.log(response.data);
+        if (response.data.existing) {
+          Alert.alert(
+            "Registration Error",
+            "User already exists, try changing username or email",
+            [{ text: "OK" }]
+          );
+        } else if (response.data.complete) {
+          navigation.navigate("LoginScreen");
+        }
+      });
+    }
   };
 
   return (
@@ -74,6 +92,17 @@ function RegisterScreen({ navigation }) {
           placeholder="Password"
           placeholderTextColor="#003f5c"
           onChangeText={(passwordReg) => setPassword(passwordReg)}
+        />
+      </View>
+
+      <View style={styles.inputView}>
+        <TextInput
+          style={styles.TextInput}
+          placeholder="Confirm Password"
+          placeholderTextColor="#003f5c"
+          onChangeText={(confirmPasswordReg) =>
+            setConfirmPassword(confirmPasswordReg)
+          }
         />
       </View>
 

@@ -21,7 +21,11 @@ const RootStackScreen = ({ navigation }) => {
         component={MainScreen}
         options={{ headerShown: false }}
       />
-      <RootStack.Screen name="RegisterScreen" component={RegisterScreen} />
+      <RootStack.Screen 
+        name="RegisterScreen" 
+        component={RegisterScreen} 
+        options={{ headerShown: false}}
+      />
     </RootStack.Navigator>
   );
 };

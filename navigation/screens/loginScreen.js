@@ -27,21 +27,24 @@ const getData = async () => {
   }
 };
 
+const storeUser = async (value) => {
+  try {
+    await AsyncStorage.setItem("user", JSON.stringify(value));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const errorAlert = () => {
-    Alert.alert("Invalid Login", "Login details did not exist", [
-      { text: "Cancel", style: "cancel" },
-      { text: "OK" },
-    ]);
-  };
 
-  const validAlert = () => {
-    Alert.alert("Valid Login", "User exists", [
-      { text: "Cancel", style: "cancel" },
-      { text: "OK" },
-    ]);
+  const errorAlert = () => {
+    Alert.alert(
+      "Login failed",
+      "Your email or password is incorrect. Please try again",
+      [{ text: "OK" }]
+    );
   };
 
   const login = () => {
@@ -52,14 +55,7 @@ export default function LoginScreen({ navigation }) {
       if (response.data.message) {
         errorAlert();
       } else {
-        const storeData = async (email) => {
-          try {
-            const jsonValue = JSON.stringify(email);
-            await AsyncStorage.setItem("username", jsonValue);
-          } catch (e) {
-            // saving error
-          }
-        };
+        storeUser(response.data[0].Username);
         navigation.navigate("MainScreen");
       }
     });

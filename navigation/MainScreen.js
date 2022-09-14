@@ -11,6 +11,7 @@ import SettingsScreen from "./screens/settingsScreen";
 import MapScreen from "./screens/mapScreen";
 import LoginScreen from "./screens/loginScreen";
 import InventoryScreen from "./screens/inventoryScreen";
+import FriendScreen from "./screens/friendScreen";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
 // Screen names
@@ -84,7 +85,7 @@ export default function MainScreen({ navigation }) {
       />
       <Tab.Screen
         name={friendList}
-        component={SettingsScreen}
+        component={FriendScreen}
         options={{
           tabBarLabel: friendList,
         }}

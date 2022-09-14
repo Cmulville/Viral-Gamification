@@ -1,14 +1,94 @@
-import * as React from 'react';
-import { View, Text } from 'react-native'
+import Axios from "axios";
+import * as React from "react";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Button,
+  TextInput,
+  FlatList,
+} from "react-native";
+import { useState } from "react";
+import { reloadAsync } from "expo-updates";
 
-export default function FriendScreen({navigation}) {
-    return (
-        //Will need to get friends list from the screen
+const myFriends = () => {
+  Axios.post(
+    "https://deco3801-betterlatethannever.uqcloud.net/friends/approved",
+    {
+      username: "Jackie",
+    }
+  ).then((response) => {
+    //   console.log(typeof response);
+    //   console.log(response.data.friends);
 
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-            <Text
-                onPress={() => navigation.navigate('Home')}
-                style={{ fontSize: 26, fontWeight: 'bold'}}>Friends list</Text>
-        </View>
-    )
-} 
+    friends = response.data.friends;
+  });
+};
+
+var friends = [
+  { Friend1: "Neemo" },
+  { Friend1: "Nemanja" },
+  { Friend1: "Connor" },
+];
+
+export default function FriendScreen({ navigation }) {
+  const [addUser, setAddUser] = useState("");
+
+  function logFriends() {
+    myFriends();
+    console.log(friends);
+    refreshScreen();
+  }
+
+  function DisplayFriends() {}
+
+  return (
+    //Will need to get friends list from the screen
+    <View>
+      <TextInput
+        placeholder="Add User"
+        placeholderTextColor="#003f5c"
+        onChangeText={(addUser) => setAddUser(addUser)}
+      />
+      <Button title="Add Friend" onPress={logFriends} />
+
+      <View style={styles.friendView}>
+        {friends.map((friend) => {
+          return (
+            <View>
+              <Text>{friend.Friend1}</Text>
+            </View>
+          );
+        })}
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  inputView: {
+    backgroundColor: "#fff",
+    borderRadius: 30,
+    width: "70%",
+    height: 45,
+    marginBottom: 20,
+
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  friendView: {
+    borderRadius: 50,
+    alignItems: "center",
+    borderWidth: 30,
+    borderColor: "#fff",
+  },
+
+  TextInput: {
+    height: 50,
+    flex: 1,
+    padding: 10,
+    marginLeft: 20,
+    width: "100%",
+  },
+});
