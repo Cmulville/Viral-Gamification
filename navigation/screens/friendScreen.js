@@ -9,40 +9,46 @@ import {
   FlatList,
 } from "react-native";
 import { useState } from "react";
-import { reloadAsync } from "expo-updates";
-
-const myFriends = () => {
-  Axios.post(
-    "https://deco3801-betterlatethannever.uqcloud.net/friends/approved",
-    {
-      username: "Jackie",
-    }
-  ).then((response) => {
-    //   console.log(typeof response);
-    //   console.log(response.data.friends);
-
-    friends = response.data.friends;
-  });
-};
-
-var friends = [
-  { Friend1: "Neemo" },
-  { Friend1: "Nemanja" },
-  { Friend1: "Connor" },
-];
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function FriendScreen({ navigation }) {
   const [addUser, setAddUser] = useState("");
+  const [friends, setFriends] = useState([]);
+  const [user, setUser] = useState("");
 
   function logFriends() {
     myFriends();
-    console.log(friends);
+    getUser();
+    console.log(user);
   }
 
-  function DisplayFriends() {}
+  const getUser = async () => {
+    try {
+      const value = await AsyncStorage.getItem("user");
+      if (value != null) {
+        setUser(JSON.parse(value));
+      } else {
+        return null;
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const myFriends = () => {
+    Axios.post(
+      "https://deco3801-betterlatethannever.uqcloud.net/friends/approved",
+      {
+        username: "Jackie",
+      }
+    ).then((response) => {
+      setFriends(response.data.friends);
+    });
+  };
+
+  myFriends();
 
   return (
-    //Will need to get friends list from the screen
     <View>
       <View style={styles.container}>
         <TextInput
