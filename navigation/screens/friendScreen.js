@@ -37,7 +37,6 @@ export default function FriendScreen({ navigation }) {
   function logFriends() {
     myFriends();
     console.log(friends);
-    refreshScreen();
   }
 
   function DisplayFriends() {}
