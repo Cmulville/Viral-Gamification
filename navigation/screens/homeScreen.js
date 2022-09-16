@@ -3,35 +3,36 @@ import { View, Text } from 'react-native'
 import CountDown from 'react-native-countdown-component';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import PropTypes from 'prop-types';
-import moment from 'moment';
+import moment from 'moment/moment';
 
 export default function HomeScreen({navigation}) {  
+  
 
-  const [time, setTime] = React.useState(604800);
+  const date = moment().utcOffset('+10:00').format('YYYY-MM-DD hh:mm:ss');
 
-  var date = moment().utcOffset('+05:30').format('YYYY-MM-DD hh:mm:ss');
-  var expirydate = '2022-12-23 :00:45';
-  var diffr = moment.duration(moment(expirydate).diff(moment(date)));
+  //Can get expiry date from DB
+  const expirydate = '2022-10-02 00:00:00';
+  const diffr = moment.duration(moment(expirydate).diff(moment(date)));
 
-  var hours = parseInt(diffr.asHours());
-  var minutes = parseInt(diffr.minutes());
-  var seconds = parseInt(diffr.seconds());
-  var endTime = hours * 60 * 60 + minutes * 60 + seconds;
+  const hours = parseInt(diffr.asHours());
+  const minutes = parseInt(diffr.minutes());
+  const seconds = parseInt(diffr.seconds());
+  const endTime = hours * 60 * 60 + minutes * 60 + seconds;
+ 
+  const [time, setTime] = React.useState(endTime);
+  
+// React.useEffect(() => {
+//   getData();
+// }, []);
 
-  setTime(endTime)
-
-  React.useEffect(() => {
-    getData();
-  }, []);
-
-    const saveData = async (value) => {
-      try {
-        await AsyncStorage.setItem('time', JSON.stringify(value))
-        alert('Data successfully saved')
-      } catch (e) {
-        alert('Failed to save the data to the storage')
-      }
-    }
+// const saveData = async (value) => {
+//   try {
+//     await AsyncStorage.setItem('time', JSON.stringify(value))
+//     alert('Data successfully saved')
+//   } catch (e) {
+//     alert('Failed to save the data to the storage')
+//   }
+// }
 
 //     const getData = async () => {
     
@@ -47,21 +48,21 @@ export default function HomeScreen({navigation}) {
 //   }
 // }
 
-const getData = () => {
-  //function to get the value from AsyncStorage
-  try {
-  AsyncStorage.getItem('time').then(
-    (value) =>
-      //AsyncStorage returns a promise so adding a callback to get the value
-      setTime(parseInt(value))
-    //Setting the value in Text
+// const getData = () => {
+//   //function to get the value from AsyncStorage
+//   try {
+//   AsyncStorage.getItem('time').then(
+//     (value) =>
+//       //AsyncStorage returns a promise so adding a callback to get the value
+//       setTime(parseInt(value))
+//     //Setting the value in Text
     
-  );
-  alert("accessed storage!")
-  } catch(e) {
-    alert("failed to access storage")
-}
-};
+//   );
+//   alert("accessed storage!")
+//   } catch(e) {
+//     alert("failed to access storage")
+// }
+// };
 
 // saveData(time);
 
@@ -82,7 +83,7 @@ const getData = () => {
       />
       
         <Text
-                onPress={getData}
+                //onPress={alert(Math.ceil(endTime/60/60/24))}
                 style={{ fontSize: 26, fontWeight: 'bold'}}>Home Screen {time}</Text>
         </View>
     )
