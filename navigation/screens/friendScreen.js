@@ -17,8 +17,8 @@ export default function FriendScreen({ navigation }) {
   const [user, setUser] = useState("");
 
   function logFriends() {
-    myFriends();
     getUser();
+    myFriends();
     console.log(user);
   }
 
@@ -39,14 +39,15 @@ export default function FriendScreen({ navigation }) {
     Axios.post(
       "https://deco3801-betterlatethannever.uqcloud.net/friends/approved",
       {
-        username: "Jackie",
+        username: user,
       }
     ).then((response) => {
       setFriends(response.data.friends);
     });
   };
 
-  myFriends();
+  // getUser();
+  // myFriends();
 
   return (
     <View>
