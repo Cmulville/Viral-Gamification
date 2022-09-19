@@ -2,6 +2,7 @@ import * as React from "react";
 import MapView, { Callout, Circle, Marker } from "react-native-maps";
 import { StyleSheet, Text, View, Dimensions, Image, icon } from "react-native";
 import * as Location from "expo-location";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function MapScreen() {
   // constant that stores a pin and method (setpin) that changes it. values are just dummy data
@@ -12,6 +13,20 @@ export default function MapScreen() {
   const [pin, setPin] = React.useState({latitude: -27.470125,
                                         longitude: 153.021072,});
   const [distance, setDistance] = React.useState({thing: 0});
+  const [user, setUser] = useState("");
+
+  const getUser = async () => {
+    try {
+      const value = await AsyncStorage.getItem("user");
+      if (value != null) {
+        setUser(JSON.parse(value));
+      } else {
+        return null;
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const calcualteDistance = (lat1, long1, lat2, long2) => {
     //birsbane is lat 1
@@ -48,11 +63,14 @@ export default function MapScreen() {
   };
 
   const location = () => {
-    Axios.post("https://deco3801-betterlatethannever.uqcloud.net/location", {
+    getUser();
+    Axios.post("https://deco3801-betterlatethannever.uqcloud.net/location/update", {
+      user: user,
       latitude: pin.latitude,
       longitude: pin.longitude,
     }).then((response) => {
       if (response.data.message) {
+
         errorAlert();
       } else {
         validAlert();
@@ -98,6 +116,7 @@ export default function MapScreen() {
                     latitude: e.nativeEvent.coordinate.latitude,
                     longitude: e.nativeEvent.coordinate.longitude,
                 });
+                  location();
                   setDistance({
                     thing: calcualteDistance(pin.latitude, pin.longitude, uq.latitude, uq.longitude)
                   });
