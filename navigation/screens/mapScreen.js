@@ -149,8 +149,6 @@ export default function MapScreen() {
 						      <Text>Brisbane</Text>
 					      </Callout>
           </Marker>
-          <Alert> {calcualteDistance(pin.latitude, pin.longitude, testuser.latitude, testuser.longitude)}
-          </Alert>
           <Marker 
             // marker that shows UQ st lucia
             coordinate = {{latitude: -27.4975,
