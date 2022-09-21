@@ -50,61 +50,47 @@ function RegisterScreen({ navigation }) {
     <View style={styles.container}>
       <StatusBar style="auto" />
 
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="First Name"
-          placeholderTextColor="#003f5c"
-          onChangeText={(firstNameReg) => setFirstName(firstNameReg)}
-        />
-      </View>
+      <TextInput
+        style={styles.TextInput}
+        onChangeText={setFirstName}
+        placeholderTextColor="#003f5c"
+        placeholder="First Name"
+      />
 
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Last Name"
-          placeholderTextColor="#003f5c"
-          onChangeText={(lastNameReg) => setLastName(lastNameReg)}
-        />
-      </View>
+      <TextInput
+        style={styles.TextInput}
+        onChangeText={setLastName}
+        placeholderTextColor="#003f5c"
+        placeholder="Last Name"
+      />
 
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Username"
-          placeholderTextColor="#003f5c"
-          onChangeText={(usernameReg) => setUsername(usernameReg)}
-        />
-      </View>
+      <TextInput
+        style={styles.TextInput}
+        onChangeText={setUsername}
+        placeholderTextColor="#003f5c"
+        placeholder="Username"
+      />
 
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Email"
-          placeholderTextColor="#003f5c"
-          onChangeText={(emailReg) => setEmail(emailReg)}
-        />
-      </View>
+      <TextInput
+        style={styles.TextInput}
+        onChangeText={setEmail}
+        placeholderTextColor="#003f5c"
+        placeholder="Email"
+      />
 
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Password"
-          placeholderTextColor="#003f5c"
-          onChangeText={(passwordReg) => setPassword(passwordReg)}
-        />
-      </View>
+      <TextInput
+        style={styles.TextInput}
+        onChangeText={setPassword}
+        placeholderTextColor="#003f5c"
+        placeholder="Password"
+      />
 
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Confirm Password"
-          placeholderTextColor="#003f5c"
-          onChangeText={(confirmPasswordReg) =>
-            setConfirmPassword(confirmPasswordReg)
-          }
-        />
-      </View>
+      <TextInput
+        style={styles.TextInput}
+        onChangeText={setConfirmPassword}
+        placeholderTextColor="#003f5c"
+        placeholder="Confirm Password"
+      />
 
       <TouchableOpacity onPress={() => navigation.navigate("LoginScreen")}>
         <Text style={styles.forgot_button}>
