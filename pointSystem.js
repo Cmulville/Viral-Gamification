@@ -1,8 +1,9 @@
 import * as React from React
 
 //Gives the player points based on their status. can be accessed via database or async storage 
-function daily_points() {
+function daily_points(user) {
 //Check user daily bonus at start (will be true or false)
+
 const daily_bonus = false;
  //access player status and assign to this variable:
  const status = 'Immune'

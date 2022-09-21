@@ -21,6 +21,7 @@ export default function HomeScreen({navigation}) {
  
   const [time, setTime] = React.useState(endTime);
   
+  
 // React.useEffect(() => {
 //   getData();
 // }, []);
@@ -83,7 +84,6 @@ export default function HomeScreen({navigation}) {
       />
       
         <Text
-                //onPress={alert(Math.ceil(endTime/60/60/24))}
                 style={{ fontSize: 26, fontWeight: 'bold'}}>Home Screen {time}</Text>
         </View>
     )
