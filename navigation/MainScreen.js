@@ -10,13 +10,13 @@ import MapScreen from "./screens/mapScreen";
 import LoginScreen from "./screens/loginScreen";
 import InventoryScreen from "./screens/inventoryScreen";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import PointSystem from "../pointSystem";
 
 export default function MainScreen({ navigation }) {
 // Screen names
 const inventoryName = "Inventory";
 const mapName = "Map";
 const friendList = "Friends";
-
 React.useEffect(() => {
   setValues();
 }, []);
@@ -52,7 +52,7 @@ const screenColors = statusColours[status]
 
 const Tab = createBottomTabNavigator();
 
-
+alert(a)
   return (
       <Tab.Navigator
         initalRouteName={MainScreen}
