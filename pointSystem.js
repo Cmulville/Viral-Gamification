@@ -23,9 +23,9 @@ const PointSystem = {
     //Changes the status of the victim from cured to user
     infect: (user) => {
         //Infect user if infected user is within the corresponding radius
-        setStatus = async (values) => {
+        setStatus = async () => {
             try {
-                await AsyncStorage.setItem("status", values)
+                await AsyncStorage.setItem("status", 'Infected')
             } catch(e) {
                 alert("Couldn't change the status")
             }
@@ -34,6 +34,13 @@ const PointSystem = {
 
     cure: (user) => {
         //cure user once all goals are reached
+        setStatus = async () => {
+            try {
+                await AsyncStorage.setItem("status", 'Cured')
+            } catch(e) {
+                alert("Couldn't change the status")
+            }
+        }
     
     },
 

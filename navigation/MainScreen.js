@@ -54,7 +54,7 @@ const screenColors = statusColours[status];
 
 const Tab = createBottomTabNavigator();
 
-alert(a)
+
   return (
     <Tab.Navigator
       initalRouteName={MainScreen}
@@ -81,7 +81,12 @@ alert(a)
             //   />
             // ),
             
-            title: status+" | Points:"+" "+points
+            title: status+" | Points:"+" "+points,
+            headerStyle: {
+          backgroundColor: screenColors,
+
+          //   alignItems: 'center'
+        },
           
         })}
       >
@@ -91,19 +96,27 @@ alert(a)
                       
                       }}
        />
-        <Tab.Screen name={mapName} component={MapScreen}
-        options={{ 
-                      tabBarLabel: mapName,
-                      
-                      }}/>
-        <Tab.Screen name={inventoryName} component={InventoryScreen}
-        options={{ 
-                      tabBarLabel: inventoryName
-                      }}/>
-        <Tab.Screen name={friendList} component={SettingsScreen} 
-        options={{ 
-                      tabBarLabel: friendList
-                      }}/>
+      <Tab.Screen
+        name={mapName}
+        component={MapScreen}
+        options={{
+          tabBarLabel: mapName,
+        }}
+      />
+      <Tab.Screen
+        name={inventoryName}
+        component={InventoryScreen}
+        options={{
+          tabBarLabel: inventoryName,
+        }}
+      />
+      <Tab.Screen
+        name={friendList}
+        component={SettingsScreen}
+        options={{
+          tabBarLabel: friendList,
+        }}
+      />
 
       {/* <Tab.Screen name={detailName} component={DetailScreen}/> */}
     </Tab.Navigator>
