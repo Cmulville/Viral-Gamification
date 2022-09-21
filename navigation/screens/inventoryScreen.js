@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { ScrollView, StyleSheet, Text, View, Button } from 'react-native';
 // import EncryptedStorage from 'react-native-encrypted-storage';
 
 // async function retrieveUserSession() {
@@ -20,32 +20,48 @@ import { StyleSheet, Text, View, Button } from 'react-native';
 export default function InventoryScreen({navigation}) {
     //session = retrieveUserSession();
     //Session should include a username/email which will be used to access these inventory stats 
-    sumSanitizer = 0
-    santizerGoal = 33
-    sumGloves = 0
-    gloveGoal = 53
-    sumFaceMask = 0
-    faceMaskGoal = 9
+    const sumSanitizer = 0
+    const santizerGoal = 33
+    const sumGloves = 0
+    const gloveGoal = 53
+    const sumFaceMask = 0
+    const faceMaskGoal = 9
+    const cureMe = !(sumSanitizer == santizerGoal && sumFaceMask == faceMaskGoal && sumGloves == gloveGoal)
+
     return (
         <View style={styles.container}>
-            <View style={styles.header}>
-            <Text style={styles.header}>Inventory </Text>
-            </View>
-            <View style={styles.items}>
-                <Button title='Santitizer' />   
-                <Text style={{fontSize: 22}}>{sumSanitizer}/{santizerGoal} </Text>
-            </View>
-                 
-            <View style={styles.items}>
-                <Button title='Gloves' />
-                <Text style={{fontSize: 22}}>{sumGloves}/{gloveGoal} </Text>
-            </View>    
+            
+                <View>
+                    <Text style={styles.header}>Inventory </Text>
+                </View>
 
-            <View style={styles.items}>
-                <Button title='Face Masks' />       
-                <Text style={{fontSize: 22}}>{sumFaceMask}/{faceMaskGoal} </Text>
+                <ScrollView >
+                <View style={styles.item_container}>
+                    <View style={styles.items}>
+                        <Button title='Santitizer' />   
+                        <Text style={{fontSize: 22}}>{sumSanitizer}/{santizerGoal} </Text>
+                    </View>
+                        
+                    <View style={styles.items}>
+                        <Button title='Gloves' />
+                        <Text style={{fontSize: 22}}>{sumGloves}/{gloveGoal} </Text>
+                    </View>    
+
+                    <View style={styles.items}>
+                        <Button title='Face Masks' />       
+                        <Text style={{fontSize: 22}}>{sumFaceMask}/{faceMaskGoal} </Text>
+                    </View>
+                </View>
+                <View>
+                    <Button onPress={() => alert('You are cured!')} 
+                            color='#00c749'
+                            title='Cure me!'
+                            disabled={cureMe}></Button>
+                </View>
+                </ScrollView>
+
             </View>
-        </View>
+        
     )
 } 
 
@@ -55,16 +71,14 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         
     },
-    button: {
-    
-    },
     item_container: {
-        flexDirection: 'column',
+        flexDirection: 'row',
+        justifyContent: 'center'
     },
     header: {
         alignItems: 'center',
         justifyContent: 'center',
-        marginBottom: 58,
+        margin:10,
         fontSize: 32,
         fontWeight: 'bold'
     },
@@ -72,6 +86,9 @@ const styles = StyleSheet.create({
         marginBottom: 30,
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    button: {
+        marginVertical: 16
     }
 
   });
