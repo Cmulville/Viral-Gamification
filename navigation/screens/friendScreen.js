@@ -7,6 +7,7 @@ import {
   Button,
   TextInput,
   FlatList,
+  Alert
 } from "react-native";
 import { useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -21,6 +22,26 @@ export default function FriendScreen({ navigation }) {
     getUser();
     console.log(user);
   }
+
+  function searchUsers() {
+    Axios.post(
+      "https://deco3801-betterlatethannever.uqcloud.net/findUser",
+      {
+        username: addUser,
+      }
+    ).then((response) => {
+        if (response.data.noUser) {
+          Alert.alert(
+            "Username Not Found",
+            "The Username you entered does not exist",
+            [{ text: "OK" }]
+          );
+        } else {
+          console.log(response.data)
+        }
+    });
+  };
+  
 
   const getUser = async () => {
     try {
@@ -50,12 +71,13 @@ export default function FriendScreen({ navigation }) {
 
   return (
     <View>
-      <View style={styles.container}>
+      <View>
         <TextInput
             placeholder="Add User"
             placeholderTextColor="#003f5c"
             onChangeText={(addUser) => setAddUser(addUser)}
         />
+        <Button title="Search Friend" onPress={searchUsers}/>
       </View>
       <Button title="Add Friend" onPress={logFriends} />
 
@@ -86,9 +108,8 @@ const styles = StyleSheet.create({
 
   container: {
     width: '100%',
-    height: 50,
     backgroundColor: 'grey',
-    borderRadius: 8
+    borderRadius: 20
   },
   
   friendView: {
