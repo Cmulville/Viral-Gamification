@@ -10,6 +10,8 @@ export default function MapScreen() {
                     longitude: 153.0260};
   const uq = {latitude: -27.4975,
               longitude: 153.0137};
+
+
   const [pin, setPin] = React.useState({latitude: -27.470125,
                                         longitude: 153.021072,});
   const [distance, setDistance] = React.useState({thing: 0});
@@ -151,7 +153,7 @@ export default function MapScreen() {
                           longitude: 153.0137,}}
             >
               <Image
-              source={require("../../assets/mask.jpg")}
+              source={require("../../assets/images/mask.jpg")}
               style={{ height: 50, width: 50 }}
               />
                 <Callout>
@@ -166,7 +168,7 @@ export default function MapScreen() {
             pinColor = "#00FF00"
             >
               <Image
-              source={require("../../assets/gloves.png")}
+              source={require("../../assets/images/gloves.png")}
               style={{ height: 50, width: 50 }}
               />
                 <Callout>
