@@ -105,44 +105,6 @@ alert(a)
                       tabBarLabel: friendList
                       }}/>
 
-        headerStyle: {
-          backgroundColor: screenColors,
-
-          //   alignItems: 'center'
-        },
-        // headerRight: () => (
-        //   <Button
-        //     onPress={() => navigation.navigate(loginName)}
-        //     title="Login"
-        //     color="#0"
-        //   />
-        // ),
-
-        title: status + " | Points:" + " " + points,
-      })}
-    >
-      <Tab.Screen
-        name={mapName}
-        component={MapScreen}
-        options={{
-          tabBarLabel: mapName,
-        }}
-      />
-      <Tab.Screen
-        name={inventoryName}
-        component={InventoryScreen}
-        options={{
-          tabBarLabel: inventoryName,
-        }}
-      />
-      <Tab.Screen
-        name={friendList}
-        component={SettingsScreen}
-        options={{
-          tabBarLabel: friendList,
-        }}
-      />
-
       {/* <Tab.Screen name={detailName} component={DetailScreen}/> */}
     </Tab.Navigator>
   );
