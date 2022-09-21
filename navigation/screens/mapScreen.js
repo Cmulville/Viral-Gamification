@@ -3,6 +3,8 @@ import MapView, { Callout, Circle, Marker } from "react-native-maps";
 import { StyleSheet, Text, View, Dimensions, Image, icon } from "react-native";
 import * as Location from "expo-location";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Axios from "axios";
+
 
 export default function MapScreen() {
   // constant that stores a pin and method (setpin) that changes it. values are just dummy data
@@ -15,7 +17,7 @@ export default function MapScreen() {
   const [pin, setPin] = React.useState({latitude: -27.470125,
                                         longitude: 153.021072,});
   const [distance, setDistance] = React.useState({thing: 0});
-  const [user, setUser] = useState("");
+  const [user, setUser] = React.useState("");
 
   const getUser = async () => {
     try {
@@ -44,7 +46,7 @@ export default function MapScreen() {
               Math.sin(deltalambda/2) * Math.sin(deltalambda/2);
 
     let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-
+    
     let d = R * c; // in metres
     
     return(d);
