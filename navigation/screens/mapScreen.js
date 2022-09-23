@@ -1,10 +1,9 @@
 import * as React from "react";
 import MapView, { Callout, Circle, Marker } from "react-native-maps";
-import { StyleSheet, Text, View, Dimensions, Image, icon } from "react-native";
+import { StyleSheet, Text, View, Dimensions, Image, icon, Alert } from "react-native";
 import * as Location from "expo-location";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Axios from "axios";
-
 
 export default function MapScreen() {
   // constant that stores a pin and method (setpin) that changes it. values are just dummy data
@@ -18,6 +17,8 @@ export default function MapScreen() {
                                         longitude: 153.021072,});
   const [distance, setDistance] = React.useState({thing: 0});
   const [user, setUser] = React.useState("");
+  const [testuser, setTestUser] = React.useState({latitude: 0, 
+                                                  latitude: 0});
 
   const getUser = async () => {
     try {
@@ -66,7 +67,7 @@ export default function MapScreen() {
     ]);
   };
 
-  const location = () => {
+  const UpdateLocation = () => {
     getUser();
     Axios.post("https://deco3801-betterlatethannever.uqcloud.net/location/update", {
       user: user,
@@ -79,6 +80,18 @@ export default function MapScreen() {
       } else {
         validAlert();
       }
+    });
+  };
+
+  const GetLocation = () => {
+    getUser();
+    Axios.post("https://deco3801-betterlatethannever.uqcloud.net/location/get", {
+      user: "Test@gamil"
+    }).then((response) => {
+      if (response) {
+        setTestUser({latitude: response.data.loc[0],
+                    longitude: response.data.loc[1]});
+      } 
     });
   };
 
@@ -120,7 +133,7 @@ export default function MapScreen() {
                     latitude: e.nativeEvent.coordinate.latitude,
                     longitude: e.nativeEvent.coordinate.longitude,
                 });
-                  location();
+                  UpdateLocation();
                   setDistance({
                     thing: calcualteDistance(pin.latitude, pin.longitude, uq.latitude, uq.longitude)
                   });
@@ -136,7 +149,6 @@ export default function MapScreen() {
 						      <Text>Brisbane</Text>
 					      </Callout>
           </Marker>
-          
           <Marker 
             // marker that shows UQ st lucia
             coordinate = {{latitude: -27.4975,
