@@ -9,18 +9,20 @@ import {
   FlatList,
   Alert
 } from "react-native";
-import { useState } from "react";
+import { useState, useEffect } from "react"; 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function FriendScreen({ navigation }) {
   const [addUser, setAddUser] = useState("");
   const [friends, setFriends] = useState([]);
   const [user, setUser] = useState("");
+  const [foundUser, setFoundUser] = useState([]);
+  const [requests, setRequests] = useState([]);
 
-  function logFriends() {
+  function loadPage() {
     getUser();
     myFriends();
-    console.log(user);
+    showRequests();
   }
 
   function searchUsers() {
@@ -37,8 +39,12 @@ export default function FriendScreen({ navigation }) {
             [{ text: "OK" }]
           );
         } else {
-          console.log(response.data)
+          console.log(response.data);
+          setFoundUser(response.data.userExists);
+          console.log(foundUser);
         }
+    }).catch((err) => {
+        console.log("searchUsers");
     });
   };
   
@@ -63,13 +69,28 @@ export default function FriendScreen({ navigation }) {
         username: user,
       }
     ).then((response) => {
-      setFriends(response.data.friends);
+        setFriends(response.data.friends);
+        console.log(response.data.friends);
     });
   };
 
-  // getUser();
-  // myFriends();
+  const showRequests = () => {
+    Axios.post(
+      "https://deco3801-betterlatethannever.uqcloud.net/friends/requested",
+      {
+        username: user,
+      }
+    ).then((response) => {
+          console.log(response.data);
+          setRequests(response.data.friends);
+        
+    }).catch((err) => {
+        console.log("Error at showReqests");
+    });
+   }
 
+  getUser();
+ 
   return (
     <View>
       <View>
@@ -78,10 +99,20 @@ export default function FriendScreen({ navigation }) {
             placeholderTextColor="#003f5c"
             onChangeText={(addUser) => setAddUser(addUser)}
         />
-        <Button title="Search Friend" onPress={searchUsers}/>
+      <Button title="Search Friend" onPress={searchUsers}/>
       </View>
-      <Button title="Add Friend" onPress={logFriends} />
+      <View style={styles.friendView}>
+        {foundUser.map((friend) => {
+          return (
+            <View>
+              <Text>{friend.Username}</Text>
+              <Button title="Friend Request"/>
+            </View>
+          );
+        })}
+      </View>
 
+    <Button title="Current Friends" onPress={myFriends}/>
       <View style={styles.friendView}>
         {friends.map((friend) => {
           return (
@@ -91,6 +122,19 @@ export default function FriendScreen({ navigation }) {
           );
         })}
       </View>
+
+      <Text>Friend Requests</Text>
+      <Button title="Requested Friend" onPress={showRequests}/>
+      <View style={styles.friendView}>
+        {requests.map((request) => {
+          return (
+            <View>
+              <Text>{request.Friend1}</Text>
+            </View>
+          );
+        })}
+      </View>
+
     </View>
   );
 }
@@ -108,15 +152,15 @@ const styles = StyleSheet.create({
   },
 
   container: {
-    width: '100%',
-    backgroundColor: 'grey',
-    borderRadius: 20
+      flex: 1,
+      flexDirection: 'row',
+      justifyContent: 'space-between'
   },
   
   friendView: {
     borderRadius: 50,
     alignItems: "center",
-    borderWidth: 30,
+    borderWidth: 20,
     borderColor: "#fff",
   },
 
