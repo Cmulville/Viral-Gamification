@@ -12,13 +12,15 @@ export default function MapScreen() {
   const uq = {latitude: -27.4975,
               longitude: 153.0137};
 
-
   const [pin, setPin] = React.useState({latitude: -27.470125,
                                         longitude: 153.021072,});
   const [distance, setDistance] = React.useState({thing: 0});
   const [user, setUser] = React.useState("");
   const [testuser, setTestUser] = React.useState({latitude: 0, 
                                                   latitude: 0});
+  const [items, setItems] = React.useState({latitude: [], 
+                                            latitude: []});
+  const [count, setCount] = React.useState(0);
 
   const getUser = async () => {
     try {
@@ -41,15 +43,11 @@ export default function MapScreen() {
     let phi2 = lat2 * Math.PI/180;
     let deltaphi = (lat2 - lat1) * Math.PI/180;
     let deltalambda = (long2 - long1) * Math.PI/180;
-
     let a = Math.sin(deltaphi/2) * Math.sin(deltaphi/2) +
               Math.cos(phi1) * Math.cos(phi2) *
               Math.sin(deltalambda/2) * Math.sin(deltalambda/2);
-
-    let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-    
+    let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
     let d = R * c; // in metres
-    
     return(d);
   };
 
@@ -75,7 +73,6 @@ export default function MapScreen() {
       longitude: pin.longitude,
     }).then((response) => {
       if (response.data.message) {
-
         errorAlert();
       } else {
         validAlert();
@@ -89,8 +86,27 @@ export default function MapScreen() {
       user: "Test@gamil"
     }).then((response) => {
       if (response) {
-        setTestUser({latitude: response.data.loc[0],
-                    longitude: response.data.loc[1]});
+        setTestUser({latitude: response.data.loc[1],
+                    longitude: response.data.loc[0]});
+      } 
+    });
+  };
+
+  const getItems = () => {
+    Axios.post("https://deco3801-betterlatethannever.uqcloud.net/items/get", {
+    }).then((response) => {
+      if (response) {
+        setItems({latitude: response.data.loc[1],
+                  longitude: response.data.loc[0]});
+      } 
+    });
+  };
+
+  const countItems = () => {
+    Axios.post("https://deco3801-betterlatethannever.uqcloud.net/items/count", {
+    }).then((response) => {
+      if (response) {
+        setCount(response.data.count);
       } 
     });
   };
@@ -113,6 +129,11 @@ export default function MapScreen() {
           latitude: location.coords.latitude,
           longitude: location.coords.longitude,
       });
+      let count = countItems();
+      if (count < 5){
+        let amount = 5 - count;
+        //add amount of items to database
+      }
 
     })();
     }, []);
