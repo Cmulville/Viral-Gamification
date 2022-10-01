@@ -21,7 +21,6 @@ export default function FriendScreen({ navigation }) {
   const [user, setUser] = useState("");
   const [foundUser, setFoundUser] = useState([]);
   const [requests, setRequests] = useState([]);
-  const [numRequests, setNumRequests] = useState(0);
   const [iconName, setIconName] = useState("person-add-outline");
 
   function loadPage() {
@@ -30,7 +29,14 @@ export default function FriendScreen({ navigation }) {
     showRequests();
   }
 
+  //Finds a user for when searching friends to add.
   function searchUsers() {
+    if (addUser == "") {
+      Alert.alert("Username Error", "Username must not be empty", [{text:"Ok"}]);
+      setFoundUser([]);
+      return;
+    }
+
     Axios.post(
       "https://deco3801-betterlatethannever.uqcloud.net/findUser",
       {
@@ -68,6 +74,7 @@ export default function FriendScreen({ navigation }) {
     }
   };
 
+  //Retrieves list of friends from the backend
   const myFriends = () => {
     Axios.post(
       "https://deco3801-betterlatethannever.uqcloud.net/friends/approved",
@@ -75,11 +82,13 @@ export default function FriendScreen({ navigation }) {
         username: user,
       }
     ).then((response) => {
+        console.log(response.data);
         setFriends(response.data.friends);
         console.log(response.data.friends);
     });
   };
 
+  //Shows the requests a user currently has from others.
   const showRequests = () => {
     Axios.post(
       "https://deco3801-betterlatethannever.uqcloud.net/friends/requested",
@@ -89,15 +98,13 @@ export default function FriendScreen({ navigation }) {
     ).then((response) => {
           console.log(response.data.friends);
           setRequests(response.data.friends);
-          setNumRequests(0);
-          console.log(numRequests);
         
     }).catch((err) => {
         console.log("Error at showReqests");
     });
    };
 
-
+  //Has an alert message to confirm request. Calls sendFriendRequest
   const makeRequest = () => {
       setIconName("person-add-outline");
       const message = "Are you sure you want to send a friend request to " 
@@ -119,6 +126,7 @@ export default function FriendScreen({ navigation }) {
 
   };
 
+  //Send a friend request to a looked up user
   const sendFriendRequest = () => {
     Axios.post(
       "https://deco3801-betterlatethannever.uqcloud.net/friends/makeRequest",
@@ -140,9 +148,70 @@ export default function FriendScreen({ navigation }) {
     });
   };
 
-  const handleRequest = () => {
-      console.log("TOUCHED");
-  };
+
+  /* Function to send queries to the backend to delete or approve friend requests made*/
+  function handleRequest(index, state) {
+      if (state) {
+        const message = "Are you sure you want to accept " + requests[index].Friend1
+              + "'s friend request?"; 
+        Alert.alert(
+            "Approve Request",
+            message,
+            [
+                { 
+                    text: "Yes", 
+                    onPress: () => Axios.post(
+                            "https://deco3801-betterlatethannever.uqcloud.net/friends/approve",
+                            {
+                                requestor: requests[index].Friend1,
+                                requestee: user,
+                            }
+                          ).then((response) => {
+                                if (response.data.err) {
+                                    console.log(response.data);
+                                } else {
+                                   showRequests(); 
+                                   myFriends();
+                                }
+                          }),
+                },
+                {
+                    text: "No"
+                }
+         ]);
+
+      } else {
+        const message = "Are you sure you want to deny " + requests[index].Friend1
+              + "'s friend request?"; 
+        Alert.alert(
+            "Deny Request",
+            message,
+            [
+                { 
+                    text: "Yes", 
+                    onPress: () => Axios.post(
+                            "https://deco3801-betterlatethannever.uqcloud.net/friends/deny",
+                            {
+                                requestor: requests[index].Friend1,
+                                requestee: user,
+                            }
+                          ).then((response) => {
+                                if (response.data.err) {
+                                    console.log(response.data);
+                                } else {
+                                   showRequests(); 
+                                }
+                          }),
+                },
+                
+                {
+                    text: "No"
+                }
+            ]
+          );
+      }
+  }
+
 
   getUser();
  
@@ -177,8 +246,9 @@ export default function FriendScreen({ navigation }) {
       <View style={styles.friendView}>
         {friends.map((friend) => {
           return (
-            <View>
-              <Text>{friend.Friend1}</Text>
+            <View style={styles.container}>
+              <Text>{friend.Username}</Text>
+              <Text>{friend.InfectionStatus}</Text>
             </View>
           );
         })}
@@ -190,10 +260,10 @@ export default function FriendScreen({ navigation }) {
           return (
             <View style={styles.container}>
               <Text>{request.Friend1}</Text>
-                <TouchableOpacity onPress={handleRequest}>
+                <TouchableOpacity onPress={() => handleRequest(index, true)}>
                     <Ionicons name={'checkmark-circle-outline'} color={"#43ff64d9"} size={35} />
                 </TouchableOpacity>
-                <TouchableOpacity onPress={handleRequest}>
+                <TouchableOpacity onPress={() => handleRequest(index, false)}>
                     <Ionicons name={'close-circle-outline'} color={"#ff0000cc"} size={35} />
                 </TouchableOpacity>
             </View>
@@ -226,7 +296,6 @@ const styles = StyleSheet.create({
   
   friendView: {
     borderRadius: 40,
-    //alignItems: "center",
     padding: 15,
     borderWidth: 10,
     borderColor: "#fff",
