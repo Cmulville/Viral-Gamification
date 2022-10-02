@@ -14,6 +14,7 @@ import {
 } from "react-native";
 import { useState, useEffect } from "react"; 
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import SearchBar from "../components/SearchBar.js";
 
 export default function FriendScreen({ navigation }) {
   const [addUser, setAddUser] = useState("");
@@ -30,7 +31,7 @@ export default function FriendScreen({ navigation }) {
   }
 
   //Finds a user for when searching friends to add.
-  function searchUsers() {
+  const searchUsers = () => {
     if (addUser == "") {
       Alert.alert("Username Error", "Username must not be empty", [{text:"Ok"}]);
       setFoundUser([]);
@@ -213,23 +214,51 @@ export default function FriendScreen({ navigation }) {
   }
 
 
+  function deleteFriend(index) {
+        const message = "Are you sure you want to remove " + friends[index].Username
+              + " as a friend?"; 
+        Alert.alert(
+            "Remove Friend",
+            message,
+            [
+                { 
+                    text: "Yes", 
+                    onPress: () => Axios.post(
+                            "https://deco3801-betterlatethannever.uqcloud.net/friends/delete",
+                            {
+                                requestor: friends[index].Username,
+                                requestee: user,
+                            }
+                          ).then((response) => {
+                                if (response.data.err) {
+                                    console.log(response.data);
+                                } else {
+                                   myFriends(); 
+                                }
+                          }),
+                },
+                
+                {
+                    text: "No"
+                }
+            ]
+          );
+  }
+
   getUser();
  
   return (
     <View>
-      <View>
-        <TextInput
-            placeholder="Add User"
-            placeholderTextColor="#003f5c"
-            onChangeText={(addUser) => setAddUser(addUser)}
-        />
-      <Button title="Search Friend" onPress={searchUsers}/>
+      <SearchBar searchPhrase={addUser} setSearchPhrase={setAddUser}/>
+      <View style={{paddingBottom:20}}>
+        <Button title="Search Friend" onPress={searchUsers}/>
       </View>
       <View style={styles.friendView}>
-        {foundUser.map((friend) => {
+      {
+          foundUser.map((friend) => {
           return (
             <View style={styles.container}>
-              <Text style={{paddingRight: 40}}>{friend.Username}</Text>
+              <Text style={{fontWeight:"bold"}}>{friend.Username}</Text>
               <TouchableHighlight underlayColor='none' 
                     onPressIn={()=>setIconName("person-add-sharp")} 
                     onPressOut={makeRequest}>
@@ -239,22 +268,28 @@ export default function FriendScreen({ navigation }) {
 
             </View>
           );
-        })}
+        })
+        }
+      
       </View>
 
-    <Button title="Current Friends" onPress={myFriends}/>
+      <Button title="Current Friends" onPress={myFriends}/>
       <View style={styles.friendView}>
-        {friends.map((friend) => {
+        {friends.map((friend, index) => {
           return (
             <View style={styles.container}>
-              <Text>{friend.Username}</Text>
+              <Text style={{fontWeight: 'bold'}}>{friend.Username}</Text>
               <Text>{friend.InfectionStatus}</Text>
+              <TouchableOpacity onPress={() => deleteFriend(index)}>
+                  <Ionicons name={'trash-outline'} color={"#ff0000cc"} size={35} />
+              </TouchableOpacity>
+
             </View>
           );
         })}
       </View>
 
-      <Button title="Requested Friend" onPress={showRequests}/>
+      <Button title="Requested Friends" onPress={showRequests}/>
       <View style={styles.friendView}>
         {requests.map((request, index) => {
           return (
@@ -289,9 +324,10 @@ const styles = StyleSheet.create({
 
   container: {
       display: "flex",
-      justifyContent: "space-around",
+      justifyContent: "space-between",
       flexDirection: "row",
       alignItems: "center",
+      paddingBottom: 10,
   },
   
   friendView: {
@@ -299,6 +335,7 @@ const styles = StyleSheet.create({
     padding: 15,
     borderWidth: 10,
     borderColor: "#fff",
+    marginBottom: 20
   },
 
   TextInput: {
