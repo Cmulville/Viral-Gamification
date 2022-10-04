@@ -11,7 +11,7 @@ export default function HomeScreen({navigation}) {
   const date = moment().utcOffset('+10:00').format('YYYY-MM-DD hh:mm:ss');
 
   //Can get expiry date from DB
-  const expirydate = '2022-10-02 00:00:00';
+  const expirydate = '2022-10-22 00:00:00';
   const diffr = moment.duration(moment(expirydate).diff(moment(date)));
 
   const hours = parseInt(diffr.asHours());

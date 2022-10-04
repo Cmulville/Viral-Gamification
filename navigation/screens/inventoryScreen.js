@@ -1,5 +1,8 @@
 import * as React from 'react';
 import { ScrollView, StyleSheet, Text, View, Button } from 'react-native';
+import PointSystem from '../../pointSystem';
+import { tabContext } from '../../tabContext';
+
 // import EncryptedStorage from 'react-native-encrypted-storage';
 
 // async function retrieveUserSession() {
@@ -17,16 +20,32 @@ import { ScrollView, StyleSheet, Text, View, Button } from 'react-native';
 //     }
 // }
 
-export default function InventoryScreen({navigation}) {
+const context = React.createContext({})
+export const styleProvider = context.Provider
+ 
+export default function InventoryScreen({changeStatus}) {
     //session = retrieveUserSession();
     //Session should include a username/email which will be used to access these inventory stats 
-    const sumSanitizer = 0
+    const { status } = React.useContext(tabContext)
+    const { updateStatus } = React.useContext(tabContext)
+    const { points } = React.useContext(tabContext)
+    const { updatePoints } = React.useContext(tabContext)
+
+    const sumSanitizer = 33
     const santizerGoal = 33
-    const sumGloves = 0
+    const sumGloves = 53
     const gloveGoal = 53
-    const sumFaceMask = 0
+    const sumFaceMask = 9
     const faceMaskGoal = 9
-    const cureMe = !(sumSanitizer == santizerGoal && sumFaceMask == faceMaskGoal && sumGloves == gloveGoal)
+    const cureMe = !(sumSanitizer == santizerGoal && sumFaceMask == faceMaskGoal && sumGloves == gloveGoal && status == "Infected")
+    
+    const cureStatus = () => {
+        PointSystem.cure()
+        
+        updateStatus("Cured")
+        updatePoints(PointSystem.cure_bonus())
+    }
+
 
     return (
         <View style={styles.container}>
@@ -53,7 +72,9 @@ export default function InventoryScreen({navigation}) {
                     </View>
                 </View>
                 <View>
-                    <Button onPress={() => alert('You are cured!')} 
+                    <Button onPress={
+                        cureStatus
+                                } 
                             color='#00c749'
                             title='Cure me!'
                             disabled={cureMe}></Button>

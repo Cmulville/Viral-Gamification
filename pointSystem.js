@@ -1,8 +1,9 @@
 import React from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import { tabContext } from "./tabContext";
 
 const PointSystem = {
+    
     dailyPoints: (status) => {
         const daily_bonus = true;
         //access player status and assign to this variable:
@@ -21,36 +22,74 @@ const PointSystem = {
         }
     },
     //Changes the status of the victim from cured to user
-    infect: (user) => {
-        //Infect user if infected user is within the corresponding radius
-        setStatus = async () => {
-            try {
+    infect: async () => {
+        try {
+            const value = await AsyncStorage.getItem("status")
+            if (value === 'Cured') {
                 await AsyncStorage.setItem("status", 'Infected')
-            } catch(e) {
-                alert("Couldn't change the status")
+                alert("You've been infected!")
+                
+            } else {
+                alert('Already cured! Keep being healthy!')
             }
+        } catch(e) {
+            alert("Couldn't change the status")
         }
     },
 
-    cure: (user) => {
-        //cure user once all goals are reached
-        setStatus = async () => {
+    //Cure user by setting status to cured
+    cure: async () => {
             try {
-                await AsyncStorage.setItem("status", 'Cured')
+                const value = await AsyncStorage.getItem("status")
+                if (value === 'Infected') {
+                    await AsyncStorage.setItem("status", 'Cured')
+                    
+                    alert('You are cured!')
+                    
+                } else {
+                    alert('Already cured! Keep being healthy!')
+                }
             } catch(e) {
                 alert("Couldn't change the status")
             }
+            
+        },
+    //Add points
+    cure_bonus: () => {
+        //Can add conditions influencing what this figure will be
+        return 1000
+    },
+
+    //Immunise user        
+    immunise: async () => {
+            try {
+                const value = await AsyncStorage.getItem("status")
+                if (value != 'Immune') {
+                    await AsyncStorage.setItem("status", 'Immune')
+                    alert('You are Immune!')
+                    
+                } else {
+                    alert('Already Immune!')
+                }
+            } catch(e) {
+                alert("Couldn't change the status")
+            }
+        },
+
+    collect_item: async (item) => {
+        const points = 0
+        if (item == "Gloves") {
+            points == 150
+        } else if (item == "Sanitizier") {
+            points = 500
+        } else if (item == "Face Mask") {
+            points = 300
         }
-    
-    },
-
-    immunise: (user) => {
-        //Immunise user
-        
-    },
-
-    collect_item: (user, item) => {
-        //adds the item to the users database tally based on its name.
+        try {
+            await AsyncStorage.setItem("Points", points)
+        } catch(e) {
+            alert("Couldn't update points")
+        }
     },
 
     immunity_interact: (user, immune_user) => {

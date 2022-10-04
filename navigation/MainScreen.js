@@ -12,40 +12,47 @@ import LoginScreen from "./screens/loginScreen";
 import InventoryScreen from "./screens/inventoryScreen";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import PointSystem from "../pointSystem";
+import { tabContext } from "../tabContext";
 
 export default function MainScreen({ navigation }) {
-// Screen names
+  
+  // Screen names
 const inventoryName = "Inventory";
 const mapName = "Map";
 const friendList = "Friends";
-React.useEffect(() => {
-  setValues();
-}, []);
 
-const setValues = async () => {   
-  let values
-    try {
-      const pointsGet = await AsyncStorage.getItem('points');
-      const statusGet = await AsyncStorage.getItem('status');
-      if(pointsGet !== null && statusGet !== null) {
-        setPoints(pointsGet)
-        setStatus(statusGet)
-        alert("saved as "+" "+points+" "+status)
-      } else {
-        alert("No stored points or status. defaults used.")
-      }
-    } catch(e) {
-      alert('Failed to get data from storage')
-  }
-}
+// const setValues = async () => {   
+//   let values
+//     try {
+//       const pointsGet = await AsyncStorage.getItem('points');
+//       const statusGet = await AsyncStorage.getItem('status');
+//       if(pointsGet !== null && statusGet !== null) {
+//         setPoints(pointsGet)
+//         setStatus(statusGet)
+//         alert("saved as "+" "+points+" "+status)
+//       } else {
+//         alert("No stored points or status. defaults used.")
+//       }
+//     } catch(e) {
+//       alert('Failed to get data from storage')
+//   }
+// }
 
-// Player status
-const [status, setStatus] = React.useState('Cured');
-const [points, setPoints] = React.useState(0)
+// const changeStatus = (status) => {
+//   setStatus(status)
+// } 
+
+// // Player status
+// const [status, setStatus] = React.useState('Cured');
+// //const [nextStatus, setNextStatus] = React.useState({data:''})
+// const [points, setPoints] = React.useState(0)
   //const status = 'Immune'
   //const points = 0
   
-const statusColours = {
+const { status } = React.useContext(tabContext)
+const { points } = React.useContext(tabContext)
+  
+  const statusColours = {
   Cured: "#05cf02",
   Infected: "#f52718",
   Immune: "#0aefff",
@@ -109,7 +116,9 @@ const Tab = createBottomTabNavigator();
         options={{
           tabBarLabel: inventoryName,
         }}
-      />
+      >
+        {/* {(changeStatus) => <InventoryScreen {...changeStatus} />} */}
+      </Tab.Screen>
       <Tab.Screen
         name={friendList}
         component={SettingsScreen}
