@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, Dimensions, Image, icon, Alert } from "react-na
 import * as Location from "expo-location";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Axios from "axios";
+import { randomCirclePoint } from "random-location";
 
 export default function MapScreen() {
   // constant that stores a pin and method (setpin) that changes it. values are just dummy data
@@ -34,6 +35,12 @@ export default function MapScreen() {
       console.log(e);
     }
   };
+
+  function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
+  }
 
   const calcualteDistance = (lat1, long1, lat2, long2) => {
     //birsbane is lat 1
@@ -111,6 +118,22 @@ export default function MapScreen() {
     });
   };
 
+  const UpdateItemLocation = (itemtype, lat, long) => {
+    getUser();
+    Axios.post("https://deco3801-betterlatethannever.uqcloud.net/location/update", {
+      itemtype: itemtype,
+      latitude: lat,
+      longitude: long,
+    }).then((response) => {
+      if (response.data.message) {
+        errorAlert();
+      } else {
+        validAlert();
+      }
+    });
+  };
+
+
   // event that get asks for permission then gets the users inital location
   React.useEffect(() => {
     (async () => {
@@ -133,6 +156,11 @@ export default function MapScreen() {
       if (count < 5){
         let amount = 5 - count;
         //add amount of items to database
+        for (let i = 0; i < amount; i++) {
+          let place = randomCirclePoint(uq, 1000);
+          let itemtype = getRandomInt(1, 5);
+          UpdateItemLocation(itemtype, place.latitude, place.longitude);
+        }
       }
 
     })();
