@@ -19,7 +19,9 @@ export default function MapScreen() {
   const [user, setUser] = React.useState("");
   const [testuser, setTestUser] = React.useState({latitude: 0, 
                                                   latitude: 0});
-  const [items, setItems] = React.useState({latitude: [], 
+  const [items, setItems] = React.useState({ids: [],
+                                            idtypes: [],
+                                            latitude: [], 
                                             latitude: []});
   const [count, setCount] = React.useState(0);
 
@@ -103,7 +105,7 @@ export default function MapScreen() {
     Axios.post("https://deco3801-betterlatethannever.uqcloud.net/items/get", {
     }).then((response) => {
       if (response) {
-        setItems({latitude: response.data.loc[1],
+        setItems({atitude: response.data.loc[1],
                   longitude: response.data.loc[0]});
       } 
     });
@@ -161,6 +163,7 @@ export default function MapScreen() {
           let itemtype = getRandomInt(1, 5);
           UpdateItemLocation(itemtype, place.latitude, place.longitude);
         }
+        getItems();
       }
 
     })();
