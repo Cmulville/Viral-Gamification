@@ -14,6 +14,7 @@ import {
 } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 
+
 export default function App() {
   
   const [status, setStatus] = React.useState(null)
