@@ -12,6 +12,7 @@ import LoginScreen from "./screens/loginScreen";
 import InventoryScreen from "./screens/inventoryScreen";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import PointSystem from "../pointSystem";
+import FriendScreen from "./screens/friendScreen";
 
 export default function MainScreen({ navigation }) {
 // Screen names
@@ -105,7 +106,7 @@ const Tab = createBottomTabNavigator();
         options={{ 
                       tabBarLabel: inventoryName
                       }}/>
-        <Tab.Screen name={friendList} component={SettingsScreen} 
+        <Tab.Screen name={friendList} component={FriendScreen} 
         options={{ 
                       tabBarLabel: friendList
                       }}/>
