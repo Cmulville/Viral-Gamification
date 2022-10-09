@@ -45,6 +45,7 @@ export default function LoginScreen({ navigation }) {
       }
     });    
     
+    //Add user database info to ga e
     Axios.post("https://deco3801-betterlatethannever.uqcloud.net/userStats", {
       email: email,
     }).then((response) => {
@@ -63,6 +64,19 @@ export default function LoginScreen({ navigation }) {
         }
       }
 
+    });
+
+    Axios.post("https://deco3801-betterlatethannever.uqcloud.net/user/getUserInventory", {
+      email: email,
+    }).then((response) => {
+  
+      if (response.data.message) {
+        console.log("Couldn't get items")
+      } else {
+        console.log(response.data.items)
+        
+      }
+      
     });
     
   };

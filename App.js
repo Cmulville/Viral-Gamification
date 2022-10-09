@@ -16,47 +16,32 @@ import {
 import { NavigationContainer } from "@react-navigation/native";
 import PointSystem from "./pointSystem";
 
-
 export default function App() {
   
   const [status, setStatus] = React.useState(null)
   const [points, setPoints] = React.useState(0)
   const [email, setEmail] = React.useState(0)
+  const [items, setItems] = React.useState(null)
 
   // Ask about this
   // 6e930c12dc934cbd849bd2be
-  // const userStats = () => {
-  //   Axios.post("https://deco3801-betterlatethannever.uqcloud.net/userStats", {
-  //     username: username,
-  //     email: email,
-  //   }).then((response) => {
-  //     if (response.data.message) {
-  //       errorAlert(); 
-  //     } else {
-  //       setStatus()
-  //     }
-  //   });
-  // };
 
-//   React.useEffect(() => {
-//     setValues();
-//   }, []);
+  const getUserInventory = (email) => {
+    Axios.post("https://deco3801-betterlatethannever.uqcloud.net/user/getUserInventory", {
+    email: email,
+  }).then((response) => {
 
-//   const setValues = async () => {   
-//     try {
-//       const pointsGet = parseInt(await AsyncStorage.getItem('points'));
-//       const statusGet = await AsyncStorage.getItem('status');
-//       if(pointsGet !== null && statusGet !== null) {
-//         setPoints(pointsGet)
-//         setStatus(statusGet)
-//         alert("saved as "+" "+points+" "+status)
-//       } else {
-//         alert("No stored points or status. defaults used.")
-//       }
-//     } catch(e) {
-//       alert('Failed to get data from storage')
-//   }
-// }
+    if (response.data.message) {
+      console.log("Couldn't get items")
+    } else {
+      const userInventory = []
+      console.log(response.data.items)     
+      
+    }
+    
+  });
+  }
+
   const updateStatusDB = (status) => {
     
     Axios.post("https://deco3801-betterlatethannever.uqcloud.net/user/updateStatus", {
@@ -176,7 +161,7 @@ export default function App() {
 
 
   return (
-    <tabContext.Provider value={{status, points, email, updateStatus, statusChange, updatePoints, addPoints, set_active_email, updateDailyBD}}>
+    <tabContext.Provider value={{items, status, points, email, updateStatus, statusChange, updatePoints, addPoints, set_active_email, updateDailyBD}}>
       <StatusBar style="dark" />
       <NavigationContainer>
         <RootStackScreen />
