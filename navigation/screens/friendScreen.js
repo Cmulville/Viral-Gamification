@@ -25,7 +25,6 @@ export default function FriendScreen({ navigation }) {
   const [iconName, setIconName] = useState("person-add-outline");
 
   function loadPage() {
-    getUser();
     myFriends();
     showRequests();
   }
@@ -63,6 +62,7 @@ export default function FriendScreen({ navigation }) {
   };
 
   const getUser = async () => {
+    console.leg('here');
     try {
       const value = await AsyncStorage.getItem("user");
       if (value != null) {
@@ -73,6 +73,7 @@ export default function FriendScreen({ navigation }) {
     } catch (e) {
       console.log(e);
     }
+      console.log(user);
   };
 
   //Retrieves list of friends from the backend
@@ -245,16 +246,39 @@ export default function FriendScreen({ navigation }) {
           );
   }
 
-  getUser();
+ getUser();
  
+ // useEffect(() => {console.log('useEffect ran once'); 
+
+ //   const getUser = async () => {
+ //       try {
+ //         const value = await AsyncStorage.getItem("user");
+ //         if (value != null) {
+ //           setUser(value);
+ //         } else {
+ //             console.log("IS NULL");
+ //           return null;
+ //         }
+ //       } catch (e) {
+ //         console.log(e);
+ //       }
+ //         console.log(user);
+ //     };
+
+ //     getUser();
+ //     loadPage();
+ // }, [user]);
+
   return (
     <View>
       <SearchBar searchPhrase={addUser} setSearchPhrase={setAddUser}/>
       <View style={{paddingBottom:20}}>
         <Button title="Search Friend" onPress={searchUsers}/>
       </View>
-      <View style={styles.friendView}>
       {
+      foundUser.length != 0 ? 
+      <View style={styles.friendView}>
+      {  
           foundUser.map((friend) => {
           return (
             <View style={styles.container}>
@@ -264,16 +288,17 @@ export default function FriendScreen({ navigation }) {
                     onPressOut={makeRequest}>
                 <Ionicons name={iconName} color={"#43ff64d9"} size={35} />
               </TouchableHighlight>
-
-
             </View>
           );
         })
         }
       
-      </View>
+      </View> : <Text>NO USER</Text>
+      }
 
       <Button title="Current Friends" onPress={myFriends}/>
+      {
+        friends.length != 0 ?
       <View style={styles.friendView}>
         {friends.map((friend, index) => {
           return (
@@ -288,6 +313,9 @@ export default function FriendScreen({ navigation }) {
           );
         })}
       </View>
+          :
+          <Text>NO FRIENDS CURRENTLY </Text>
+      }
 
       <Button title="Requested Friends" onPress={showRequests}/>
       <View style={styles.friendView}>

@@ -62,9 +62,7 @@ const styles = StyleSheet.create({
             },
 
       searchBar__unclicked: {
-              paddingTop: 10,
-              paddingLeft: 10,
-              paddingRight: 10,
+              padding: 10,
               flexDirection: "row",
               width: "95%",
               backgroundColor: "#d9dbda",
@@ -72,9 +70,7 @@ const styles = StyleSheet.create({
               alignItems: "center",
             },
       searchBar__clicked: {
-              paddingTop: 10,
-              paddingLeft: 10,
-              paddingRight: 10,
+              padding: 10,
               flexDirection: "row",
               width: "80%",
               backgroundColor: "#d9dbda",
