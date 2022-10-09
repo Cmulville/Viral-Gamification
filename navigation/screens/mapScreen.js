@@ -12,7 +12,6 @@ export default function MapScreen() {
                     longitude: 153.0260};
   const uq = {latitude: -27.4975,
               longitude: 153.0137};
-
   const [pin, setPin] = React.useState({latitude: -27.470125,
                                         longitude: 153.021072,});
   const [distance, setDistance] = React.useState({thing: 0});
@@ -23,8 +22,7 @@ export default function MapScreen() {
                                             idtypes: [],
                                             latitude: [], 
                                             latitude: []});
-  const [count, setCount] = React.useState(0);
-
+  const [count, setCount] = React.useState({count: 0});
   const getUser = async () => {
     try {
       const value = await AsyncStorage.getItem("user");
@@ -105,8 +103,10 @@ export default function MapScreen() {
     Axios.post("https://deco3801-betterlatethannever.uqcloud.net/items/get", {
     }).then((response) => {
       if (response) {
-        setItems({atitude: response.data.loc[1],
-                  longitude: response.data.loc[0]});
+        setItems({ids: response.data.loc[0],
+                  itemType: response.data.loc[1],
+                  latitude: response.data.loc[3],
+                  longitude: response.data.loc[2]});
       } 
     });
   };
@@ -115,7 +115,7 @@ export default function MapScreen() {
     Axios.post("https://deco3801-betterlatethannever.uqcloud.net/items/count", {
     }).then((response) => {
       if (response) {
-        setCount(response.data.count);
+        setCount({count: response.data.count[0]});
       } 
     });
   };
@@ -135,7 +135,6 @@ export default function MapScreen() {
     });
   };
 
-
   // event that get asks for permission then gets the users inital location
   React.useEffect(() => {
     (async () => {
@@ -154,18 +153,19 @@ export default function MapScreen() {
           latitude: location.coords.latitude,
           longitude: location.coords.longitude,
       });
-      let count = countItems();
+      countItems();
+      console.log(count.count);
+      //setting up items database
       if (count < 5){
-        let amount = 5 - count;
+        let amount = 5 - count.count;
+        console.log(amount);
         //add amount of items to database
         for (let i = 0; i < amount; i++) {
           let place = randomCirclePoint(uq, 1000);
           let itemtype = getRandomInt(1, 5);
           UpdateItemLocation(itemtype, place.latitude, place.longitude);
         }
-        getItems();
       }
-
     })();
     }, []);
  
@@ -251,7 +251,6 @@ export default function MapScreen() {
 						    <Text>User is {distance.thing} metres away</Text>
 					    </Callout>
           </Marker>
-        
           <Circle //circle that is around the user, maybe can be used as the infection radius
           center={pin} radius={100}/>
       </MapView>
