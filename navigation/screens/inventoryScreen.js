@@ -42,7 +42,7 @@ export default function InventoryScreen({changeStatus}) {
     
     const cureStatus = () => {
         PointSystem.cure()
-        statusChange("Cured")
+        statusChange("Healthy")
         addPoints(PointSystem.cure_bonus())
     }
 

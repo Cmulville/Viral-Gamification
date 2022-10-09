@@ -43,7 +43,7 @@ const friendList = "Friends";
 // } 
 
 // // Player status
-// const [status, setStatus] = React.useState('Cured');
+// const [status, setStatus] = React.useState('Healthy');
 // //const [nextStatus, setNextStatus] = React.useState({data:''})
 // const [points, setPoints] = React.useState(0)
   //const status = 'Immune'
@@ -53,7 +53,7 @@ const { status } = React.useContext(tabContext)
 const { points } = React.useContext(tabContext)
   
   const statusColours = {
-  Cured: "#05cf02",
+  Healthy: "#05cf02",
   Infected: "#f52718",
   Immune: "#0aefff",
 };

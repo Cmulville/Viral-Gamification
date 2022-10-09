@@ -16,38 +16,38 @@ const PointSystem = {
                 return 500
             } else if(status === "Infected") {
                 return 150
-            } else if(status === "Cured") {
+            } else if(status === "Healthy") {
                 return 1000
             }
         }
     },
-    //Changes the status of the victim from cured to user
+    //Changes the status of the victim from Healthy to user
     infect: async () => {
         try {
             const value = await AsyncStorage.getItem("status")
-            if (value === 'Cured') {
+            if (value === 'Healthy') {
                 await AsyncStorage.setItem("status", 'Infected')
                 alert("You've been infected!")
                 
             } else {
-                alert('Already cured! Keep being healthy!')
+                alert('Already Healthy! Keep being healthy!')
             }
         } catch(e) {
             alert("Couldn't change the status")
         }
     },
 
-    //Cure user by setting status to cured
+    //Cure user by setting status to Healthy
     cure: async () => {
             try {
                 const value = await AsyncStorage.getItem("status")
                 if (value === 'Infected') {
-                    await AsyncStorage.setItem("status", 'Cured')
+                    await AsyncStorage.setItem("status", 'Healthy')
                     
-                    alert('You are cured!')
+                    alert('You are Healthy!')
                     
                 } else {
-                    alert('Already cured! Keep being healthy!')
+                    alert('Already Healthy! Keep being healthy!')
                 }
             } catch(e) {
                 alert("Couldn't change the status")
