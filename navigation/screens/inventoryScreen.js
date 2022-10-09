@@ -4,26 +4,6 @@ import PointSystem from '../../pointSystem';
 import { tabContext } from '../../tabContext';
 import Axios from 'axios';
 
-// import EncryptedStorage from 'react-native-encrypted-storage';
-
-// async function retrieveUserSession() {
-//     try {   
-//         const session = await EncryptedStorage.getItem("user_session");
-    
-//         if (session !== undefined) {
-//             return session
-//             //Session should identify a username; might make it return a list
-//             //True is the same as the presence of value
-//             //This username can be used to retrieve stuff from the database
-//         }
-//     } catch (error) {
-//         console.log(error.code);    
-//     }
-// }
-
-const context = React.createContext({})
-export const styleProvider = context.Provider
- 
 export default function InventoryScreen({changeStatus}) {
     //session = retrieveUserSession();
     //Session should include a username/email which will be used to access these inventory stats 
@@ -31,17 +11,24 @@ export default function InventoryScreen({changeStatus}) {
     const { updateStatus } = React.useContext(tabContext)
     const { statusChange } = React.useContext(tabContext)
     const { addPoints } = React.useContext(tabContext)
+    const { items } = React.useContext(tabContext)
+
+    const santizerGoal = 15
+    const gloveGoal = 15
+    const faceMaskGoal = 10
+    const item2goal = 15    
+    const item3goal = 15
 
     const sumSanitizer = 0
-    const santizerGoal = 15
     const sumGloves = 0
-    const gloveGoal = 15
     const sumFaceMask = 0
-    const faceMaskGoal = 10
     const item2 = 0
-    const item2goal = 15
     const item3 = 0
-    const item3goal = 15
+
+    //Assign Item counts based on ID
+
+
+    //Determine if conditions are set for user to be cleared
     const cureMe = 
         !(sumSanitizer == santizerGoal && sumFaceMask == faceMaskGoal 
             && sumGloves == gloveGoal && item2 == item2goal

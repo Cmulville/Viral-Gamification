@@ -36,12 +36,15 @@ export default function App() {
     } else {
       const userInventory = []
       console.log(response.data.items)     
-      
+      response.data.items.forEach(element => {
+        console.log(element.ItemID)         
+      });
+
     }
     
   });
   }
-
+  
   const updateStatusDB = (status) => {
     
     Axios.post("https://deco3801-betterlatethannever.uqcloud.net/user/updateStatus", {
@@ -87,7 +90,7 @@ export default function App() {
       if (response.data.message) {
         alert('Daily fail')
       } else {
-        alert('Daily success')
+        //alert('Daily success')
         
       }
 
@@ -161,7 +164,7 @@ export default function App() {
 
 
   return (
-    <tabContext.Provider value={{items, status, points, email, updateStatus, statusChange, updatePoints, addPoints, set_active_email, updateDailyBD}}>
+    <tabContext.Provider value={{items, status, points, email, setItems, updateStatus, statusChange, updatePoints, addPoints, set_active_email, updateDailyBD}}>
       <StatusBar style="dark" />
       <NavigationContainer>
         <RootStackScreen />

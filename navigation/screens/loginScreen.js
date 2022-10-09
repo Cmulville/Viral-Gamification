@@ -17,12 +17,11 @@ import { tabContext } from "../../tabContext";
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const a = null
-  const b = null
   const { updateStatus } = React.useContext(tabContext)
   const { updatePoints } = React.useContext(tabContext)
   const { set_active_email } = React.useContext(tabContext)
   const { updateDailyBD } = React.useContext(tabContext)
+  const { setItems } = React.useContext(tabContext)
 
   const errorAlert = () => {
     Alert.alert("Login failed", "Your email or password is incorrect. Please try again", [
@@ -55,9 +54,9 @@ export default function LoginScreen({ navigation }) {
       } else {
         if (login_success) {
           updateStatus(response.data.stat[0].InfectionStatus)
-          console.log(response.data.stat[0])
+          //console.log(response.data.stat[0])
           updatePoints(response.data.stat[0].Points+PointSystem.dailyPoints(response.data.stat[0].InfectionStatus, response.data.stat[0].dailyLogin))
-          console.log("The DB points: "+(response.data.stat[0].Points+PointSystem.dailyPoints(response.data.stat[0].InfectionStatus, response.data.stat[0].dailyLogin)))
+          //console.log("The DB points: "+(response.data.stat[0].Points+PointSystem.dailyPoints(response.data.stat[0].InfectionStatus, response.data.stat[0].dailyLogin)))
           set_active_email(email)
           // updatePoints(PointSystem.dailyPoints(response.data.stat[0].InfectionStatus, response.data.stat[0].dailyLogin))
           updateDailyBD()
@@ -73,8 +72,12 @@ export default function LoginScreen({ navigation }) {
       if (response.data.message) {
         console.log("Couldn't get items")
       } else {
-        console.log(response.data.items)
-        
+        const userInventory = {}
+        console.log(response.data.items)     
+        response.data.items.forEach(element => {
+          userInventory.push(element.ItemID)         
+        });
+        console.log(userInventory)
       }
       
     });

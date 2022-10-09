@@ -6,7 +6,6 @@ import LoginScreen from "./screens/loginScreen";
 import MainScreen from "./MainScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { and, or } from "react-native-reanimated";
 
 const RootStack = createStackNavigator();
 
