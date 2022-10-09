@@ -51,17 +51,13 @@ export default function LoginScreen({ navigation }) {
       
       if (response.data.message) {
         errorAlert(); 
-        alert('fail')
       } else {
         if (login_success) {
-          alert('success')
-          
           updateStatus(response.data.stat[0].InfectionStatus)
           console.log(response.data.stat[0])
           updatePoints(response.data.stat[0].Points+PointSystem.dailyPoints(response.data.stat[0].InfectionStatus, response.data.stat[0].dailyLogin))
           console.log("The DB points: "+(response.data.stat[0].Points+PointSystem.dailyPoints(response.data.stat[0].InfectionStatus, response.data.stat[0].dailyLogin)))
           set_active_email(email)
-          alert(email)
           // updatePoints(PointSystem.dailyPoints(response.data.stat[0].InfectionStatus, response.data.stat[0].dailyLogin))
           updateDailyBD()
         }
