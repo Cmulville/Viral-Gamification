@@ -12,36 +12,36 @@ const RootStack = createStackNavigator();
 
 const RootStackScreen = ({ navigation }) => {
 
-  const[user, setUser] = React.useState(null)
-  const[points, setPoints] = React.useState(null)
-  const[status, setStatus] = React.useState(null)
+  // const[user, setUser] = React.useState(null)
+  // const[points, setPoints] = React.useState(0)
+  // const[status, setStatus] = React.useState(null)
 
-  React.useEffect(() => {
-    getUserData();
-  }, []);
+  // React.useEffect(() => {
+  //   getUserData();
+  // }, []);
   
-  const getUserData = async () => {   
-    let values
-      try {
-        const userGet = await AsyncStorage.getItem('user');
-        const pointsGet = await AsyncStorage.getItem('points');
-        const statusGet = await AsyncStorage.getItem('status');
-        if(userGet !== null && pointsGet !== null && statusGet !== null) {
-          setUser(userGet)
-          setPoints(pointsGet)
-          setStatus(statusGet)
-          alert("saved as "+user+" "+points+" "+status)
-        } else {
-          const userInfo = ['user', 'Rory2']
-          const pointsStore = ['points', JSON.stringify(1)]
-          const statusStore = ['status', 'Infected']
-          await AsyncStorage.multiSet([userInfo, pointsStore, statusStore])
-          alert("All of em should be stored")
-        }
-      } catch(e) {
-        alert('Failed to get data from storage')
-    }
-  }
+  // const getUserData = async () => {   
+  //   let values
+  //     try {
+  //       const userGet = await AsyncStorage.getItem('user');
+  //       const pointsGet = await AsyncStorage.getItem('points');
+  //       const statusGet = await AsyncStorage.getItem('status');
+  //       if(userGet !== null && pointsGet !== null && statusGet !== null) {
+  //         setUser(userGet)
+  //         setPoints(pointsGet)
+  //         setStatus(statusGet)
+  //         alert("saved as "+user+" "+points+" "+status)
+  //       } else {
+  //         const userInfo = ['user', 'Rory2']
+  //         const pointsStore = ['points', JSON.stringify(1)]
+  //         const statusStore = ['status', 'Infected']
+  //         await AsyncStorage.multiSet([userInfo, pointsStore, statusStore])
+  //         alert("All of em should be stored")
+  //       }
+  //     } catch(e) {
+  //       alert('Failed to get data from storage')
+  //   }
+  // }
   
   return (
 

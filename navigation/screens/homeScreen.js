@@ -18,9 +18,13 @@ export default function HomeScreen({navigation}) {
   const minutes = parseInt(diffr.minutes());
   const seconds = parseInt(diffr.seconds());
   const endTime = hours * 60 * 60 + minutes * 60 + seconds;
- 
+  if (endTime == 0) {
+    endTime = endTime +  7 * 24 * 60 * 60
+  }
+
   const [time, setTime] = React.useState(endTime);
   
+ 
   
 // React.useEffect(() => {
 //   getData();

@@ -4,18 +4,18 @@ import { tabContext } from "./tabContext";
 
 const PointSystem = {
     
-    dailyPoints: (status) => {
-        const daily_bonus = true;
+    dailyPoints: (status, daily_bonus) => {
+
         //access player status and assign to this variable:
         
-        if (!daily_bonus) {
+        if (daily_bonus == 0) {
             return 0
         } else {
             //Rather than return, the point tally from the database should be accessed and tallied.
             if(status === "Immune") {
                 return 500
             } else if(status === "Infected") {
-                return "Got here so far"
+                return 150
             } else if(status === "Cured") {
                 return 1000
             }

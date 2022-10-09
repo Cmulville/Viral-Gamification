@@ -2,6 +2,7 @@ import * as React from 'react';
 import { ScrollView, StyleSheet, Text, View, Button } from 'react-native';
 import PointSystem from '../../pointSystem';
 import { tabContext } from '../../tabContext';
+import Axios from 'axios';
 
 // import EncryptedStorage from 'react-native-encrypted-storage';
 
@@ -28,8 +29,8 @@ export default function InventoryScreen({changeStatus}) {
     //Session should include a username/email which will be used to access these inventory stats 
     const { status } = React.useContext(tabContext)
     const { updateStatus } = React.useContext(tabContext)
-    const { points } = React.useContext(tabContext)
-    const { updatePoints } = React.useContext(tabContext)
+    const { statusChange } = React.useContext(tabContext)
+    const { addPoints } = React.useContext(tabContext)
 
     const sumSanitizer = 33
     const santizerGoal = 33
@@ -41,8 +42,8 @@ export default function InventoryScreen({changeStatus}) {
     
     const cureStatus = () => {
         PointSystem.cure()
-        updateStatus("Cured")
-        updatePoints(PointSystem.cure_bonus())
+        statusChange("Cured")
+        addPoints(PointSystem.cure_bonus())
     }
 
 

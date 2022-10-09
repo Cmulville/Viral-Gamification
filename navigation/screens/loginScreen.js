@@ -11,29 +11,66 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
+import PointSystem from "../../pointSystem";
+import { tabContext } from "../../tabContext";
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const a = null
+  const b = null
+  const { updateStatus } = React.useContext(tabContext)
+  const { updatePoints } = React.useContext(tabContext)
+  const { set_active_email } = React.useContext(tabContext)
+  const { updateDailyBD } = React.useContext(tabContext)
+
   const errorAlert = () => {
     Alert.alert("Login failed", "Your email or password is incorrect. Please try again", [
       { text: "OK" },
     ]);
   };
-
+  //Context will need to be updated through login
+  
   const login = () => {
+    const login_success = true
     Axios.post("https://deco3801-betterlatethannever.uqcloud.net/login", {
       email: email,
       password: password,
     }).then((response) => {
       if (response.data.message) {
         errorAlert();
+        login_success = false
       } else {
         navigation.navigate("MainScreen")
       }
-    });
-  };
+    });    
+    
+    Axios.post("https://deco3801-betterlatethannever.uqcloud.net/userStats", {
+      email: email,
+    }).then((response) => {
+      
+      if (response.data.message) {
+        errorAlert(); 
+        alert('fail')
+      } else {
+        if (login_success) {
+          alert('success')
+          
+          updateStatus(response.data.stat[0].InfectionStatus)
+          console.log(response.data.stat[0])
+          updatePoints(response.data.stat[0].Points+PointSystem.dailyPoints(response.data.stat[0].InfectionStatus, response.data.stat[0].dailyLogin))
+          console.log("The DB points: "+(response.data.stat[0].Points+PointSystem.dailyPoints(response.data.stat[0].InfectionStatus, response.data.stat[0].dailyLogin)))
+          set_active_email(email)
+          alert(email)
+          // updatePoints(PointSystem.dailyPoints(response.data.stat[0].InfectionStatus, response.data.stat[0].dailyLogin))
+          updateDailyBD()
+        }
+      }
 
+    });
+    
+  };
+    
   return (
     <View style={styles.container}>
       <Image
