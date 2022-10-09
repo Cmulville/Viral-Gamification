@@ -11,7 +11,7 @@ import {
   Button,
   TouchableOpacity,
 } from "react-native";
-
+//Functioning?
 import { NavigationContainer } from "@react-navigation/native";
 
 export default function App() {
