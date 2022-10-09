@@ -32,13 +32,21 @@ export default function InventoryScreen({changeStatus}) {
     const { statusChange } = React.useContext(tabContext)
     const { addPoints } = React.useContext(tabContext)
 
-    const sumSanitizer = 33
-    const santizerGoal = 33
-    const sumGloves = 53
-    const gloveGoal = 53
-    const sumFaceMask = 9
-    const faceMaskGoal = 9
-    const cureMe = !(sumSanitizer == santizerGoal && sumFaceMask == faceMaskGoal && sumGloves == gloveGoal && status == "Infected")
+    const sumSanitizer = 0
+    const santizerGoal = 15
+    const sumGloves = 0
+    const gloveGoal = 15
+    const sumFaceMask = 0
+    const faceMaskGoal = 10
+    const item2 = 0
+    const item2goal = 15
+    const item3 = 0
+    const item3goal = 15
+    const cureMe = 
+        !(sumSanitizer == santizerGoal && sumFaceMask == faceMaskGoal 
+            && sumGloves == gloveGoal && item2 == item2goal
+            && item3 == item3goal && 
+             status == "Infected")
     
     const cureStatus = () => {
         PointSystem.cure()
@@ -76,7 +84,7 @@ export default function InventoryScreen({changeStatus}) {
                         cureStatus
                                 } 
                             color='#00c749'
-                            title='Cure me!'
+                            title='Cure Yourself'
                             disabled={cureMe}></Button>
                 </View>
                 </ScrollView>
