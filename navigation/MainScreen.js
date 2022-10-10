@@ -14,6 +14,7 @@ import InventoryScreen from "./screens/inventoryScreen";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import PointSystem from "../pointSystem";
 import { tabContext } from "../tabContext";
+import FriendScreen from "./screens/friendScreen";
 
 export default function MainScreen({ navigation }) {
   
@@ -55,6 +56,7 @@ const Tab = createBottomTabNavigator();
         },
             
             title: status+" | Points:"+" "+points,
+
             headerStyle: {
           backgroundColor: screenColors,
 
@@ -76,29 +78,20 @@ const Tab = createBottomTabNavigator();
                       
                       }}
        />
-      <Tab.Screen
-        name={mapName}
-        component={MapScreen}
-        options={{
-          tabBarLabel: mapName,
-        }}
-      />
-      <Tab.Screen
-        name={inventoryName}
-        component={InventoryScreen}
-        options={{
-          tabBarLabel: inventoryName,
-        }}
-      >
-        {/* {(changeStatus) => <InventoryScreen {...changeStatus} />} */}
-      </Tab.Screen>
-      <Tab.Screen
-        name={friendList}
-        component={SettingsScreen}
-        options={{
-          tabBarLabel: friendList,
-        }}
-      />
+
+        <Tab.Screen name={mapName} component={MapScreen}
+        options={{ 
+                      tabBarLabel: mapName,
+                      
+                      }}/>
+        <Tab.Screen name={inventoryName} component={InventoryScreen}
+        options={{ 
+                      tabBarLabel: inventoryName
+                      }}/>
+        <Tab.Screen name={friendList} component={FriendScreen} 
+        options={{ 
+                      tabBarLabel: friendList
+                      }}/>
 
       {/* <Tab.Screen name={detailName} component={DetailScreen}/> */}
     </Tab.Navigator>
