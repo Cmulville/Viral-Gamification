@@ -163,6 +163,7 @@ export default function MapScreen() {
         console.log('Permission to access locaion was approved')
       }
 
+      myFriends();
       let location = await Location.getCurrentPositionAsync({});
       randomLocation.distance()
 
@@ -172,7 +173,6 @@ export default function MapScreen() {
           longitude: location.coords.longitude,
       });
       countItems();
-      myFriends();
       console.log(friends);
       console.log(count.count);
       //setting up items database
