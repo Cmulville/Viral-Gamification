@@ -23,6 +23,7 @@ export default function MapScreen() {
                                             latitude: [], 
                                             latitude: []});
   const [count, setCount] = React.useState({count: 0});
+  const [friends, setFriends] = React.useState([]);
   const getUser = async () => {
     try {
       const value = await AsyncStorage.getItem("user");
@@ -36,11 +37,26 @@ export default function MapScreen() {
     }
   };
 
+  //Retrieves list of friends from the backend
+  const myFriends = () => {
+    getUser();
+    Axios.post(
+      "https://deco3801-betterlatethannever.uqcloud.net/friends/approved",
+      {
+        username: user,
+      }
+    ).then((response) => {
+        setFriends(response.data.friends);
+        console.log(friends);
+    });
+  };
+
   function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
   }
+
 
   const calcualteDistance = (lat1, long1, lat2, long2) => {
     //birsbane is lat 1
@@ -154,6 +170,8 @@ export default function MapScreen() {
           longitude: location.coords.longitude,
       });
       countItems();
+      myFriends();
+      console.log(friends);
       console.log(count.count);
       //setting up items database
       if (count < 5){
@@ -212,6 +230,17 @@ export default function MapScreen() {
 					      </Callout>
                 
           </Marker>
+          {
+              friends.map((friend, index) => {
+                  return (
+                      <Marker coordinate = {{latitude: friend.Latitude,
+                                             longitude: friend.Longitude,}}
+                              pinColor = {friend.InfectionStatus == 'Infected' ? 'red' : 'green'}>
+                      <Callout><Text>{friend.Username}</Text></Callout>
+                      </Marker>
+                  );
+              })
+          }
 
           <Marker
             //item marker for mask
