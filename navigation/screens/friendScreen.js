@@ -11,6 +11,7 @@ import {
   Alert,
   TouchableHighlight,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import { useState, useEffect } from "react"; 
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -62,7 +63,6 @@ export default function FriendScreen({ navigation }) {
   };
 
   const getUser = async () => {
-    console.leg('here');
     try {
       const value = await AsyncStorage.getItem("user");
       if (value != null) {
@@ -248,41 +248,25 @@ export default function FriendScreen({ navigation }) {
 
  getUser();
  
- // useEffect(() => {console.log('useEffect ran once'); 
-
- //   const getUser = async () => {
- //       try {
- //         const value = await AsyncStorage.getItem("user");
- //         if (value != null) {
- //           setUser(value);
- //         } else {
- //             console.log("IS NULL");
- //           return null;
- //         }
- //       } catch (e) {
- //         console.log(e);
- //       }
- //         console.log(user);
- //     };
-
- //     getUser();
- //     loadPage();
- // }, [user]);
-
   return (
+    <ScrollView>
     <View>
       <SearchBar searchPhrase={addUser} setSearchPhrase={setAddUser}/>
-      <View style={{paddingBottom:20}}>
+      <View style={{paddingBottom:15}}>
         <Button title="Search Friend" onPress={searchUsers}/>
       </View>
       {
       foundUser.length != 0 ? 
       <View style={styles.friendView}>
+	<View style={styles.container}>
+		<Text style={{fontWeight: 'bold', textDecorationLine: 'underline'}}>USERNAME</Text>
+		<Text style={{fontWeight: 'bold', textDecorationLine: 'underline'}}>ADD USER</Text>
+	</View>
       {  
           foundUser.map((friend) => {
           return (
             <View style={styles.container}>
-              <Text style={{fontWeight:"bold"}}>{friend.Username}</Text>
+              <Text>{friend.Username}</Text>
               <TouchableHighlight underlayColor='none' 
                     onPressIn={()=>setIconName("person-add-sharp")} 
                     onPressOut={makeRequest}>
@@ -293,10 +277,12 @@ export default function FriendScreen({ navigation }) {
         })
         }
       
-      </View> : <Text>NO USER</Text>
+      </View> : <View style={{alignItems: "center", paddingBottom: 40}}>
+			<Text style={styles.title}>NO USER</Text>
+		</View>
       }
 
-      <Button title="Current Friends" onPress={myFriends}/>
+      <Button title="Refresh Current Friends" onPress={myFriends}/>
       {
         friends.length != 0 ?
       <View style={styles.friendView}>
@@ -313,11 +299,14 @@ export default function FriendScreen({ navigation }) {
           );
         })}
       </View>
-          :
-          <Text>NO FRIENDS CURRENTLY </Text>
+          :	<View style={{alignItems: "center", paddingBottom: 40}}>
+			<Text style={styles.title}>NO FRIENDS CURRENTLY</Text>
+		</View>
       }
 
-      <Button title="Requested Friends" onPress={showRequests}/>
+      <Button title="Refresh Requested Friends" onPress={showRequests}/>
+      {
+	requests.length != 0 ?
       <View style={styles.friendView}>
         {requests.map((request, index) => {
           return (
@@ -333,8 +322,12 @@ export default function FriendScreen({ navigation }) {
           );
         })}
       </View>
-
+	  : 	<View style={{alignItems: "center", padding: 20}}>
+			<Text style={styles.title}>NO REQUESTS</Text>
+		</View>
+	}
     </View>
+    </ScrollView>
   );
 }
 
@@ -356,6 +349,12 @@ const styles = StyleSheet.create({
       flexDirection: "row",
       alignItems: "center",
       paddingBottom: 10,
+  },
+  
+  title: {
+      fontSize: 20, 
+      fontWeight: 'bold',
+
   },
   
   friendView: {
