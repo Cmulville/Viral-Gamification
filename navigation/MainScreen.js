@@ -22,6 +22,7 @@ export default function MainScreen({ navigation }) {
 const inventoryName = "Inventory";
 const mapName = "Map";
 const friendList = "Friends";
+const timerName = "Event Timer";
 
 //status and points context
 const { status } = React.useContext(tabContext)
@@ -50,6 +51,8 @@ const Tab = createBottomTabNavigator();
             iconName = focused ? "briefcase" : "briefcase-outline";
           } else if (rn == friendList) {
             iconName = focused ? "people" : "people-outline";
+          } else if (rn == timerName) {
+            iconName = focused ? 'timer': "timer-outline";
           }
 
           return <Ionicons name={iconName} size={size} color={screenColors} />;
@@ -72,13 +75,6 @@ const Tab = createBottomTabNavigator();
           
         })}
       >
-      <Tab.Screen name='Home' component={HomeScreen} 
-      options={{ 
-                      tabBarLabel: "Timer",
-                      
-                      }}
-       />
-
         <Tab.Screen name={mapName} component={MapScreen}
         options={{ 
                       tabBarLabel: mapName,
@@ -91,6 +87,12 @@ const Tab = createBottomTabNavigator();
         <Tab.Screen name={friendList} component={FriendScreen} 
         options={{ 
                       tabBarLabel: friendList
+                      }}/>
+
+        <Tab.Screen name={timerName} component={HomeScreen} 
+        options={{ 
+                      tabBarLabel: timerName,
+                      
                       }}/>
 
       {/* <Tab.Screen name={detailName} component={DetailScreen}/> */}

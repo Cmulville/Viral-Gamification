@@ -23,9 +23,17 @@ export default function App() {
   const [points, setPoints] = React.useState(0)
   const [email, setEmail] = React.useState(0)
   const [items, setItems] = React.useState(null)
+  const [eventEndTIme, setEventEndTime] = React.useState(0)
 
   // Ask about this
   // 6e930c12dc934cbd849bd2be
+  const statusColours = {
+    Healthy: "#05cf02",
+    Infected: "#f52718",
+    Immune: "#0aefff",
+  };
+  const screenColors = statusColours[status];
+
 
   const getUserInventory = (email) => {
     Axios.post("https://deco3801-betterlatethannever.uqcloud.net/user/getUserInventory", {
@@ -165,7 +173,7 @@ export default function App() {
 
 
   return (
-    <tabContext.Provider value={{items, status, points, email, setItems, updateStatus, statusChange, updatePoints, addPoints, set_active_email, updateDailyBD}}>
+    <tabContext.Provider value={{items, status, points, email, eventEndTIme, screenColors, setEventEndTime, setItems, updateStatus, statusChange, updatePoints, addPoints, set_active_email, updateDailyBD}}>
       <StatusBar style="dark" />
       <NavigationContainer>
         <RootStackScreen />

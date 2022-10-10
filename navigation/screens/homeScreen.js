@@ -4,9 +4,13 @@ import CountDown from 'react-native-countdown-component';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import PropTypes from 'prop-types';
 import moment from 'moment/moment';
+import { tabContext } from '../../tabContext';
 
 export default function HomeScreen({navigation}) {  
-  
+  const { endEventTime } = React.useContext(tabContext)
+  const { setEventEndTime } = React.useContext(tabContext)
+  const { screenColors } = React.useContext(tabContext)
+
 
   const date = moment().utcOffset('+10:00').format('YYYY-MM-DD hh:mm:ss');
 
@@ -18,77 +22,28 @@ export default function HomeScreen({navigation}) {
   const minutes = parseInt(diffr.minutes());
   const seconds = parseInt(diffr.seconds());
   const endTime = hours * 60 * 60 + minutes * 60 + seconds;
+  const [time, setTime] = React.useState(endTime);
   if (endTime == 0) {
-    endTime = endTime +  7 * 24 * 60 * 60
+    setTime(endTime +  7 * 24 * 60 * 60)
   }
 
-  const [time, setTime] = React.useState(endTime);
-  
  
-  
-// React.useEffect(() => {
-//   getData();
-// }, []);
-
-// const saveData = async (value) => {
-//   try {
-//     await AsyncStorage.setItem('time', JSON.stringify(value))
-//     alert('Data successfully saved')
-//   } catch (e) {
-//     alert('Failed to save the data to the storage')
-//   }
-// }
-
-//     const getData = async () => {
-    
-//     try {
-//       const value = await AsyncStorage.getItem('time');
-//       if(value !== null) {
-//         const intValue = parseInt(value)
-//         setTime(intValue)
-//         alert(time)
-//       }
-//     } catch(e) {
-//       alert('Failed to get data from storage')
-//   }
-// }
-
-// const getData = () => {
-//   //function to get the value from AsyncStorage
-//   try {
-//   AsyncStorage.getItem('time').then(
-//     (value) =>
-//       //AsyncStorage returns a promise so adding a callback to get the value
-//       setTime(parseInt(value))
-//     //Setting the value in Text
-    
-//   );
-//   alert("accessed storage!")
-//   } catch(e) {
-//     alert("failed to access storage")
-// }
-// };
-
-// saveData(time);
-
-
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-            
+          <Text style={{ color: screenColors, fontSize: 40, fontWeight: 'bold', marginBottom: 30}}>Event ends in:</Text>    
         <CountDown
         size={30}
         until={time}
         onFinish={() => alert('Finished')}
-        digitStyle={{backgroundColor: '#FFF', borderWidth: 2, borderColor: '#1CC625'}}
-        digitTxtStyle={{color: '#1CC625'}}
-        timeLabelStyle={{color: '#1CC625', fontWeight: 'bold'}}
-        separatorStyle={{color: '#1CC625'}}
+        digitStyle={{backgroundColor: '#FFF', borderWidth: 2, borderColor: screenColors}}
+        //digitTxtStyle={{color: screenColors}}
+        timeLabelStyle={{color: screenColors, fontWeight: 'bold'}}
+        separatorStyle={{color: screenColors}}
         timeToShow={['D', 'H', 'M', 'S']}
         showSeparator
       />
       
-        <Text
-                style={{ fontSize: 26, fontWeight: 'bold'}}>Home Screen {time}</Text>
+        
         </View>
     )
 } 
