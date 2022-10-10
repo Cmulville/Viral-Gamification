@@ -11,16 +11,20 @@ export default function HomeScreen({navigation}) {
   const date = moment().utcOffset('+10:00').format('YYYY-MM-DD hh:mm:ss');
 
   //Can get expiry date from DB
-  const expirydate = '2022-10-02 00:00:00';
+  const expirydate = '2022-10-22 00:00:00';
   const diffr = moment.duration(moment(expirydate).diff(moment(date)));
 
   const hours = parseInt(diffr.asHours());
   const minutes = parseInt(diffr.minutes());
   const seconds = parseInt(diffr.seconds());
   const endTime = hours * 60 * 60 + minutes * 60 + seconds;
- 
+  if (endTime == 0) {
+    endTime = endTime +  7 * 24 * 60 * 60
+  }
+
   const [time, setTime] = React.useState(endTime);
   
+ 
   
 // React.useEffect(() => {
 //   getData();

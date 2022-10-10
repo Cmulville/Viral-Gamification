@@ -29,7 +29,7 @@ const inventoryName = 'Inventory'
 const status = 'Immune'
 const points = 0
 const statusColours = {
-  'Cured': '#05cf02',
+  'Healthy': '#05cf02',
   'Infected' : '#f52718',
   'Immune' : '#0aefff'
 }

@@ -3,6 +3,7 @@ import * as React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { View, Text, Button, Image } from 'react-native';
 
 //Screens
 import HomeScreen from "./screens/homeScreen";
@@ -12,42 +13,22 @@ import LoginScreen from "./screens/loginScreen";
 import InventoryScreen from "./screens/inventoryScreen";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import PointSystem from "../pointSystem";
+import { tabContext } from "../tabContext";
 import FriendScreen from "./screens/friendScreen";
 
 export default function MainScreen({ navigation }) {
-// Screen names
+  
+  // Screen names
 const inventoryName = "Inventory";
 const mapName = "Map";
 const friendList = "Friends";
-React.useEffect(() => {
-  setValues();
-}, []);
 
-const setValues = async () => {   
-  let values
-    try {
-      const pointsGet = await AsyncStorage.getItem('points');
-      const statusGet = await AsyncStorage.getItem('status');
-      if(pointsGet !== null && statusGet !== null) {
-        setPoints(pointsGet)
-        setStatus(statusGet)
-        alert("saved as "+" "+points+" "+status)
-      } else {
-        alert("No stored points or status. defaults used.")
-      }
-    } catch(e) {
-      alert('Failed to get data from storage')
-  }
-}
-
-// Player status
-const [status, setStatus] = React.useState('Cured');
-const [points, setPoints] = React.useState(0)
-  //const status = 'Immune'
-  //const points = 0
+//status and points context
+const { status } = React.useContext(tabContext)
+const { points } = React.useContext(tabContext)
   
-const statusColours = {
-  Cured: "#05cf02",
+  const statusColours = {
+  Healthy: "#05cf02",
   Infected: "#f52718",
   Immune: "#0aefff",
 };
@@ -73,21 +54,21 @@ const Tab = createBottomTabNavigator();
 
           return <Ionicons name={iconName} size={size} color={screenColors} />;
         },
-            // headerRight: () => (
-            //   <Button
-            //     onPress={() => navigation.navigate(loginName)}
-            //     title="Login"
-            //     color="#0"
-            //   />
-            // ),
             
-            title: status+" | Points:"+" "+points
-            ,
+            title: status+" | Points:"+" "+points,
+
             headerStyle: {
           backgroundColor: screenColors,
 
           //   alignItems: 'center'
         },
+        headerRight: () => {
+          <Button
+              onPress={() => navigation.navigate("Settings")}
+              title="Settings"
+              color="#fff"
+            />
+        }
           
         })}
       >
@@ -97,6 +78,7 @@ const Tab = createBottomTabNavigator();
                       
                       }}
        />
+
         <Tab.Screen name={mapName} component={MapScreen}
         options={{ 
                       tabBarLabel: mapName,

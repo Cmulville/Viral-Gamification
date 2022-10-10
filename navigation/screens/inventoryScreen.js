@@ -1,32 +1,61 @@
 import * as React from 'react';
 import { ScrollView, StyleSheet, Text, View, Button } from 'react-native';
-// import EncryptedStorage from 'react-native-encrypted-storage';
+import PointSystem from '../../pointSystem';
+import { tabContext } from '../../tabContext';
+import Axios from 'axios';
 
-// async function retrieveUserSession() {
-//     try {   
-//         const session = await EncryptedStorage.getItem("user_session");
-    
-//         if (session !== undefined) {
-//             return session
-//             //Session should identify a username; might make it return a list
-//             //True is the same as the presence of value
-//             //This username can be used to retrieve stuff from the database
-//         }
-//     } catch (error) {
-//         console.log(error.code);    
-//     }
-// }
-
-export default function InventoryScreen({navigation}) {
+export default function InventoryScreen({changeStatus}) {
     //session = retrieveUserSession();
     //Session should include a username/email which will be used to access these inventory stats 
-    const sumSanitizer = 0
-    const santizerGoal = 33
-    const sumGloves = 0
-    const gloveGoal = 53
-    const sumFaceMask = 0
-    const faceMaskGoal = 9
-    const cureMe = !(sumSanitizer == santizerGoal && sumFaceMask == faceMaskGoal && sumGloves == gloveGoal)
+    const { status } = React.useContext(tabContext)
+    const { updateStatus } = React.useContext(tabContext)
+    const { statusChange } = React.useContext(tabContext)
+    const { addPoints } = React.useContext(tabContext)
+    const { items } = React.useContext(tabContext)
+
+    const santizerGoal = 15
+    const gloveGoal = 15
+    const faceMaskGoal = 10
+    const item2goal = 15    
+    const item3goal = 15
+
+    let sumSanitizer = 0
+    let sumGloves = 0
+    let sumFaceMask = 0
+    let item2 = 0
+    let item3 = 0
+
+    //Assign Item counts based on ID
+    // console.log(items)
+    // console.log('inventory')
+    items.forEach(element => {
+        // console.log(element)
+        // console.log ("Split")
+        if (element.ItemID == 1) {
+            sumSanitizer = element.Count
+        } 
+        else if (element.ItemID == 2) {
+            sumGloves = element.Count
+        
+        } else if (element.ItemID == 3) {
+            sumFaceMask = element.Count
+        }
+    }); 
+
+    
+    //Determine if conditions are set for user to be cleared
+    const cureMe = 
+        !(sumSanitizer == santizerGoal && sumFaceMask == faceMaskGoal 
+            && sumGloves == gloveGoal && item2 == item2goal
+            && item3 == item3goal && 
+             status == "Infected")
+    
+    const cureStatus = () => {
+        PointSystem.cure()
+        statusChange("Healthy")
+        addPoints(PointSystem.cure_bonus())
+    }
+
 
     return (
         <View style={styles.container}>
@@ -49,13 +78,15 @@ export default function InventoryScreen({navigation}) {
 
                     <View style={styles.items}>
                         <Button title='Face Masks' />       
-                        <Text style={{fontSize: 22}}>{sumFaceMask}/{faceMaskGoal} </Text>
+                        <Text co style={{fontSize: 22}}>{sumFaceMask}/{faceMaskGoal} </Text>
                     </View>
                 </View>
                 <View>
-                    <Button onPress={() => alert('You are cured!')} 
+                    <Button onPress={
+                        cureStatus
+                                } 
                             color='#00c749'
-                            title='Cure me!'
+                            title='Cure Yourself'
                             disabled={cureMe}></Button>
                 </View>
                 </ScrollView>
@@ -84,11 +115,12 @@ const styles = StyleSheet.create({
     },
     items: {
         marginBottom: 30,
+        width: 30,
         alignItems: 'center',
         justifyContent: 'center',
     },
     button: {
-        marginVertical: 16
+        marginVertical: 16,
     }
 
   });
