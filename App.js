@@ -131,8 +131,8 @@ export default function App() {
     try {
       
       const value = parseInt(points) + new_points
-      console.log(new_points)
-      console.log(value)
+      // console.log(new_points)
+      // console.log(value)
             
       await AsyncStorage.setItem("points", JSON.stringify(value))
       
@@ -148,13 +148,13 @@ export default function App() {
   const updatePoints = async (new_points) => {
     try {
             
-      console.log(new_points)
+      //console.log(new_points)
             
       await AsyncStorage.setItem("points", JSON.stringify(new_points))
       
       setPoints(new_points)
       
-      console.log(points)
+      //console.log(points)
       //updatePointsDB(new_points)
 
     } catch(e) {

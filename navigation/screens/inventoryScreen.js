@@ -19,14 +19,28 @@ export default function InventoryScreen({changeStatus}) {
     const item2goal = 15    
     const item3goal = 15
 
-    const sumSanitizer = 0
-    const sumGloves = 0
-    const sumFaceMask = 0
-    const item2 = 0
-    const item3 = 0
+    let sumSanitizer = 0
+    let sumGloves = 0
+    let sumFaceMask = 0
+    let item2 = 0
+    let item3 = 0
 
     //Assign Item counts based on ID
-
+    // console.log(items)
+    // console.log('inventory')
+        items.forEach(element => {
+            console.log(element)
+            console.log ("Split")
+            if (element.ItemID == 1) {
+                sumSanitizer = element.Count
+            } 
+            else if (element.ItemID == 2) {
+                sumGloves = element.Count
+            
+            } else if (element.ItemID == 3) {
+                sumFaceMask = element.Count
+            }
+        }); 
 
     //Determine if conditions are set for user to be cleared
     const cureMe = 

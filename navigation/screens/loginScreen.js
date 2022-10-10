@@ -72,12 +72,7 @@ export default function LoginScreen({ navigation }) {
       if (response.data.message) {
         console.log("Couldn't get items")
       } else {
-        const userInventory = {}
-        console.log(response.data.items)     
-        response.data.items.forEach(element => {
-          userInventory.push(element.ItemID)         
-        });
-        console.log(userInventory)
+        setItems(response.data.items)   
       }
       
     });
