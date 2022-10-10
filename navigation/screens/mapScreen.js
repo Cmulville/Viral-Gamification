@@ -58,7 +58,6 @@ export default function MapScreen() {
     return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
   }
 
-
   const calcualteDistance = (lat1, long1, lat2, long2) => {
     //birsbane is lat 1
     //uq lat 2
@@ -152,6 +151,7 @@ export default function MapScreen() {
     });
   };
 
+
   // event that get asks for permission then gets the users inital location
   React.useEffect(() => {
     (async () => {
@@ -172,24 +172,11 @@ export default function MapScreen() {
           latitude: location.coords.latitude,
           longitude: location.coords.longitude,
       });
-      countItems();
-      console.log(friends);
-      console.log(count.count);
-      //setting up items database
-      if (count < 5){
-        let amount = 5 - count.count;
-        console.log(amount);
-        //add amount of items to database
-        for (let i = 0; i < amount; i++) {
-          let place = randomCirclePoint(uq, 1000);
-          let itemtype = getRandomInt(1, 5);
-          UpdateItemLocation(itemtype, place.latitude, place.longitude);
-        }
-      }
     })();
     }, []);
  
   return (
+    
     <View style={styles.container}>
       <MapView style={styles.map}
               // where the map will hover when opened Location is St Lucia
@@ -205,11 +192,12 @@ export default function MapScreen() {
                     latitude: e.nativeEvent.coordinate.latitude,
                     longitude: e.nativeEvent.coordinate.longitude,
                   });
-
+                  /*
                   countItems();
                   console.log("count:")
                   console.log(count);
                   //setting up items database 
+                
                   if (count < 5){
                     let amount = 5 - count;
                     console.log("amount:");
@@ -223,6 +211,7 @@ export default function MapScreen() {
                       addItem(itemtype, place.latitude, place.longitude);
                     }
                   }
+                  */
 
                   UpdateLocation();
                   setDistance({
