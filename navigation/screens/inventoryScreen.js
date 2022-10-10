@@ -28,20 +28,21 @@ export default function InventoryScreen({changeStatus}) {
     //Assign Item counts based on ID
     // console.log(items)
     // console.log('inventory')
-        items.forEach(element => {
-            console.log(element)
-            console.log ("Split")
-            if (element.ItemID == 1) {
-                sumSanitizer = element.Count
-            } 
-            else if (element.ItemID == 2) {
-                sumGloves = element.Count
-            
-            } else if (element.ItemID == 3) {
-                sumFaceMask = element.Count
-            }
-        }); 
+    items.forEach(element => {
+        // console.log(element)
+        // console.log ("Split")
+        if (element.ItemID == 1) {
+            sumSanitizer = element.Count
+        } 
+        else if (element.ItemID == 2) {
+            sumGloves = element.Count
+        
+        } else if (element.ItemID == 3) {
+            sumFaceMask = element.Count
+        }
+    }); 
 
+    
     //Determine if conditions are set for user to be cleared
     const cureMe = 
         !(sumSanitizer == santizerGoal && sumFaceMask == faceMaskGoal 
@@ -77,7 +78,7 @@ export default function InventoryScreen({changeStatus}) {
 
                     <View style={styles.items}>
                         <Button title='Face Masks' />       
-                        <Text style={{fontSize: 22}}>{sumFaceMask}/{faceMaskGoal} </Text>
+                        <Text co style={{fontSize: 22}}>{sumFaceMask}/{faceMaskGoal} </Text>
                     </View>
                 </View>
                 <View>
@@ -114,11 +115,12 @@ const styles = StyleSheet.create({
     },
     items: {
         marginBottom: 30,
+        width: 30,
         alignItems: 'center',
         justifyContent: 'center',
     },
     button: {
-        marginVertical: 16
+        marginVertical: 16,
     }
 
   });
