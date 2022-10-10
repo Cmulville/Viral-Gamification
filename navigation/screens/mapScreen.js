@@ -22,8 +22,9 @@ export default function MapScreen() {
                                             idtypes: [],
                                             latitude: [], 
                                             latitude: []});
-  const [count, setCount] = React.useState({count: 0});
   const [friends, setFriends] = React.useState([]);
+  const [count, setCount] = React.useState(0);
+
   const getUser = async () => {
     try {
       const value = await AsyncStorage.getItem("user");
@@ -131,22 +132,22 @@ export default function MapScreen() {
     Axios.post("https://deco3801-betterlatethannever.uqcloud.net/items/count", {
     }).then((response) => {
       if (response) {
-        setCount({count: response.data.count[0]});
+        setCount(response.data.count[0].count);
       } 
     });
   };
 
-  const UpdateItemLocation = (itemtype, lat, long) => {
-    getUser();
-    Axios.post("https://deco3801-betterlatethannever.uqcloud.net/location/update", {
+  const addItem = (itemtype, lat, long) => {
+    Axios.post("https://deco3801-betterlatethannever.uqcloud.net/items/add", {
       itemtype: itemtype,
       latitude: lat,
       longitude: long,
     }).then((response) => {
       if (response.data.message) {
         errorAlert();
-      } else {
-        validAlert();
+      } else if (response.data.success) {
+        validAlert()
+        console.log("worked")
       }
     });
   };
@@ -163,6 +164,7 @@ export default function MapScreen() {
       }
 
       let location = await Location.getCurrentPositionAsync({});
+      randomLocation.distance()
 
       // set Pin being used to change the pin
       setPin({
@@ -202,7 +204,26 @@ export default function MapScreen() {
                   setPin({
                     latitude: e.nativeEvent.coordinate.latitude,
                     longitude: e.nativeEvent.coordinate.longitude,
-                });
+                  });
+
+                  countItems();
+                  console.log("count:")
+                  console.log(count);
+                  //setting up items database 
+                  if (count < 5){
+                    let amount = 5 - count;
+                    console.log("amount:");
+                    console.log(amount);
+                    //add amount of items to database
+                    for (let i = 0; i < amount; i++) {
+                      const place = randomCirclePoint(uq, 1000);
+                      console.log("lat and long:", place.latitude, place.longitude);
+                      const itemtype = getRandomInt(1, 5);
+                      console.log("type:", itemtype);
+                      addItem(itemtype, place.latitude, place.longitude);
+                    }
+                  }
+
                   UpdateLocation();
                   setDistance({
                     thing: calcualteDistance(pin.latitude, pin.longitude, uq.latitude, uq.longitude)
