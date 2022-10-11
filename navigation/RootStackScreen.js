@@ -6,11 +6,15 @@ import LoginScreen from "./screens/loginScreen";
 import MainScreen from "./MainScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { tabContext } from "../tabContext";
+import { color } from "react-native-reanimated";
 
 const RootStack = createStackNavigator();
 
 const RootStackScreen = ({ navigation }) => {
-
+  const { status } = React.useContext(tabContext)
+  const { points } = React.useContext(tabContext)
+  const { screenColors } = React.useContext(tabContext)
   // const[user, setUser] = React.useState(null)
   // const[points, setPoints] = React.useState(0)
   // const[status, setStatus] = React.useState(null)
@@ -54,7 +58,12 @@ const RootStackScreen = ({ navigation }) => {
       <RootStack.Screen
         name="MainScreen"
         component={MainScreen}
-        options={{ headerShown: false }}
+        options={{
+          title: status + " | Points:" + points,
+          headerStyle: {
+            backgroundColor: screenColors
+          }
+        }}
       />
       <RootStack.Screen 
         name="RegisterScreen" 

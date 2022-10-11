@@ -57,14 +57,6 @@ const Tab = createBottomTabNavigator();
 
           return <Ionicons name={iconName} size={size} color={screenColors} />;
         },
-            
-            title: status+" | Points:"+" "+points,
-
-            headerStyle: {
-          backgroundColor: screenColors,
-
-          //   alignItems: 'center'
-        },
         headerRight: () => {
           <Button
               onPress={() => navigation.navigate("Settings")}
@@ -78,21 +70,23 @@ const Tab = createBottomTabNavigator();
         <Tab.Screen name={mapName} component={MapScreen}
         options={{ 
                       tabBarLabel: mapName,
-                      
+                      headerShown: false
                       }}/>
         <Tab.Screen name={inventoryName} component={InventoryScreen}
         options={{ 
-                      tabBarLabel: inventoryName
+                      tabBarLabel: inventoryName,
+                      headerShown: false
                       }}/>
         <Tab.Screen name={friendList} component={FriendScreen} 
         options={{ 
-                      tabBarLabel: friendList
+                      tabBarLabel: friendList,
+                      headerShown: false
                       }}/>
 
         <Tab.Screen name={timerName} component={HomeScreen} 
         options={{ 
                       tabBarLabel: timerName,
-                      
+                      headerShown: false
                       }}/>
 
       {/* <Tab.Screen name={detailName} component={DetailScreen}/> */}
