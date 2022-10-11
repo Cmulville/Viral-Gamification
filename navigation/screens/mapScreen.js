@@ -67,6 +67,26 @@ export default function MapScreen() {
     });
   }
 
+  const infect = (username) => {
+    Axios.post(
+      "https://deco3801-betterlatethannever.uqcloud.net/users/infect",
+      {
+        username: username,
+      }
+    ).then((response) => {
+        console.log("infected", {username});
+    });
+  }
+
+  const contact = () => { 
+    for (var i = 0; i < users.length; i++) {
+      let dist = calculateDistance(pin.latitude, pin.longitude, users[i].Latitude, users[i].Longitude);
+      if (dist < 100){
+        infect(users[i].Username);
+      }
+    }
+  }
+
   //Retrieves list of friends from the backend
   const myFriends = () => {
     getUser();
@@ -87,7 +107,7 @@ export default function MapScreen() {
     return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
   }
 
-  const calcualteDistance = (lat1, long1, lat2, long2) => {
+  const calculateDistance = (lat1, long1, lat2, long2) => {
     //birsbane is lat 1
     //uq lat 2
     let R = 6371000; // metres
@@ -257,7 +277,7 @@ export default function MapScreen() {
 
           for (var i = 0; i < items.length; i++) {
             if (
-              calcualteDistance(
+              calculateDistance(
                 items[i].latitude,
                 items[i].longitude,
                 e.nativeEvent.coordinate.latitude,
@@ -277,7 +297,7 @@ export default function MapScreen() {
           setItems(nonCollectedItems);
 
           if (
-            calcualteDistance(
+            calculateDistance(
               initialCentre.latitude,
               initialCentre.longitude,
               e.nativeEvent.coordinate.latitude,
@@ -293,7 +313,7 @@ export default function MapScreen() {
 
             for (var i = 0; i < items.length; i++) {
               if (
-                calcualteDistance(
+                calculateDistance(
                   items[i].latitude,
                   items[i].longitude,
                   e.nativeEvent.coordinate.latitude,
@@ -320,10 +340,10 @@ export default function MapScreen() {
             }
             setItems(newItems);
           }
-
+          contact();
           UpdateLocation();
           setDistance({
-            thing: calcualteDistance(
+            thing: calculateDistance(
               pin.latitude,
               pin.longitude,
               uq.latitude,
