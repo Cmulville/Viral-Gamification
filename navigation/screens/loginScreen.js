@@ -61,83 +61,97 @@ export default function LoginScreen({ navigation }) {
     });
   };
 
+  const CircleButton = props =>(
+    <TouchableOpacity
+      style = {{
+        margin: props.margin,
+        height: props.size,
+        width: props.size,
+        backgroundColor: props.color,
+        alignItems: "center",
+        justifyContent: "center",
+        borderRadius: props.size *2,
+      }}
+      onPress={props.onPress}>
+        <Text style = {{color: props.textColor, fontSize: props.fontSize,textAlignVertical:"center",textAlign:"center"}}>
+          LET'S GET VIRAL
+        </Text>
+      </TouchableOpacity>
+  )
+
   return (
-    <View style={styles.container}>
-      <Image
-        style={styles.image}
-        source={require("../../assets/images/logo.png")}
+    <>
+      <View style={styles.container}>
+      <Text style={styles.titleText}>
+          </Text>
+      <View style = {styles.inputView}>
+        <TextInput
+          style={styles.TextInput}
+          placeholder="Email" 
+          placeholderTextColor="#003f5c"
+          onChangeText={(email) => setEmail(email)}
+          />
+      </View>
+      <View style = {styles.inputView}>
+        <TextInput
+          style={styles.TextInput}
+          placeholder="Password"
+          placeholderTextColor="#003f5c"
+          onChangeText={(password) => setPassword(password)}
+          />
+      </View>
+      <View style = {styles.circleView}>
+        <CircleButton
+        size={150}
+        color="#da0f0f"
+        textColor="white"
+        fontSize={30}
+        margin={10}
+        onPress={login}
       />
-
-      <StatusBar style="dark" />
-
-      <TextInput
-        style={styles.TextInput}
-        onChangeText={setEmail}
-        placeholderTextColor="#003f5c"
-        placeholder="Email"
-      />
-
-      <TextInput
-        style={styles.TextInput}
-        onChangeText={setPassword}
-        placeholderTextColor="#003f5c"
-        placeholder="Password"
-      />
-
+      </View>
       <TouchableOpacity onPress={() => navigation.navigate("RegisterScreen")}>
-        <Text style={styles.forgot_button}>Don't have an account? Sign up</Text>
+        <Text style ={styles.newUserView}>Click here to Sign Up!</Text>
       </TouchableOpacity>
-
-      <TouchableOpacity style={styles.loginBtn} onPress={login}>
-        <Text style={styles.loginText}>LOGIN</Text>
-      </TouchableOpacity>
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#7bb2be",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-
-  image: {
-    marginBottom: 40,
-    height: 300,
-    width: 300,
-  },
-
-  inputView: {
-    backgroundColor: "#fff",
-    borderRadius: 30,
-    width: "70%",
+      <StatusBar style="auto" />
+      </View> 
+    </>
+    );
+  }
+  
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: "#0b4c68",
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    titleText:{
+      fontFamily:"sans-serif",
+      textAlign:"center",
+      fontSize:20,
+      fontWeight:"bold",
+    },
+    inputView:{
+    backgroundColor:"#d3d3d3",
+    borderRadius:30,
+    width: "70%", 
     height: 45,
     marginBottom: 20,
-
-    alignItems: "left",
-  },
-
-  TextInput: {
-    height: 50,
-    flex: 1,
-    padding: 10,
-    marginLeft: 20,
-  },
-
-  forgot_button: {
-    height: 30,
-    marginBottom: 30,
-  },
-
-  loginBtn: {
-    width: "80%",
-    borderRadius: 25,
-    height: 50,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 40,
-    backgroundColor: "#FFF",
-  },
-});
+    alignItems: "flex-start",
+    },
+    TextInput: {
+      height: 50,
+      flex: 1,
+      padding: 0,
+      marginLeft: 15,
+    },
+    circleView: {
+      alignItems:"center",
+    },
+    newUserView:{
+      color: "white",
+      height:50,
+      marginBottom: 30,
+    }
+  });
