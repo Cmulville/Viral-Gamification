@@ -168,19 +168,15 @@ export default function MapScreen() {
     });
   };
 
-  const addItem = (itemtype, lat, long) => {
-    Axios.post("https://deco3801-betterlatethannever.uqcloud.net/items/add", {
-      itemtype: itemtype,
-      latitude: lat,
-      longitude: long,
+  const addItem = (itemtype) => {
+    Axios.post("https://deco3801-betterlatethannever.uqcloud.net/user/item", {
+      itemid: itemtype,
+      username: user,
     }).then((response) => {
-      if (response.data.message) {
-        errorAlert();
-      } else if (response.data.success) {
-        validAlert();
-        console.log("worked");
-      }
+      console.log("response received");
+      console.log(response.data);
     });
+    console.log("post sent");
   };
 
   function getItem(itemType) {
@@ -234,11 +230,36 @@ export default function MapScreen() {
         showsUserLocation={true}
         //method that will update the location of user when it changes
         onUserLocationChange={(e) => {
+          console.log("changed");
+          addItem(1);
           // console.log("location changed", e.nativeEvent.coordinate);
           setPin({
             latitude: e.nativeEvent.coordinate.latitude,
             longitude: e.nativeEvent.coordinate.longitude,
           });
+
+          const nonCollectedItems = [];
+
+          for (var i = 0; i < items.length; i++) {
+            if (
+              calcualteDistance(
+                items[i].latitude,
+                items[i].longitude,
+                e.nativeEvent.coordinate.latitude,
+                e.nativeEvent.coordinate.longitude
+              ) < 20
+            ) {
+              addItem(items[i].itemType);
+              Alert.alert(
+                "item collected ",
+                "You've just collected " + items[i].itemType,
+                [{ test: "OK" }]
+              );
+            } else {
+              nonCollectedItems.push(items[i]);
+            }
+          }
+          setItems(nonCollectedItems);
 
           if (
             calcualteDistance(
@@ -284,26 +305,6 @@ export default function MapScreen() {
             }
             setItems(newItems);
           }
-          /*
-                  countItems();
-                  console.log("count:")
-                  console.log(count);
-                  //setting up items database 
-                
-                  if (count < 5){
-                    let amount = 5 - count;
-                    console.log("amount:");
-                    console.log(amount);
-                    //add amount of items to database
-                    for (let i = 0; i < amount; i++) {
-                      const place = randomCirclePoint(uq, 1000);
-                      console.log("lat and long:", place.latitude, place.longitude);
-                      const itemtype = getRandomInt(1, 5);
-                      console.log("type:", itemtype);
-                      addItem(itemtype, place.latitude, place.longitude);
-                    }
-                  }
-                  */
 
           UpdateLocation();
           setDistance({
