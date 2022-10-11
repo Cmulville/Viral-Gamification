@@ -23,6 +23,7 @@ export default function MapScreen() {
                                             latitude: [], 
                                             latitude: []});
   const [friends, setFriends] = React.useState([]);
+  const [users, setUsers] = React.useState([]);
   const [count, setCount] = React.useState(0);
 
   const getUser = async () => {
@@ -37,6 +38,19 @@ export default function MapScreen() {
       console.log(e);
     }
   };
+
+  const distanceUsers = () => {
+    getUser();
+    Axios.post(
+      "https://deco3801-betterlatethannever.uqcloud.net/users/distance",
+      {
+        username: user,
+      }
+    ).then((response) => {
+        setUsers(response.data.users);
+        console.log(users);
+    });
+  }
 
   //Retrieves list of friends from the backend
   const myFriends = () => {
@@ -152,6 +166,17 @@ export default function MapScreen() {
   };
 
 
+  const checkContact = () => {
+    for (let i = 0; i < users.length; i++) {
+      let dist = calcualteDistance(pin.latitude, pin.longitude, users[i].Latitude, users[i].Longitude)
+      if (dist <= 100){
+        //infect
+      }   
+    }
+  }
+
+
+
   // event that get asks for permission then gets the users inital location
   React.useEffect(() => {
     (async () => {
@@ -164,6 +189,7 @@ export default function MapScreen() {
       }
 
       myFriends();
+      distanceUsers();
       let location = await Location.getCurrentPositionAsync({});
       randomLocation.distance()
 
@@ -212,7 +238,8 @@ export default function MapScreen() {
                     }
                   }
                   */
-
+                  myFriends();
+                  distanceUsers();
                   UpdateLocation();
                   setDistance({
                     thing: calcualteDistance(pin.latitude, pin.longitude, uq.latitude, uq.longitude)
