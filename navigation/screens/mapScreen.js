@@ -166,42 +166,6 @@ export default function MapScreen() {
     });
   };
 
-
-//  const checkFirst = async () => {
-//    const value = await AsyncStorage.getItem("user");
-//    if (value == null)
-//      return;
-//    getUser();
-//    Axios.post("https://deco3801-betterlatethannever.uqcloud.net/userFirst", {
-//        username: value
-//    }).then((response) => {
-//        console.log("RESPONDE" + response.data);
-//        if (response.data.firstTime) {
-//            setModalVis(true);
-//            updateFirst();
-//        }
-//    });
-//  };
-//
-//const updateFirst = async () => {
-//    getUser();
-//    const value = await AsyncStorage.getItem("user");
-//    const username = JSON.parse(value);
-//    if (value == null)
-//      return;
-//
-//    console.log('test' + user);
-//    console.log(user);
-//    Axios.post("https://deco3801-betterlatethannever.uqcloud.net/updateUserFirst", {
-//        value: 1,
-//        username: username,
-//    }).then((response) => {
-//        if (response.data.success) {
-//            console.log("Updated first time");
-//        }
-//        console.log(response.data);
-//    });
-//  };
   // event that get asks for permission then gets the users inital location
   React.useEffect(() => {
     (async () => {
@@ -247,26 +211,6 @@ export default function MapScreen() {
                     latitude: e.nativeEvent.coordinate.latitude,
                     longitude: e.nativeEvent.coordinate.longitude,
                   });
-                  /*
-                  countItems();
-                  console.log("count:")
-                  console.log(count);
-                  //setting up items database 
-                
-                  if (count < 5){
-                    let amount = 5 - count;
-                    console.log("amount:");
-                    console.log(amount);
-                    //add amount of items to database
-                    for (let i = 0; i < amount; i++) {
-                      const place = randomCirclePoint(uq, 1000);
-                      console.log("lat and long:", place.latitude, place.longitude);
-                      const itemtype = getRandomInt(1, 5);
-                      console.log("type:", itemtype);
-                      addItem(itemtype, place.latitude, place.longitude);
-                    }
-                  }
-                  */
 
                   getUser();
                   UpdateLocation();
