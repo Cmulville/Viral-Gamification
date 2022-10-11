@@ -63,7 +63,7 @@ export default function MapScreen() {
       }
     ).then((response) => {
         setUsers(response.data.users);
-        console.log(users);
+        console.log("users", users);
     });
   }
 
@@ -74,7 +74,9 @@ export default function MapScreen() {
         username: username,
       }
     ).then((response) => {
+        Alert.alert("Infected", "Username must not be empty", [{text:"Ok"}]);
         console.log("infected", {username});
+        
     });
   }
 
@@ -97,7 +99,7 @@ export default function MapScreen() {
       }
     ).then((response) => {
       setFriends(response.data.friends);
-      console.log(friends);
+      console.log("friends", friends);
     });
   };
 
@@ -340,6 +342,7 @@ export default function MapScreen() {
             }
             setItems(newItems);
           }
+          distanceUsers();
           contact();
           UpdateLocation();
           setDistance({
