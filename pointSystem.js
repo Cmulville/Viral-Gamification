@@ -90,6 +90,7 @@ const PointSystem = {
         } catch(e) {
             alert("Couldn't update points")
         }
+        return points
     },
 
     immunity_interact: (user, immune_user) => {

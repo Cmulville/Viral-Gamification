@@ -57,13 +57,7 @@ const Tab = createBottomTabNavigator();
 
           return <Ionicons name={iconName} size={size} color={screenColors} />;
         },
-        headerRight: () => {
-          <Button
-              onPress={() => navigation.navigate("Settings")}
-              title="Settings"
-              color="#fff"
-            />
-        }
+       
           
         })}
       >
