@@ -1,6 +1,7 @@
 import * as React from "react";
 import MapView, { Callout, Circle, Marker } from "react-native-maps";
-import { StyleSheet, Text, View, Dimensions, Image, icon, Alert } from "react-native";
+import { StyleSheet, Text, View, Dimensions, Image, 
+    icon, Alert, Modal, Button} from "react-native";
 import * as Location from "expo-location";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Axios from "axios";
@@ -25,8 +26,22 @@ export default function MapScreen() {
   const [friends, setFriends] = React.useState([]);
   const [count, setCount] = React.useState(0);
 
+  //Used for the pop up
+  const [modalVis, setModalVis] = React.useState(true);
+  const [firstPage, setFirstPage] = React.useState(true);
+  const infected = "This means that your main goal is to try and cure yourself from being " + 
+		   "infected by collecting items accross the map. You may infect others as you do so!";
+  const healthy = "This means that your main goal is to avoid being infected by other users " +
+		  "in your nearby vicinity and to collect items found accross the map.";
+  const message1 = "Welcome to Lets Get Viral! The immersive, simulated virus game made to be " +
+		   "played with friends and the community. You have started off the game as HEALTHY";
+
+
   const getUser = async () => {
     try {
+      if (user != "") {
+          return;
+      }
       const value = await AsyncStorage.getItem("user");
       if (value != null) {
         setUser(JSON.parse(value));
@@ -152,6 +167,41 @@ export default function MapScreen() {
   };
 
 
+//  const checkFirst = async () => {
+//    const value = await AsyncStorage.getItem("user");
+//    if (value == null)
+//      return;
+//    getUser();
+//    Axios.post("https://deco3801-betterlatethannever.uqcloud.net/userFirst", {
+//        username: value
+//    }).then((response) => {
+//        console.log("RESPONDE" + response.data);
+//        if (response.data.firstTime) {
+//            setModalVis(true);
+//            updateFirst();
+//        }
+//    });
+//  };
+//
+//const updateFirst = async () => {
+//    getUser();
+//    const value = await AsyncStorage.getItem("user");
+//    const username = JSON.parse(value);
+//    if (value == null)
+//      return;
+//
+//    console.log('test' + user);
+//    console.log(user);
+//    Axios.post("https://deco3801-betterlatethannever.uqcloud.net/updateUserFirst", {
+//        value: 1,
+//        username: username,
+//    }).then((response) => {
+//        if (response.data.success) {
+//            console.log("Updated first time");
+//        }
+//        console.log(response.data);
+//    });
+//  };
   // event that get asks for permission then gets the users inital location
   React.useEffect(() => {
     (async () => {
@@ -163,21 +213,26 @@ export default function MapScreen() {
         console.log('Permission to access locaion was approved')
       }
 
-      myFriends();
       let location = await Location.getCurrentPositionAsync({});
-      randomLocation.distance()
-
+      getUser();
+      myFriends();
       // set Pin being used to change the pin
       setPin({
           latitude: location.coords.latitude,
           longitude: location.coords.longitude,
       });
     })();
-    }, []);
- 
+    }, [user]);
+
   return (
     
     <View style={styles.container}>
+      <Modal animationType ={"slide"} transparent = {true} visible = {modalVis}>
+	<View style = {styles.modal}>
+	<Text style={{fontSize:20}}>{message1}</Text>
+	<Button title ="Next Page" onPress = {() => {setModalVis(false)}}/>
+	</View>
+      </Modal>
       <MapView style={styles.map}
               // where the map will hover when opened Location is St Lucia
               initialRegion = {{latitude: -27.4975,
@@ -213,7 +268,9 @@ export default function MapScreen() {
                   }
                   */
 
+                  getUser();
                   UpdateLocation();
+		  myFriends();
                   setDistance({
                     thing: calcualteDistance(pin.latitude, pin.longitude, uq.latitude, uq.longitude)
                   });
@@ -246,7 +303,10 @@ export default function MapScreen() {
                       <Marker coordinate = {{latitude: friend.Latitude,
                                              longitude: friend.Longitude,}}
                               pinColor = {friend.InfectionStatus == 'Infected' ? 'red' : 'green'}>
-                      <Callout><Text>{friend.Username}</Text></Callout>
+                      <Callout>
+			<Text>Username: {friend.Username}</Text>
+			<Text>Infection Status: {friend.InfectionStatus}</Text>
+		      </Callout>
                       </Marker>
                   );
               })
@@ -297,6 +357,12 @@ export default function MapScreen() {
   );
 }
 
+const statusColours = {
+    Cured: "#05cf02",
+    Infected: "#f52718",
+    Immune: "#0aefff",
+  };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -307,5 +373,19 @@ const styles = StyleSheet.create({
   map: {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
+  },
+  modal: {
+    //justifyContent: 'center',  
+    alignItems: 'center',   
+
+    backgroundColor : statusColours["Immune"],
+    padding: 10,
+    height: '75%',  
+    width: '80%',  
+    borderRadius:10,  
+    borderWidth: 4,  
+    borderColor: '#fff',    
+    marginTop: 80,  
+    marginLeft: 40,
   },
 });

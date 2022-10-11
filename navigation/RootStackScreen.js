@@ -24,7 +24,7 @@ const RootStackScreen = ({ navigation }) => {
       <RootStack.Screen
         name="MainScreen"
         component={MainScreen}
-        options={{ headerShown: false }}
+        options={{ headerShown: true }}
       />
       <RootStack.Screen
         name="RegisterScreen"
