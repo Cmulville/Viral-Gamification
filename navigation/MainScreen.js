@@ -98,11 +98,11 @@ const Tab = createBottomTabNavigator();
                         headerShown: false
                         }}/>
 
-          <Tab.Screen name={timerName} component={HomeScreen} 
+          {/* <Tab.Screen name={timerName} component={HomeScreen} 
           options={{ 
                         tabBarLabel: timerName,
                         headerShown: false
-                        }}/>
+                        }}/> */}
 
         {/* <Tab.Screen name={detailName} component={DetailScreen}/> */}
       </Tab.Navigator>

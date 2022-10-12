@@ -10,7 +10,7 @@ import { tabContext } from "../tabContext";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 
-export default function DrawerNav() {
+export default function DrawerNav({ }) {
     const Drawer = createDrawerNavigator();
     const { status } = React.useContext(tabContext)
     const { points } = React.useContext(tabContext)
@@ -18,11 +18,25 @@ export default function DrawerNav() {
     const navigation = useNavigation();
 
 return (
-        <Drawer.Navigator>
+        <Drawer.Navigator
+        screenOptions={({ route }) => ({
+            headerLeft: () => 
+          <Text
+              style={styles.container}
+              onPress={() => navigation.dispatch(DrawerActions.toggleDrawer)}
+              color="#fff"
+            ><Ionicons name="menu-outline" size={40} color="white" /></Text>,
+          headerStyle: {
+            backgroundColor: screenColors
+          }
+            
+          })}
+            >
         <Drawer.Screen
         name="MainScreen"
         component={MainScreen}
         options={{
+          drawerLabel: "Back to Game",
           gestureEnabled: false,
           title: status + " | Points: " + points,
           //headerLeft: () => null,
@@ -37,9 +51,17 @@ return (
           }
         }}
       />
-        <Drawer.Screen name="Timer" component={HomeScreen}/>
-        <Drawer.Screen name="Settings" component={SettingsScreen}/>
-        <Drawer.Screen name="Details" component={DetailScreen} />
+        <Drawer.Screen name="Event Countdown" component={HomeScreen}
+            options={{
+                drawerLabel: "Event Countdown",
+            }}
+        />
+        <Drawer.Screen name="Settings" component={SettingsScreen}
+        
+        />
+        <Drawer.Screen name="Details" component={DetailScreen} 
+        
+        />
         
         </Drawer.Navigator>
     );

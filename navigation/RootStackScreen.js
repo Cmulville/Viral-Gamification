@@ -37,7 +37,8 @@ const RootStackScreen = ({ navigationx }) => {
         <RootStack.Screen name={"Drawer"} component={DrawerNav}
           options={{
             headerShown: false,
-            tabBarShowLabel: false
+            tabBarShowLabel: false,
+            gestureEnabled: false
           }}
           />
       {/* <RootStack.Screen
