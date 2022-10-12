@@ -49,49 +49,60 @@ function RegisterScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-
+      <View style ={styles.inputView}>
       <TextInput
         style={styles.TextInput}
         onChangeText={setFirstName}
         placeholderTextColor="#003f5c"
         placeholder="First Name"
       />
+      </View>
 
+      <View style = {styles.inputView}>
       <TextInput
         style={styles.TextInput}
         onChangeText={setLastName}
         placeholderTextColor="#003f5c"
         placeholder="Last Name"
       />
+      </View>
 
+      <View style = {styles.inputView}>
       <TextInput
         style={styles.TextInput}
         onChangeText={setUsername}
         placeholderTextColor="#003f5c"
         placeholder="Username"
       />
+      </View>
 
+      <View style = {styles.inputView}>
       <TextInput
         style={styles.TextInput}
         onChangeText={setEmail}
         placeholderTextColor="#003f5c"
         placeholder="Email"
       />
+      </View>
 
+      <View style = {styles.inputView}>
       <TextInput
         style={styles.TextInput}
         onChangeText={setPassword}
         placeholderTextColor="#003f5c"
         placeholder="Password"
       />
+      </View>
 
+      <View style = {styles.inputView}>
       <TextInput
         style={styles.TextInput}
         onChangeText={setConfirmPassword}
         placeholderTextColor="#003f5c"
         placeholder="Confirm Password"
       />
-
+      </View>
+      
       <TouchableOpacity onPress={() => navigation.navigate("LoginScreen")}>
         <Text style={styles.forgot_button}>
           Already have an account? Login!
@@ -106,44 +117,38 @@ function RegisterScreen({ navigation }) {
 }
 
 export default RegisterScreen;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "column",
-    backgroundColor: "#7bb2be",
+    backgroundColor: "#0b4c68",
     alignItems: "center",
     justifyContent: "center",
   },
-
-  image: {
-    marginBottom: 40,
-    height: 300,
-    width: 300,
+  titleText:{
+    fontFamily:"sans-serif",
+    textAlign:"center",
+    fontSize:20,
+    fontWeight:"bold",
   },
-
-  inputView: {
-    backgroundColor: "#fff",
-    borderRadius: 30,
-    width: "70%",
-    height: 45,
-    marginBottom: 20,
-
-    alignItems: "left",
+  inputView:{
+  backgroundColor:"#ffffff",
+  borderRadius:30,
+  width: "70%", 
+  height: 50,
+  marginBottom: 20,
+  alignItems: "flex-start",
   },
-
   TextInput: {
-    height: 50,
+    height: 20,
     flex: 1,
-    padding: 10,
-    marginLeft: 20,
-    width: "100%",
+    padding: 0,
+    marginLeft: 15,
   },
-
   forgot_button: {
     height: 30,
     marginBottom: 30,
   },
-
   loginBtn: {
     width: "80%",
     borderRadius: 25,
@@ -151,6 +156,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: 40,
-    backgroundColor: "#FFF",
+    backgroundColor: "#da0f0f",
   },
 });
