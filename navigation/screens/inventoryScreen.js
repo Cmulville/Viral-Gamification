@@ -26,12 +26,7 @@ export default function InventoryScreen({changeStatus}) {
     let item2 = 0
     let item3 = 0
 
-    //Assign Item counts based on ID
-    // console.log(items)
-    // console.log('inventory')
     items.forEach(element => {
-        // console.log(element)
-        // console.log ("Split")
         if (element.ItemID == 1) {
             sumSanitizer = element.Count
         } 

@@ -135,6 +135,7 @@ export default function App() {
   }
 
   const addPoints = async (new_points) => {
+    console.log(new_points, typeof(new_points))
     try {
       
       const value = parseInt(points) + new_points

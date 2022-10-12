@@ -42,7 +42,6 @@ export default function LoginScreen({ navigation }) {
         errorAlert();
         login_success = false
       } else {
-        storeUser(response.data[0].Username);
         navigation.navigate("MainScreen");
       }
     });    

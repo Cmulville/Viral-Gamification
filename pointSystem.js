@@ -76,20 +76,21 @@ const PointSystem = {
             }
         },
 
-    collect_item: async (item) => {
+    collect_item: (itemType) => {
         const points = 0
-        if (item == "Gloves") {
-            points == 150
-        } else if (item == "Sanitizier") {
+        if (itemType == 0) {
+            points = 150
+        } else if (itemType == 1) {
             points = 500
-        } else if (item == "Face Mask") {
+        } else if (itemType == 2) {
             points = 300
         }
-        try {
-            await AsyncStorage.setItem("Points", points)
-        } catch(e) {
-            alert("Couldn't update points")
-        }
+        // try {
+        //     await AsyncStorage.setItem("Points", points)
+        // } catch(e) {
+        //     alert("Couldn't update points")
+        // }
+        console.log("The item type was "+itemType+" and the points received were "+points)
         return points
     },
 

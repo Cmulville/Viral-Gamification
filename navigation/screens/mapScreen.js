@@ -13,6 +13,8 @@ import * as Location from "expo-location";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Axios from "axios";
 import { randomCirclePoint } from "random-location";
+import { tabContext } from "../../tabContext";
+import PointSystem from "../../pointSystem";
 
 export default function MapScreen() {
   const UNIQUEITEMS = 3;
@@ -26,6 +28,8 @@ export default function MapScreen() {
   const [distance, setDistance] = React.useState({ thing: 0 });
   const [user, setUser] = React.useState("");
   const [testuser, setTestUser] = React.useState({ latitude: 0, latitude: 0 });
+  const { screenColors } = React.useContext(tabContext)
+  const { addPoints } = React.useContext(tabContext)
   // const [items, setItems] = React.useState({
   //   ids: [],
   //   idtypes: [],
@@ -36,11 +40,23 @@ export default function MapScreen() {
   const [users, setUsers] = React.useState([]);
   const [count, setCount] = React.useState(0);
   const [items, setItems] = React.useState([]);
+
+  const itemNames = {
+    0: 'Sanitizer',
+    1: 'Gloves',
+    2: 'Face Mask'
+  }
+
+  const getItemName = (itemType) => {
+    return itemNames[itemType]
+  }
+
   const [initialCentre, setInitialCentre] = React.useState({
     latitude: 0,
     longitude: 0,
   });
 
+  //Will store user using context
   const getUser = async () => {
     try {
       if (user != "") {
@@ -215,6 +231,8 @@ export default function MapScreen() {
       console.log("response received");
       console.log(response.data);
       if (response.data.result.length == 0) {
+        console.log(itemtype, (PointSystem.collect_item(itemtype)))
+        console.log(typeof(PointSystem.collect_item(itemtype)), PointSystem.collect_item(itemtype))
         addNewItem(itemtype); 
       } else {
         updateItem(itemtype);
@@ -230,6 +248,8 @@ export default function MapScreen() {
     }).then((response) => {
       console.log("New User Item Added");
       console.log(response.data);
+      console.log(itemtype, (PointSystem.collect_item(itemtype)))
+      console.log(typeof(PointSystem.collect_item(itemtype)), PointSystem.collect_item(itemtype))
     });
 
   };
@@ -241,21 +261,23 @@ export default function MapScreen() {
     }).then((response) => {
       console.log("Updated Item Count");
       console.log(response.data);
+      console.log(itemtype + "This is that number")
+      console.log(typeof(PointSystem.collect_item(itemtype)), PointSystem.collect_item(itemtype))
     });
 
   };
 
   function getItem(itemType) {
-    if (itemType == 0) {
-      return require("../../assets/images/mask.jpg");
-    }
-
     if (itemType == 1) {
-      return require("../../assets/images/gloves.png");
+      return require("../../assets/images/sanitizer.png");
     }
 
     if (itemType == 2) {
-      return require("../../assets/images/bart.jpeg");
+      return require("../../assets/images/gloves.png");
+    }
+
+    if (itemType == 0) {
+      return require("../../assets/images/mask.png");
     }
   }
 
@@ -310,7 +332,7 @@ export default function MapScreen() {
                 items[i].longitude,
                 e.nativeEvent.coordinate.latitude,
                 e.nativeEvent.coordinate.longitude
-              ) < 20
+              ) < 100
             ) {
               addItem(items[i].itemType);
               Alert.alert(
@@ -406,7 +428,7 @@ export default function MapScreen() {
                 latitude: friend.Latitude,
                 longitude: friend.Longitude,
               }}
-              pinColor={friend.InfectionStatus == "Infected" ? "red" : "green"}
+              pinColor={friend.InfectionStatus = screenColors}
             >
               <Callout>
                 <Text>{friend.Username}</Text>
