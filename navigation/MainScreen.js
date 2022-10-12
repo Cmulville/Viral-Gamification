@@ -40,7 +40,12 @@ const Tab = createBottomTabNavigator();
   return (
     <Tab.Navigator
       initalRouteName={MainScreen}
+      
       screenOptions={({ route }) => ({
+        tabBarLabelStyle: {
+          color: '#fff',
+          
+        },
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
           let rn = route.name;
@@ -55,9 +60,14 @@ const Tab = createBottomTabNavigator();
             iconName = focused ? 'timer': "timer-outline";
           }
 
-          return <Ionicons name={iconName} size={size} color={screenColors} />;
+          return <Ionicons name={iconName} size={size} color={"#fff"} />;
         },
-       
+       tabBarStyle: {
+        backgroundColor: screenColors,
+       },
+       tabBarBadgeStyle: {
+        textDecorationColor: screenColors,
+       }
           
         })}
       >
