@@ -26,16 +26,6 @@ export default function MapScreen() {
   const [friends, setFriends] = React.useState([]);
   const [count, setCount] = React.useState(0);
 
-  //Used for the pop up
-  const [modalVis, setModalVis] = React.useState(true);
-  const [firstPage, setFirstPage] = React.useState(true);
-  const infected = "This means that your main goal is to try and cure yourself from being " + 
-		   "infected by collecting items accross the map. You may infect others as you do so!";
-  const healthy = "This means that your main goal is to avoid being infected by other users " +
-		  "in your nearby vicinity and to collect items found accross the map.";
-  const message1 = "Welcome to Lets Get Viral! You have started off the game as HEALTHY";
-  const [seenBefore, setSeenBefore] = React.useState(0);
-
 
   const getUser = async () => {
     try {
@@ -187,35 +177,11 @@ export default function MapScreen() {
           longitude: location.coords.longitude,
       });
     })();
-    }, [user]);
+    }, []);
 
   return (
     
     <View style={styles.container}>
-      <Modal animationType ={"slide"} transparent = {true} visible = {modalVis}>
-      { firstPage ?
-	<View style = {styles.modal}>
-            <View style={{marginBottom:25}}>
-	        <Text style={{fontSize:20}}>{message1}</Text>
-            </View>
-            <Text>{healthy}</Text>
-            <View style = {styles.imageDisplay}>
-                <Image
-                  source={require("../../assets/images/mask.jpg")}
-                  style={{ height: 70, width: 70 }}/>
-                <Image
-                  source={require("../../assets/images/gloves.png")}
-                  style={{ height: 70, width: 70 }}/>
-            </View>
-	    <Button title ="Next Page" onPress = {() => {setFirstPage(false)}}/>
-	</View>
-        :
-        <View style={styles.modal}>
-            <Text>Exit</Text>
-            <Button title="Exit" onPress ={() =>{setModalVis(false)}}/>
-        </View>
-      }
-      </Modal>
       <MapView style={styles.map}
               // where the map will hover when opened Location is St Lucia
               initialRegion = {{latitude: -27.4975,
