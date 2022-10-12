@@ -53,8 +53,9 @@ export default function MapScreen() {
       console.log(e);
     }
   };
+  
 
-  const distanceUsers = () => {
+  const getUsers = () => {
     getUser();
     Axios.post(
       "https://deco3801-betterlatethannever.uqcloud.net/users/distance",
@@ -83,7 +84,9 @@ export default function MapScreen() {
   const contact = () => { 
     for (var i = 0; i < users.length; i++) {
       let dist = calculateDistance(pin.latitude, pin.longitude, users[i].Latitude, users[i].Longitude);
-      if (dist < 100){
+      console.log(dist);
+      if (dist < 10 && users[i].InfectionStatus == "Healthy"){
+        console.log("infected");
         infect(users[i].Username);
       }
     }
@@ -241,7 +244,7 @@ export default function MapScreen() {
       }
 
       myFriends();
-      distanceUsers();
+      getUsers();
       let location = await Location.getCurrentPositionAsync({});
       randomLocation.distance();
 
@@ -342,7 +345,7 @@ export default function MapScreen() {
             }
             setItems(newItems);
           }
-          distanceUsers();
+          getUsers();
           contact();
           UpdateLocation();
           setDistance({
