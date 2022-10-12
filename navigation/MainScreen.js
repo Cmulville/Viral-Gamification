@@ -1,9 +1,9 @@
 import * as React from "react";
 
-import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { View, Text, Button, Image } from 'react-native';
 
 //Screens
 import HomeScreen from "./screens/homeScreen";
@@ -12,32 +12,40 @@ import MapScreen from "./screens/mapScreen";
 import LoginScreen from "./screens/loginScreen";
 import InventoryScreen from "./screens/inventoryScreen";
 import FriendScreen from "./screens/friendScreen";
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import PointSystem from "../pointSystem";
+import { tabContext } from "../tabContext";
 
-// Screen names
+export default function MainScreen({ navigation }) {
+  
+  // Screen names
 const inventoryName = "Inventory";
 const mapName = "Map";
 const friendList = "Friends";
+const timerName = "Event Timer";
 
-// Player status
-const status = "Immune";
-const points = 0;
-const statusColours = {
-  Cured: "#05cf02",
+//status and points context
+const { status } = React.useContext(tabContext)
+const { points } = React.useContext(tabContext)
+  
+  const statusColours = {
+  Healthy: "#05cf02",
   Infected: "#f52718",
   Immune: "#0aefff",
 };
 const screenColors = statusColours[status];
 
 const Tab = createBottomTabNavigator();
-const topTab = createMaterialTopTabNavigator();
-const Stack = createStackNavigator();
 
-export default function MainScreen({ navigation }) {
   return (
     <Tab.Navigator
       initalRouteName={MainScreen}
+      
       screenOptions={({ route }) => ({
+        tabBarLabelStyle: {
+          color: '#fff',
+          
+        },
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
           let rn = route.name;
@@ -48,48 +56,42 @@ export default function MainScreen({ navigation }) {
             iconName = focused ? "briefcase" : "briefcase-outline";
           } else if (rn == friendList) {
             iconName = focused ? "people" : "people-outline";
+          } else if (rn == timerName) {
+            iconName = focused ? 'timer': "timer-outline";
           }
 
-          return <Ionicons name={iconName} size={size} color={screenColors} />;
+          return <Ionicons name={iconName} size={size} color={"#fff"} />;
         },
+       tabBarStyle: {
+        backgroundColor: screenColors,
+       },
+       tabBarBadgeStyle: {
+        textDecorationColor: screenColors,
+       }
+          
+        })}
+      >
+        <Tab.Screen name={mapName} component={MapScreen}
+        options={{ 
+                      tabBarLabel: mapName,
+                      headerShown: false
+                      }}/>
+        <Tab.Screen name={inventoryName} component={InventoryScreen}
+        options={{ 
+                      tabBarLabel: inventoryName,
+                      headerShown: false
+                      }}/>
+        <Tab.Screen name={friendList} component={FriendScreen} 
+        options={{ 
+                      tabBarLabel: friendList,
+                      headerShown: false
+                      }}/>
 
-        headerStyle: {
-          backgroundColor: screenColors,
-
-          //   alignItems: 'center'
-        },
-        // headerRight: () => (
-        //   <Button
-        //     onPress={() => navigation.navigate(loginName)}
-        //     title="Login"
-        //     color="#0"
-        //   />
-        // ),
-
-        title: status + " | Points:" + " " + points,
-      })}
-    >
-      <Tab.Screen
-        name={mapName}
-        component={MapScreen}
-        options={{
-          tabBarLabel: mapName,
-        }}
-      />
-      <Tab.Screen
-        name={inventoryName}
-        component={InventoryScreen}
-        options={{
-          tabBarLabel: inventoryName,
-        }}
-      />
-      <Tab.Screen
-        name={friendList}
-        component={FriendScreen}
-        options={{
-          tabBarLabel: friendList,
-        }}
-      />
+        <Tab.Screen name={timerName} component={HomeScreen} 
+        options={{ 
+                      tabBarLabel: timerName,
+                      headerShown: false
+                      }}/>
 
       {/* <Tab.Screen name={detailName} component={DetailScreen}/> */}
     </Tab.Navigator>

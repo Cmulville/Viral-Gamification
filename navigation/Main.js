@@ -29,11 +29,11 @@ const friendScreen = "Friends";
 const status = "Immune";
 const points = 0;
 const statusColours = {
-  Cured: "#05cf02",
-  Infected: "#f52718",
-  Immune: "#0aefff",
-};
-const screenColors = statusColours[status];
+  'Healthy': '#05cf02',
+  'Infected' : '#f52718',
+  'Immune' : '#0aefff'
+}
+const screenColors = statusColours[status]
 
 const Tab = createBottomTabNavigator();
 const topTab = createMaterialTopTabNavigator();
