@@ -27,20 +27,20 @@ const RootStackScreen = ({ navigationx }) => {
   return (
 
     <RootStack.Navigator>
-      <RootStack.Screen
+      {/* <RootStack.Screen
         name="LoginScreen"
         component={LoginScreen}
         options={{ headerShown: false }}
 
-      />
+      /> */}
               
-        <RootStack.Screen name={"Drawer"} component={DrawerNav}
+        {/* <RootStack.Screen name={"Drawer"} component={DrawerNav}
           options={{
             headerShown: false,
             tabBarShowLabel: false
           }}
-          />
-      {/* <RootStack.Screen
+          /> */}
+      <RootStack.Screen
         name="MainScreen"
         component={MainScreen}
         options={{
@@ -57,7 +57,7 @@ const RootStackScreen = ({ navigationx }) => {
             backgroundColor: screenColors
           }
         }}
-      /> */}
+      />
       <RootStack.Screen 
         name="RegisterScreen" 
         component={RegisterScreen} 

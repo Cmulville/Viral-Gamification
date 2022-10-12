@@ -40,7 +40,7 @@ export default function LoginScreen({ navigation }) {
         errorAlert();
         login_success = false
       } else {
-        navigation.navigate("MainScreen")
+        navigation.navigate("Drawer")
       }
     });    
     
