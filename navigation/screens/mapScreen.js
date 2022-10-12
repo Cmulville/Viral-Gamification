@@ -76,8 +76,7 @@ export default function MapScreen() {
       }
     ).then((response) => {
         Alert.alert("Infected", "Username must not be empty", [{text:"Ok"}]);
-        console.log("infected", {username});
-        
+        console.log("infected", {username}); 
     });
   }
 
