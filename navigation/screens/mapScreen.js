@@ -64,9 +64,9 @@ export default function MapScreen() {
   const [firstPage, setFirstPage] = React.useState(true);
   const infected = "This means that your main goal is to try and cure yourself from being " + 
 		   "infected by collecting items accross the map. You may infect others as you do so!";
-  const healthy = "This means that your main goal is to avoid being infected by other users " +
-		  "in your nearby vicinity and to collect items found accross the map.";
-  const message1 = "Welcome to Lets Get Viral! You have started off the game as HEALTHY";
+  const healthy = "Avoid being infected by other players who are in the game. You will not " +
+                  "be able to see their location! Collect items to gather points and keep yourself healthy.";
+  const message1 = "Welcome! You have started off the game as HEALTHY";
   const [seenBefore, setSeenBefore] = React.useState(0);
 
   // const getUser = async () => {
@@ -305,7 +305,7 @@ export default function MapScreen() {
     }
 
   }
-
+  const itemMap = ["Mask", "Gloves", "Vaccine", "Sanitizer", "Paracetamol", "Nebulizer"];
   // event that get asks for permission then gets the users inital location
   React.useEffect(() => {
     (async () => {
@@ -334,38 +334,46 @@ export default function MapScreen() {
       <Modal animationType ={"slide"} transparent = {true} visible = {modalVis}>
      	 { firstPage ?
      	   <View style = {styles.modal}>
+               <View style={{marginBottom:25}}>
+     	           <Text style={{fontSize:25, fontWeight: 'bold'}}>LETS GET VIRAL!</Text>
+     	       </View>
      	       <View style={{marginBottom:25}}>
      	           <Text style={{fontSize:20}}>{message1}</Text>
      	       </View>
      	       <Text>{healthy}</Text>
-     	       <View style = {styles.imageDisplay}>
-     	           <Image
-     	             source={require("../../assets/images/gloves.png")}
-     	             style={{ height: 70, width: 80 }}/>
-                   <Image
-     	             source={require("../../assets/images/sanitizer.png")}
-     	             style={{ height: 105, width: 80 }}/>
-                   <Image
-     	             source={require("../../assets/images/mask.png")}
-     	             style={{ height: 70, width: 80 }}/>
-
-     	       </View>
-     	       <View style = {styles.imageDisplay}>
-                   <Image
-     	             source={require("../../assets/images/syringe.png")}
-     	             style={{ height: 70, width: 80 }}/>
-                   <Image
-     	             source={require("../../assets/images/Nebulizer.png")}
-     	             style={{ height: 70, width: 80 }}/>
-                   <Image
-     	             source={require("../../assets/images/Tablets.png")}
-     	             style={{ height: 70, width: 80 }}/>
+               <View style={styles.modalImages}>
+     	            <View style = {styles.imageDisplay}>
+     	                <Image
+     	                  source={require("../../assets/images/gloves.png")}
+     	                  style={{ height: 70, width: 80 }}/>
+                        <Image
+     	                  source={require("../../assets/images/sanitizer.png")}
+     	                  style={{ height: 105, width: 80 }}/>
+                        <Image
+     	                  source={require("../../assets/images/mask.png")}
+     	                  style={{ height: 70, width: 80 }}/>
+     	            </View>
+     	            <View style = {styles.imageDisplay}>
+                        <Image
+     	                  source={require("../../assets/images/syringe.png")}
+     	                  style={{ height: 70, width: 80 }}/>
+                        <Image
+     	                  source={require("../../assets/images/Nebulizer.png")}
+     	                  style={{ height: 70, width: 80 }}/>
+                        <Image
+     	                  source={require("../../assets/images/Tablets.png")}
+     	                  style={{ height: 70, width: 80 }}/>
+                    </View>
                </View>
      	       <Button title ="Next Page" onPress = {() => {setFirstPage(false)}}/>
      	   </View>
      	   :
      	   <View style={styles.modal}>
-     	       <Text>Exit</Text>
+               <Text style={{fontSize:15, marginBottom: 25}}>Search for your friends and add them to view their
+               location and their current infection status! </Text>
+               <Image
+     	         source={require("../../assets/images/friends.jpg")}
+     	         style={{ height: 400, width: 200, marginBottom: 20}}/>
      	       <Button title="Exit" onPress ={() =>{setModalVis(false)}}/>
      	   </View>
      	 }
@@ -511,17 +519,20 @@ export default function MapScreen() {
               }}
             >
               { item.itemType != 3 ?
-              <Image
-                source={getItem(item.itemType)}
-                style={{ height: 50, width: 70 }}
-              />
+                  <Image
+                  source={getItem(item.itemType)}
+                  style={{ height: 50, width: 70 }}
+                />
               :
-              <Image
-                source={getItem(item.itemType)}
-                style={{ height: 70, width: 40 }}
-              />
-
+                 <Image
+                   source={getItem(item.itemType)}
+                   style={{ height: 70, width: 40 }}
+                 />
               }
+            <Callout>
+                 <Text>{itemMap[item.itemType]}</Text>
+           </Callout>
+
             </Marker>
           );
         })}
@@ -592,6 +603,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 10
   },
+
+  modalImages: {
+    borderRadius: 40,
+    borderWidth: 10,
+    borderColor: "grey",
+    backgroundColor: 'lightgrey',
+    marginBottom: 20,
+    marginTop: 20
+  },
+
   map: {
     width: Dimensions.get("window").width,
     height: Dimensions.get("window").height,
