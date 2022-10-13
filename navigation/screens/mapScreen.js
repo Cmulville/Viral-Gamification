@@ -17,285 +17,9 @@ import Axios from "axios";
 import { randomCirclePoint } from "random-location";
 import { tabContext } from "../../tabContext";
 import PointSystem from "../../pointSystem";
+import {HealthyMap, InfectedMap, ImmuneMap} from "../../mapStyles"
 
 export default function MapScreen() {
-  var mapStyle = [
-    {
-      elementType: "geometry",
-      stylers: [
-        {
-          color: "#212121",
-        },
-      ],
-    },
-    {
-      elementType: "labels.icon",
-      stylers: [
-        {
-          visibility: "off",
-        },
-      ],
-    },
-    {
-      elementType: "labels.text.fill",
-      stylers: [
-        {
-          color: "#757575",
-        },
-      ],
-    },
-    {
-      elementType: "labels.text.stroke",
-      stylers: [
-        {
-          color: "#212121",
-        },
-      ],
-    },
-    {
-      featureType: "administrative",
-      stylers: [
-        {
-          color: "#585656",
-        },
-      ],
-    },
-    {
-      featureType: "administrative",
-      elementType: "geometry",
-      stylers: [
-        {
-          color: "#757575",
-        },
-      ],
-    },
-    {
-      featureType: "administrative.country",
-      elementType: "labels.text.fill",
-      stylers: [
-        {
-          color: "#9e9e9e",
-        },
-      ],
-    },
-    {
-      featureType: "administrative.locality",
-      elementType: "labels.text.fill",
-      stylers: [
-        {
-          color: "#bdbdbd",
-        },
-      ],
-    },
-    {
-      featureType: "landscape",
-      stylers: [
-        {
-          color: "#585656",
-        },
-      ],
-    },
-    {
-      featureType: "landscape",
-      elementType: "labels",
-      stylers: [
-        {
-          visibility: "off",
-        },
-      ],
-    },
-    {
-      featureType: "poi",
-      elementType: "labels.text.fill",
-      stylers: [
-        {
-          color: "#757575",
-        },
-      ],
-    },
-    {
-      featureType: "poi.park",
-      elementType: "geometry",
-      stylers: [
-        {
-          color: "#181818",
-        },
-      ],
-    },
-    {
-      featureType: "poi.park",
-      elementType: "labels.text.fill",
-      stylers: [
-        {
-          color: "#616161",
-        },
-      ],
-    },
-    {
-      featureType: "poi.park",
-      elementType: "labels.text.stroke",
-      stylers: [
-        {
-          color: "#1b1b1b",
-        },
-      ],
-    },
-    {
-      featureType: "road",
-      stylers: [
-        {
-          visibility: "simplified",
-        },
-      ],
-    },
-    {
-      featureType: "road",
-      elementType: "geometry.fill",
-      stylers: [
-        {
-          color: "#2c2c2c",
-        },
-      ],
-    },
-    {
-      featureType: "road",
-      elementType: "labels.icon",
-      stylers: [
-        {
-          visibility: "off",
-        },
-      ],
-    },
-    {
-      featureType: "road",
-      elementType: "labels.text.fill",
-      stylers: [
-        {
-          color: "#8a8a8a",
-        },
-      ],
-    },
-    {
-      featureType: "road.arterial",
-      elementType: "geometry",
-      stylers: [
-        {
-          color: "#41d287",
-        },
-      ],
-    },
-    {
-      featureType: "road.arterial",
-      elementType: "labels",
-      stylers: [
-        {
-          color: "#ffffff",
-        },
-      ],
-    },
-    {
-      featureType: "road.highway",
-      stylers: [
-        {
-          color: "#dd64d9",
-        },
-      ],
-    },
-    {
-      featureType: "road.highway",
-      elementType: "labels",
-      stylers: [
-        {
-          color: "#ffffff",
-        },
-      ],
-    },
-    {
-      featureType: "road.highway.controlled_access",
-      elementType: "geometry",
-      stylers: [
-        {
-          color: "#4e4e4e",
-        },
-      ],
-    },
-    {
-      featureType: "road.local",
-      stylers: [
-        {
-          color: "#41d287",
-        },
-        {
-          weight: 2.5,
-        },
-      ],
-    },
-    {
-      featureType: "road.local",
-      elementType: "labels",
-      stylers: [
-        {
-          color: "#ffffff",
-        },
-      ],
-    },
-    {
-      featureType: "road.local",
-      elementType: "labels.text",
-      stylers: [
-        {
-          color: "#ffffff",
-        },
-      ],
-    },
-    {
-      featureType: "road.local",
-      elementType: "labels.text.fill",
-      stylers: [
-        {
-          color: "#ffffff",
-        },
-        {
-          weight: 5,
-        },
-      ],
-    },
-    {
-      featureType: "transit",
-      stylers: [
-        {
-          visibility: "off",
-        },
-      ],
-    },
-    {
-      featureType: "transit",
-      elementType: "labels.text.fill",
-      stylers: [
-        {
-          color: "#757575",
-        },
-      ],
-    },
-    {
-      featureType: "water",
-      elementType: "geometry",
-      stylers: [
-        {
-          color: "#000000",
-        },
-      ],
-    },
-    {
-      featureType: "water",
-      elementType: "labels.text.fill",
-      stylers: [
-        {
-          color: "#3d3d3d",
-        },
-      ],
-    },
-  ];
 
   const UNIQUEITEMS = 6;
   // constant that stores a pin and method (setpin) that changes it. values are just dummy data
@@ -311,6 +35,7 @@ export default function MapScreen() {
   const { screenColors } = React.useContext(tabContext);
   const { addPoints } = React.useContext(tabContext);
   const { username } = React.useContext(tabContext);
+  const {status} = React.useContext(tabContext);
   // const [items, setItems] = React.useState({
   //   ids: [],
   //   idtypes: [],
@@ -326,6 +51,11 @@ export default function MapScreen() {
     0: "Sanitizer",
     1: "Gloves",
     2: "Face Mask",
+  };
+  const statusColors = {
+    "Healthy" : "#05cf02",
+    "Infected" : "#f52718",
+    "Immune" : "#0aefff",
   };
 
   const getItemName = (itemType) => {
@@ -609,7 +339,7 @@ export default function MapScreen() {
       return require("../../assets/images/mask.png");
     }
 
-    if (itemType == 2) {
+    if (itemType == 1) {
       return require("../../assets/images/gloves.png");
     }
 
@@ -640,8 +370,8 @@ export default function MapScreen() {
   // event that get asks for permission then gets the users inital location
   React.useEffect(() => {
     (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
+      let { perm } = await Location.requestForegroundPermissionsAsync();
+      if (perm !== "granted") {
         console.log("Permission to access location was denied");
         return;
       } else {
@@ -731,7 +461,8 @@ export default function MapScreen() {
       </Modal>
       <MapView
         provider={"google"}
-        customMapStyle={mapStyle}
+        customMapStyle={ status == "Healthy" ? HealthyMap : 
+                        (status == "Infected" ? InfectedMap : ImmuneMap)}
         style={styles.map}
         // where the map will hover when opened Location is St Lucia
         initialRegion={{
@@ -842,10 +573,10 @@ export default function MapScreen() {
                 latitude: friend.Latitude,
                 longitude: friend.Longitude,
               }}
-              pinColor={(friend.InfectionStatus = screenColors)}
+              pinColor={statusColors[friend.InfectionStatus]}
             >
               <Callout>
-                <Text>{friend.Username}</Text>
+                <Text>Username: {friend.Username} {'\n'} Status: {friend.InfectionStatus}</Text>
               </Callout>
             </Marker>
           );
@@ -907,7 +638,7 @@ export default function MapScreen() {
         <Marker
           // marker that shows the user location and is on top of the user icon from the MapView
           coordinate={pin}
-          pinColor="blue"
+          pinColor={statusColors[status]}
         >
           <Callout>
             <Text>User is {distance.thing} metres away</Text>

@@ -78,14 +78,15 @@ export default function LoginScreen({ navigation }) {
       // console.log(error)
     });
 
-    Axios.post("https://deco3801-betterlatethannever.uqcloud.net/user/getUserInventory", {
-      email: email,
+    Axios.post("https://deco3801-betterlatethannever.uqcloud.net/user/itemCount", {
+        username: username,
     }).then((response) => {
-  
-      if (response.data.message) {
+      if (response.data.err) {
         console.log("Couldn't get items")
       } else {
-        setItems(response.data.items)   
+        console.log('got items');
+        setItems(response.data.result);   
+        console.log(response.data.result);
       }
       
     }).catch((error) => {

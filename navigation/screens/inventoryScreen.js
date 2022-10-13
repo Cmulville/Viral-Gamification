@@ -28,16 +28,24 @@ export default function InventoryScreen({changeStatus}) {
     let sumNebuilzers = 0;
     let sumPara = 0;
 
-    items.forEach(element => {
-        if (element.ItemID == 1) {
-            sumSanitizer = element.Count
-        } 
-        else if (element.ItemID == 2) {
-            sumGloves = element.Count
+    items.forEach((element) => {
+        if (element.ItemID == 0) {
+            sumFaceMask = element.Amount;
+
+        } else if (element.ItemID == 1) {
+            sumGloves = element.Amount;
         
+        } else if (element.ItemID == 2) {
+            sumVaccines = element.Amount;
+
         } else if (element.ItemID == 3) {
-            sumFaceMask = element.Count
-        }
+            sumSanitizer = element.Amount;
+
+        } else if (element.ItemID == 4) {
+            sumPara = element.Amount
+         } else if (element.ItemID == 5) {
+           sumNebulizers = element.Amount;
+         }
     }); 
 
     
