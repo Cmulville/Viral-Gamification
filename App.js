@@ -50,6 +50,8 @@ export default function App() {
 
     }
     
+  }).catch((error) => {
+    // console.log(error)
   });
   }
   
@@ -68,6 +70,8 @@ export default function App() {
         
       }
 
+    }).catch((error) => {
+      // console.log(error)
     });
   }
 
@@ -86,6 +90,8 @@ export default function App() {
       
       }
 
+    }).catch((error) => {
+      // console.log(error)
     });
   }
 
@@ -102,7 +108,9 @@ export default function App() {
         
       }
 
-    });
+    }).catch((error) => {
+      // console.log(error)
+    });;
   }
 
   const set_active_email = (userEmail) => {

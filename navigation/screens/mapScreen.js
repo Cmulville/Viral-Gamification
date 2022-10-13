@@ -95,6 +95,8 @@ export default function MapScreen() {
     ).then((response) => {
         setUsers(response.data.users);
         console.log("users", username);
+    }).catch((error) => {
+      
     });
   }
 
@@ -108,7 +110,9 @@ export default function MapScreen() {
         Alert.alert("Infected", "Username must not be empty", [{text:"Ok"}]);
         console.log("infected", {username});
         
-    });
+    }).catch((error) => {
+      // console.log(error)
+    });;
   }
 
   const contact = () => { 
@@ -130,7 +134,9 @@ export default function MapScreen() {
       }
     ).then((response) => {
       setFriends(response.data.friends);
-      console.log("friends", friends);
+      //console.log("friends", friends);
+    }).catch((error) => {
+      // console.log(error)
     });
   };
 
@@ -188,7 +194,9 @@ export default function MapScreen() {
       } else {
         validAlert();
       }
-    });
+    }).catch((error) => {
+      // console.log(error)
+    });;
   };
 
   const GetLocation = () => {
@@ -205,7 +213,9 @@ export default function MapScreen() {
           longitude: response.data.loc[0],
         });
       }
-    });
+    }).catch((error) => {
+      // console.log(error)
+    });;
   };
 
 //  const getItems = () => {
@@ -232,7 +242,9 @@ export default function MapScreen() {
       if (response) {
         setCount(response.data.count[0].count);
       }
-    });
+    }).catch((error) => {
+      // console.log(error)
+    });;
   };
 
   const addItem = (itemtype) => {
@@ -241,14 +253,19 @@ export default function MapScreen() {
       username: username,
     }).then((response) => {
       console.log("response received");
-      console.log(response.data);
+      console.log(response.data.result.length);
       if (response.data.result.length == 0) {
-        // console.log(itemtype, (PointSystem.collect_item(itemtype)))
-        // console.log(typeof(PointSystem.collect_item(itemtype)), PointSystem.collect_item(itemtype))
+
         addNewItem(itemtype); 
       } else {
         updateItem(itemtype);
       }
+      console.log("HERERHEHRE", "HI")
+      // console.log(itemtype, (PointSystem.collect_item(itemtype)))
+      // console.log(typeof(PointSystem.collect_item(itemtype)), PointSystem.collect_item(itemtype))
+      
+    }).catch((error) => {
+      // console.log(error)
     });
     console.log("post sent");
   };
@@ -262,7 +279,10 @@ export default function MapScreen() {
       // console.log("New User Item Added");
       // console.log(itemtype, (PointSystem.collect_item(itemtype)))
       // console.log(typeof(PointSystem.collect_item(itemtype)), PointSystem.collect_item(itemtype))
-    });
+      //addPoints(PointSystem.collect_item(itemtype))
+    }).catch((error) => {
+      // console.log(error)
+    });;
 
   };
 
@@ -275,7 +295,10 @@ export default function MapScreen() {
       // console.log("Updated Item Count");
       // console.log(itemtype + "This is that number")
       // console.log(typeof(PointSystem.collect_item(itemtype)), PointSystem.collect_item(itemtype))
-    });
+      // addPoints(PointSystem.collect_item(itemtype))
+    }).catch((error) => {
+      // console.log(error)
+    });;
 
   };
 
@@ -405,9 +428,10 @@ export default function MapScreen() {
                 items[i].longitude,
                 e.nativeEvent.coordinate.latitude,
                 e.nativeEvent.coordinate.longitude
-              ) < 20
+              ) < 100
             ) {
               addItem(items[i].itemType);
+              addPoints(items[i].itemType);
               Alert.alert(
                 "item collected ",
                 "You've just collected " + items[i].itemType,

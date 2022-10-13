@@ -46,6 +46,8 @@ export default function LoginScreen({ navigation }) {
       } else {
         navigation.navigate("MainScreen");
       }
+    }).catch((error) => {
+      // console.log(error)
     });    
     
     //Add user database info to ga e
@@ -68,6 +70,8 @@ export default function LoginScreen({ navigation }) {
         }
       }
 
+    }).catch((error) => {
+      // console.log(error)
     });
 
     Axios.post("https://deco3801-betterlatethannever.uqcloud.net/user/getUserInventory", {
@@ -80,6 +84,8 @@ export default function LoginScreen({ navigation }) {
         setItems(response.data.items)   
       }
       
+    }).catch((error) => {
+      // console.log(error)
     });
     
   };

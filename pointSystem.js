@@ -77,21 +77,22 @@ const PointSystem = {
         },
 
     collect_item: (itemType) => {
-        const points = 0
-        if (itemType == 0) {
-            points = 150
-        } else if (itemType == 1) {
-            points = 500
-        } else if (itemType == 2) {
-            points = 300
-        }
+        const collect_points = [150, 250, 450, 550, 300, 350, 400]
+        // let points = 0
+        // if (itemType == 0) {
+        //     points = 150
+        // } else if (itemType == 1) {
+        //     points = 500
+        // } else if (itemType == 2) {
+        //     points = 300
+        // }
         // try {
         //     await AsyncStorage.setItem("Points", points)
         // } catch(e) {
         //     alert("Couldn't update points")
         // }
-        console.log("The item type was "+itemType+" and the points received were "+points)
-        return points
+        //console.log("The item type was "+itemType+" and the points received were "+collect_points[itemType])
+        return collect_points[itemType]
     },
 
     immunity_interact: (user, immune_user) => {
