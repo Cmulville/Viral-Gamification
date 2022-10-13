@@ -23,7 +23,8 @@ export default function App() {
   const [username, setUsername] = React.useState(0)
   const [items, setItems] = React.useState(null)
   const [eventEndTIme, setEventEndTime] = React.useState(0)
-
+  const [friends, setFriends] = React.useState([]);
+  const [requests, setRequests] = React.useState([]);
   // Ask about this
   // 6e930c12dc934cbd849bd2be
   const statusColours = {
@@ -181,12 +182,37 @@ export default function App() {
     } catch(e) {
       alert("TROUBLE ADDING POINTS")
     }
-  }
+  };
 
+  //Gets a user's current friend list
+  const myFriends = () => {
+    Axios.post(
+      "https://deco3801-betterlatethannever.uqcloud.net/friends/approved",
+      {
+        username: username,
+      }
+    ).then((response) => {
+        setFriends(response.data.friends);
+    });
+  };
+
+  //Shows the requests a user currently has from others.
+  const showRequests = () => {
+    Axios.post(
+      "https://deco3801-betterlatethannever.uqcloud.net/friends/requested",
+      {
+        username: username,
+      }
+    ).then((response) => {
+          console.log(response.data.friends);
+          setRequests(response.data.friends);
+    });
+   };
 
   return (
     <tabContext.Provider value={{items, status, points, email, username, eventEndTIme, screenColors, setEventEndTime, setItems, 
-          updateStatus, statusChange, updatePoints, addPoints, set_active_email, set_active_username, updateDailyBD}}>
+          updateStatus, statusChange, updatePoints, addPoints, set_active_email, set_active_username, updateDailyBD, friends, 
+            setFriends, myFriends, requests, setRequests, showRequests}}>
       <StatusBar style="dark" />
       <NavigationContainer>
         <RootStackScreen />
