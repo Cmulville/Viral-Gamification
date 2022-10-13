@@ -32,6 +32,7 @@ export default function MapScreen() {
   const [testuser, setTestUser] = React.useState({ latitude: 0, latitude: 0 });
   const { screenColors } = React.useContext(tabContext)
   const { addPoints } = React.useContext(tabContext)
+  const { username } = React.useContext(tabContext)
   // const [items, setItems] = React.useState({
   //   ids: [],
   //   idtypes: [],
@@ -68,32 +69,32 @@ export default function MapScreen() {
   const message1 = "Welcome to Lets Get Viral! You have started off the game as HEALTHY";
   const [seenBefore, setSeenBefore] = React.useState(0);
 
-  const getUser = async () => {
-    try {
-      if (user != "") {
-          return;
-      }
-      const value = await AsyncStorage.getItem("user");
-      if (value != null) {
-        setUser(JSON.parse(value));
-      } else {
-        return null;
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  // const getUser = async () => {
+  //   try {
+  //     if (user != "") {
+  //         return;
+  //     }
+  //     const value = await AsyncStorage.getItem("user");
+  //     if (value != null) {
+  //       setUser(JSON.parse(value));
+  //     } else {
+  //       return null;
+  //     }
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
 
   const distanceUsers = () => {
-    getUser();
+    // getUser();
     Axios.post(
       "https://deco3801-betterlatethannever.uqcloud.net/users/distance",
       {
-        username: user,
+        username: username,
       }
     ).then((response) => {
         setUsers(response.data.users);
-        console.log("users", users);
+        console.log("users", username);
     });
   }
 
@@ -121,11 +122,11 @@ export default function MapScreen() {
 
   //Retrieves list of friends from the backend
   const myFriends = () => {
-    getUser();
+    // getUser();
     Axios.post(
       "https://deco3801-betterlatethannever.uqcloud.net/friends/approved",
       {
-        username: user,
+        username: username,
       }
     ).then((response) => {
       setFriends(response.data.friends);
@@ -173,11 +174,11 @@ export default function MapScreen() {
   };
 
   const UpdateLocation = () => {
-    getUser();
+    // getUser();
     Axios.post(
       "https://deco3801-betterlatethannever.uqcloud.net/location/update",
       {
-        user: user,
+        user: username,
         latitude: pin.latitude,
         longitude: pin.longitude,
       }
@@ -191,7 +192,7 @@ export default function MapScreen() {
   };
 
   const GetLocation = () => {
-    getUser();
+    // getUser();
     Axios.post(
       "https://deco3801-betterlatethannever.uqcloud.net/location/get",
       {
@@ -237,13 +238,13 @@ export default function MapScreen() {
   const addItem = (itemtype) => {
     Axios.post("https://deco3801-betterlatethannever.uqcloud.net/user/item", {
       itemid: itemtype,
-      username: user,
+      username: username,
     }).then((response) => {
       console.log("response received");
       console.log(response.data);
       if (response.data.result.length == 0) {
-        console.log(itemtype, (PointSystem.collect_item(itemtype)))
-        console.log(typeof(PointSystem.collect_item(itemtype)), PointSystem.collect_item(itemtype))
+        // console.log(itemtype, (PointSystem.collect_item(itemtype)))
+        // console.log(typeof(PointSystem.collect_item(itemtype)), PointSystem.collect_item(itemtype))
         addNewItem(itemtype); 
       } else {
         updateItem(itemtype);
@@ -255,12 +256,12 @@ export default function MapScreen() {
   const addNewItem = (itemtype) => {
     Axios.post("https://deco3801-betterlatethannever.uqcloud.net/user/addNewItem", {
       itemid: itemtype,
-      username: user,
+      username: username,
     }).then((response) => {
-      console.log("New User Item Added");
       console.log(response.data);
-      console.log(itemtype, (PointSystem.collect_item(itemtype)))
-      console.log(typeof(PointSystem.collect_item(itemtype)), PointSystem.collect_item(itemtype))
+      // console.log("New User Item Added");
+      // console.log(itemtype, (PointSystem.collect_item(itemtype)))
+      // console.log(typeof(PointSystem.collect_item(itemtype)), PointSystem.collect_item(itemtype))
     });
 
   };
@@ -268,12 +269,12 @@ export default function MapScreen() {
   const updateItem = (itemtype) => {
     Axios.post("https://deco3801-betterlatethannever.uqcloud.net/user/updateItemCount", {
       itemid: itemtype,
-      username: user,
+      username: username,
     }).then((response) => {
-      console.log("Updated Item Count");
       console.log(response.data);
-      console.log(itemtype + "This is that number")
-      console.log(typeof(PointSystem.collect_item(itemtype)), PointSystem.collect_item(itemtype))
+      // console.log("Updated Item Count");
+      // console.log(itemtype + "This is that number")
+      // console.log(typeof(PointSystem.collect_item(itemtype)), PointSystem.collect_item(itemtype))
     });
 
   };
@@ -318,7 +319,7 @@ export default function MapScreen() {
 
       distanceUsers();
       let location = await Location.getCurrentPositionAsync({});
-      getUser();
+      // getUser();
       myFriends();
       // set Pin being used to change the pin
       setPin({
@@ -396,7 +397,7 @@ export default function MapScreen() {
                 items[i].longitude,
                 e.nativeEvent.coordinate.latitude,
                 e.nativeEvent.coordinate.longitude
-              ) < 100
+              ) < 20
             ) {
               addItem(items[i].itemType);
               Alert.alert(

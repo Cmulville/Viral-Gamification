@@ -20,6 +20,7 @@ export default function App() {
   const [status, setStatus] = React.useState(null)
   const [points, setPoints] = React.useState(0)
   const [email, setEmail] = React.useState(0)
+  const [username, setUsername] = React.useState(0)
   const [items, setItems] = React.useState(null)
   const [eventEndTIme, setEventEndTime] = React.useState(0)
 
@@ -108,6 +109,10 @@ export default function App() {
       setEmail(userEmail)
   }
 
+  const set_active_username = (userName) => {
+    setUsername(userName)
+  }
+
   const statusChange = async (new_status) => {
     try {
       
@@ -172,7 +177,8 @@ export default function App() {
 
 
   return (
-    <tabContext.Provider value={{items, status, points, email, eventEndTIme, screenColors, setEventEndTime, setItems, updateStatus, statusChange, updatePoints, addPoints, set_active_email, updateDailyBD}}>
+    <tabContext.Provider value={{items, status, points, email, username, eventEndTIme, screenColors, setEventEndTime, setItems, 
+          updateStatus, statusChange, updatePoints, addPoints, set_active_email, set_active_username, updateDailyBD}}>
       <StatusBar style="dark" />
       <NavigationContainer>
         <RootStackScreen />

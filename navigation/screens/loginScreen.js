@@ -16,10 +16,12 @@ import { tabContext } from "../../tabContext";
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("")
   const [password, setPassword] = useState("");
   const { updateStatus } = React.useContext(tabContext)
   const { updatePoints } = React.useContext(tabContext)
   const { set_active_email } = React.useContext(tabContext)
+  const { set_active_username } = React.useContext(tabContext)
   const { updateDailyBD } = React.useContext(tabContext)
   const { setItems } = React.useContext(tabContext)
 
@@ -55,6 +57,7 @@ export default function LoginScreen({ navigation }) {
         errorAlert(); 
       } else {
         if (login_success) {
+          set_active_username(response.data.stat[0].Username)
           updateStatus(response.data.stat[0].InfectionStatus)
           //console.log(response.data.stat[0])
           updatePoints(response.data.stat[0].Points+PointSystem.dailyPoints(response.data.stat[0].InfectionStatus, response.data.stat[0].dailyLogin))
