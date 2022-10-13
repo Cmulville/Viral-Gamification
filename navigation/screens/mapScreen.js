@@ -648,7 +648,6 @@ export default function MapScreen() {
         console.log("Permission to access locaion was approved");
       }
 
-      distanceUsers();
       let location = await Location.getCurrentPositionAsync({});
       // getUser();
       myFriends();
@@ -760,7 +759,7 @@ export default function MapScreen() {
                 items[i].longitude,
                 e.nativeEvent.coordinate.latitude,
                 e.nativeEvent.coordinate.longitude
-              ) < 100
+              ) < 20
             ) {
               addItem(items[i].itemType);
               console.log("#" + items[i].itemType, "These items");
