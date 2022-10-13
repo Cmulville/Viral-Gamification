@@ -19,6 +19,284 @@ import { tabContext } from "../../tabContext";
 import PointSystem from "../../pointSystem";
 
 export default function MapScreen() {
+  var mapStyle = [
+    {
+      elementType: "geometry",
+      stylers: [
+        {
+          color: "#212121",
+        },
+      ],
+    },
+    {
+      elementType: "labels.icon",
+      stylers: [
+        {
+          visibility: "off",
+        },
+      ],
+    },
+    {
+      elementType: "labels.text.fill",
+      stylers: [
+        {
+          color: "#757575",
+        },
+      ],
+    },
+    {
+      elementType: "labels.text.stroke",
+      stylers: [
+        {
+          color: "#212121",
+        },
+      ],
+    },
+    {
+      featureType: "administrative",
+      stylers: [
+        {
+          color: "#585656",
+        },
+      ],
+    },
+    {
+      featureType: "administrative",
+      elementType: "geometry",
+      stylers: [
+        {
+          color: "#757575",
+        },
+      ],
+    },
+    {
+      featureType: "administrative.country",
+      elementType: "labels.text.fill",
+      stylers: [
+        {
+          color: "#9e9e9e",
+        },
+      ],
+    },
+    {
+      featureType: "administrative.locality",
+      elementType: "labels.text.fill",
+      stylers: [
+        {
+          color: "#bdbdbd",
+        },
+      ],
+    },
+    {
+      featureType: "landscape",
+      stylers: [
+        {
+          color: "#585656",
+        },
+      ],
+    },
+    {
+      featureType: "landscape",
+      elementType: "labels",
+      stylers: [
+        {
+          visibility: "off",
+        },
+      ],
+    },
+    {
+      featureType: "poi",
+      elementType: "labels.text.fill",
+      stylers: [
+        {
+          color: "#757575",
+        },
+      ],
+    },
+    {
+      featureType: "poi.park",
+      elementType: "geometry",
+      stylers: [
+        {
+          color: "#181818",
+        },
+      ],
+    },
+    {
+      featureType: "poi.park",
+      elementType: "labels.text.fill",
+      stylers: [
+        {
+          color: "#616161",
+        },
+      ],
+    },
+    {
+      featureType: "poi.park",
+      elementType: "labels.text.stroke",
+      stylers: [
+        {
+          color: "#1b1b1b",
+        },
+      ],
+    },
+    {
+      featureType: "road",
+      stylers: [
+        {
+          visibility: "simplified",
+        },
+      ],
+    },
+    {
+      featureType: "road",
+      elementType: "geometry.fill",
+      stylers: [
+        {
+          color: "#2c2c2c",
+        },
+      ],
+    },
+    {
+      featureType: "road",
+      elementType: "labels.icon",
+      stylers: [
+        {
+          visibility: "off",
+        },
+      ],
+    },
+    {
+      featureType: "road",
+      elementType: "labels.text.fill",
+      stylers: [
+        {
+          color: "#8a8a8a",
+        },
+      ],
+    },
+    {
+      featureType: "road.arterial",
+      elementType: "geometry",
+      stylers: [
+        {
+          color: "#41d287",
+        },
+      ],
+    },
+    {
+      featureType: "road.arterial",
+      elementType: "labels",
+      stylers: [
+        {
+          color: "#ffffff",
+        },
+      ],
+    },
+    {
+      featureType: "road.highway",
+      stylers: [
+        {
+          color: "#dd64d9",
+        },
+      ],
+    },
+    {
+      featureType: "road.highway",
+      elementType: "labels",
+      stylers: [
+        {
+          color: "#ffffff",
+        },
+      ],
+    },
+    {
+      featureType: "road.highway.controlled_access",
+      elementType: "geometry",
+      stylers: [
+        {
+          color: "#4e4e4e",
+        },
+      ],
+    },
+    {
+      featureType: "road.local",
+      stylers: [
+        {
+          color: "#41d287",
+        },
+        {
+          weight: 2.5,
+        },
+      ],
+    },
+    {
+      featureType: "road.local",
+      elementType: "labels",
+      stylers: [
+        {
+          color: "#ffffff",
+        },
+      ],
+    },
+    {
+      featureType: "road.local",
+      elementType: "labels.text",
+      stylers: [
+        {
+          color: "#ffffff",
+        },
+      ],
+    },
+    {
+      featureType: "road.local",
+      elementType: "labels.text.fill",
+      stylers: [
+        {
+          color: "#ffffff",
+        },
+        {
+          weight: 5,
+        },
+      ],
+    },
+    {
+      featureType: "transit",
+      stylers: [
+        {
+          visibility: "off",
+        },
+      ],
+    },
+    {
+      featureType: "transit",
+      elementType: "labels.text.fill",
+      stylers: [
+        {
+          color: "#757575",
+        },
+      ],
+    },
+    {
+      featureType: "water",
+      elementType: "geometry",
+      stylers: [
+        {
+          color: "#000000",
+        },
+      ],
+    },
+    {
+      featureType: "water",
+      elementType: "labels.text.fill",
+      stylers: [
+        {
+          color: "#3d3d3d",
+        },
+      ],
+    },
+  ];
+
   const UNIQUEITEMS = 6;
   // constant that stores a pin and method (setpin) that changes it. values are just dummy data
   const birsbane = { latitude: -27.4705, longitude: 153.026 };
@@ -30,9 +308,9 @@ export default function MapScreen() {
   const [distance, setDistance] = React.useState({ thing: 0 });
   const [user, setUser] = React.useState("");
   const [testuser, setTestUser] = React.useState({ latitude: 0, latitude: 0 });
-  const { screenColors } = React.useContext(tabContext)
-  const { addPoints } = React.useContext(tabContext)
-  const { username } = React.useContext(tabContext)
+  const { screenColors } = React.useContext(tabContext);
+  const { addPoints } = React.useContext(tabContext);
+  const { username } = React.useContext(tabContext);
   // const [items, setItems] = React.useState({
   //   ids: [],
   //   idtypes: [],
@@ -45,27 +323,29 @@ export default function MapScreen() {
   const [items, setItems] = React.useState([]);
 
   const itemNames = {
-    0: 'Sanitizer',
-    1: 'Gloves',
-    2: 'Face Mask'
-  }
+    0: "Sanitizer",
+    1: "Gloves",
+    2: "Face Mask",
+  };
 
   const getItemName = (itemType) => {
-    return itemNames[itemType]
-  }
+    return itemNames[itemType];
+  };
 
   const [initialCentre, setInitialCentre] = React.useState({
     latitude: 0,
     longitude: 0,
   });
 
-//Used for the pop up
+  //Used for the pop up
   const [modalVis, setModalVis] = React.useState(true);
   const [firstPage, setFirstPage] = React.useState(true);
-  const infected = "This means that your main goal is to try and cure yourself from being " + 
-		   "infected by collecting items accross the map. You may infect others as you do so!";
-  const healthy = "Avoid being infected by other players who are in the game. You will not " +
-                  "be able to see their location! Collect items to gather points and keep yourself healthy.";
+  const infected =
+    "This means that your main goal is to try and cure yourself from being " +
+    "infected by collecting items accross the map. You may infect others as you do so!";
+  const healthy =
+    "Avoid being infected by other players who are in the game. You will not " +
+    "be able to see their location! Collect items to gather points and keep yourself healthy.";
   const message1 = "Welcome! You have started off the game as HEALTHY";
   const [seenBefore, setSeenBefore] = React.useState(0);
 
@@ -92,13 +372,13 @@ export default function MapScreen() {
       {
         username: username,
       }
-    ).then((response) => {
+    )
+      .then((response) => {
         setUsers(response.data.users);
         console.log("users", username);
-    }).catch((error) => {
-      
-    });
-  }
+      })
+      .catch((error) => {});
+  };
 
   const infect = (username) => {
     Axios.post(
@@ -106,23 +386,29 @@ export default function MapScreen() {
       {
         username: username,
       }
-    ).then((response) => {
-        Alert.alert("Infected", "Username must not be empty", [{text:"Ok"}]);
-        console.log("infected", {username});
-        
-    }).catch((error) => {
-      // console.log(error)
-    });;
-  }
+    )
+      .then((response) => {
+        Alert.alert("Infected", "Username must not be empty", [{ text: "Ok" }]);
+        console.log("infected", { username });
+      })
+      .catch((error) => {
+        // console.log(error)
+      });
+  };
 
-  const contact = () => { 
+  const contact = () => {
     for (var i = 0; i < users.length; i++) {
-      let dist = calculateDistance(pin.latitude, pin.longitude, users[i].Latitude, users[i].Longitude);
-      if (dist < 100){
+      let dist = calculateDistance(
+        pin.latitude,
+        pin.longitude,
+        users[i].Latitude,
+        users[i].Longitude
+      );
+      if (dist < 100) {
         infect(users[i].Username);
       }
     }
-  }
+  };
 
   //Retrieves list of friends from the backend
   const myFriends = () => {
@@ -132,12 +418,14 @@ export default function MapScreen() {
       {
         username: username,
       }
-    ).then((response) => {
-      setFriends(response.data.friends);
-      //console.log("friends", friends);
-    }).catch((error) => {
-      // console.log(error)
-    });
+    )
+      .then((response) => {
+        setFriends(response.data.friends);
+        //console.log("friends", friends);
+      })
+      .catch((error) => {
+        // console.log(error)
+      });
   };
 
   function getRandomInt(min, max) {
@@ -188,15 +476,17 @@ export default function MapScreen() {
         latitude: pin.latitude,
         longitude: pin.longitude,
       }
-    ).then((response) => {
-      if (response.data.message) {
-        errorAlert();
-      } else {
-        validAlert();
-      }
-    }).catch((error) => {
-      // console.log(error)
-    });;
+    )
+      .then((response) => {
+        if (response.data.message) {
+          errorAlert();
+        } else {
+          validAlert();
+        }
+      })
+      .catch((error) => {
+        // console.log(error)
+      });
   };
 
   const GetLocation = () => {
@@ -206,100 +496,112 @@ export default function MapScreen() {
       {
         user: "Test@gamil",
       }
-    ).then((response) => {
-      if (response) {
-        setTestUser({
-          latitude: response.data.loc[1],
-          longitude: response.data.loc[0],
-        });
-      }
-    }).catch((error) => {
-      // console.log(error)
-    });;
+    )
+      .then((response) => {
+        if (response) {
+          setTestUser({
+            latitude: response.data.loc[1],
+            longitude: response.data.loc[0],
+          });
+        }
+      })
+      .catch((error) => {
+        // console.log(error)
+      });
   };
 
-//  const getItems = () => {
-//    Axios.post(
-//      "https://deco3801-betterlatethannever.uqcloud.net/items/get",
-//      {}
-//    ).then((response) => {
-//      if (response) {
-//        setItems({
-//          ids: response.data.loc[0],
-//          itemType: response.data.loc[1],
-//          latitude: response.data.loc[3],
-//          longitude: response.data.loc[2],
-//        });
-//      }
-//    });
-//  };
+  //  const getItems = () => {
+  //    Axios.post(
+  //      "https://deco3801-betterlatethannever.uqcloud.net/items/get",
+  //      {}
+  //    ).then((response) => {
+  //      if (response) {
+  //        setItems({
+  //          ids: response.data.loc[0],
+  //          itemType: response.data.loc[1],
+  //          latitude: response.data.loc[3],
+  //          longitude: response.data.loc[2],
+  //        });
+  //      }
+  //    });
+  //  };
 
   const countItems = () => {
     Axios.post(
       "https://deco3801-betterlatethannever.uqcloud.net/items/count",
       {}
-    ).then((response) => {
-      if (response) {
-        setCount(response.data.count[0].count);
-      }
-    }).catch((error) => {
-      // console.log(error)
-    });;
+    )
+      .then((response) => {
+        if (response) {
+          setCount(response.data.count[0].count);
+        }
+      })
+      .catch((error) => {
+        // console.log(error)
+      });
   };
 
   const addItem = (itemtype) => {
     Axios.post("https://deco3801-betterlatethannever.uqcloud.net/user/item", {
       itemid: itemtype,
       username: username,
-    }).then((response) => {
-      console.log("response received");
-      console.log(response.data.result.length);
-      if (response.data.result.length == 0) {
-
-        addNewItem(itemtype); 
-      } else {
-        updateItem(itemtype);
-      }
-      console.log("HERERHEHRE", "HI")
-      // console.log(itemtype, (PointSystem.collect_item(itemtype)))
-      // console.log(typeof(PointSystem.collect_item(itemtype)), PointSystem.collect_item(itemtype))
-      
-    }).catch((error) => {
-      // console.log(error)
-    });
+    })
+      .then((response) => {
+        console.log("response received");
+        console.log(response.data.result.length);
+        if (response.data.result.length == 0) {
+          addNewItem(itemtype);
+        } else {
+          updateItem(itemtype);
+        }
+        console.log("HERERHEHRE", "HI");
+        // console.log(itemtype, (PointSystem.collect_item(itemtype)))
+        // console.log(typeof(PointSystem.collect_item(itemtype)), PointSystem.collect_item(itemtype))
+      })
+      .catch((error) => {
+        // console.log(error)
+      });
     console.log("post sent");
   };
 
   const addNewItem = (itemtype) => {
-    Axios.post("https://deco3801-betterlatethannever.uqcloud.net/user/addNewItem", {
-      itemid: itemtype,
-      username: username,
-    }).then((response) => {
-      console.log(response.data);
-      // console.log("New User Item Added");
-      // console.log(itemtype, (PointSystem.collect_item(itemtype)))
-      // console.log(typeof(PointSystem.collect_item(itemtype)), PointSystem.collect_item(itemtype))
-      //addPoints(PointSystem.collect_item(itemtype))
-    }).catch((error) => {
-      // console.log(error)
-    });;
-
+    Axios.post(
+      "https://deco3801-betterlatethannever.uqcloud.net/user/addNewItem",
+      {
+        itemid: itemtype,
+        username: username,
+      }
+    )
+      .then((response) => {
+        console.log(response.data);
+        // console.log("New User Item Added");
+        // console.log(itemtype, (PointSystem.collect_item(itemtype)))
+        // console.log(typeof(PointSystem.collect_item(itemtype)), PointSystem.collect_item(itemtype))
+        //addPoints(PointSystem.collect_item(itemtype))
+      })
+      .catch((error) => {
+        // console.log(error)
+      });
   };
 
   const updateItem = (itemtype) => {
-    Axios.post("https://deco3801-betterlatethannever.uqcloud.net/user/updateItemCount", {
-      itemid: itemtype,
-      username: username,
-    }).then((response) => {
-      console.log(response.data);
-      // console.log("Updated Item Count");
-      // console.log(itemtype + "This is that number")
-      // console.log(typeof(PointSystem.collect_item(itemtype)), PointSystem.collect_item(itemtype))
-      // addPoints(PointSystem.collect_item(itemtype))
-    }).catch((error) => {
-      // console.log(error)
-    });;
-
+    Axios.post(
+      "https://deco3801-betterlatethannever.uqcloud.net/user/updateItemCount",
+      {
+        itemid: itemtype,
+        username: username,
+      }
+    )
+      .then((response) => {
+        console.log(response.data);
+        // console.log("Updated Item Count");
+        // console.log(itemtype + "This is that number")
+        // console.log(typeof(PointSystem.collect_item(itemtype)), PointSystem.collect_item(itemtype))
+        // addPoints(PointSystem.collect_item(itemtype))
+      })
+      .catch((error) => {
+        // console.log(error)
+      });
   };
 
   function getItem(itemType) {
@@ -314,7 +616,7 @@ export default function MapScreen() {
     if (itemType == 2) {
       return require("../../assets/images/syringe.png");
     }
-    
+
     if (itemType == 3) {
       return require("../../assets/images/sanitizer.png");
     }
@@ -326,9 +628,15 @@ export default function MapScreen() {
     if (itemType == 5) {
       return require("../../assets/images/Nebulizer.png");
     }
-
   }
-  const itemMap = ["Mask", "Gloves", "Vaccine", "Sanitizer", "Paracetamol", "Nebulizer"];
+  const itemMap = [
+    "Mask",
+    "Gloves",
+    "Vaccine",
+    "Sanitizer",
+    "Paracetamol",
+    "Nebulizer",
+  ];
   // event that get asks for permission then gets the users inital location
   React.useEffect(() => {
     (async () => {
@@ -340,7 +648,6 @@ export default function MapScreen() {
         console.log("Permission to access locaion was approved");
       }
 
-      distanceUsers();
       let location = await Location.getCurrentPositionAsync({});
       // getUser();
       myFriends();
@@ -354,54 +661,77 @@ export default function MapScreen() {
 
   return (
     <View style={styles.container}>
-      <Modal animationType ={"slide"} transparent = {true} visible = {modalVis}>
-     	 { firstPage ?
-     	   <View style = {styles.modal}>
-               <View style={{marginBottom:25}}>
-     	           <Text style={{fontSize:25, fontWeight: 'bold'}}>LETS GET VIRAL!</Text>
-     	       </View>
-     	       <View style={{marginBottom:25}}>
-     	           <Text style={{fontSize:20}}>{message1}</Text>
-     	       </View>
-     	       <Text>{healthy}</Text>
-               <View style={styles.modalImages}>
-     	            <View style = {styles.imageDisplay}>
-     	                <Image
-     	                  source={require("../../assets/images/gloves.png")}
-     	                  style={{ height: 70, width: 80 }}/>
-                        <Image
-     	                  source={require("../../assets/images/sanitizer.png")}
-     	                  style={{ height: 105, width: 80 }}/>
-                        <Image
-     	                  source={require("../../assets/images/mask.png")}
-     	                  style={{ height: 70, width: 80 }}/>
-     	            </View>
-     	            <View style = {styles.imageDisplay}>
-                        <Image
-     	                  source={require("../../assets/images/syringe.png")}
-     	                  style={{ height: 70, width: 80 }}/>
-                        <Image
-     	                  source={require("../../assets/images/Nebulizer.png")}
-     	                  style={{ height: 70, width: 80 }}/>
-                        <Image
-     	                  source={require("../../assets/images/Tablets.png")}
-     	                  style={{ height: 70, width: 80 }}/>
-                    </View>
-               </View>
-     	       <Button title ="Next Page" onPress = {() => {setFirstPage(false)}}/>
-     	   </View>
-     	   :
-     	   <View style={styles.modal}>
-               <Text style={{fontSize:15, marginBottom: 25}}>Search for your friends and add them to view their
-               location and their current infection status! </Text>
-               <Image
-     	         source={require("../../assets/images/friends.jpg")}
-     	         style={{ height: 400, width: 200, marginBottom: 20}}/>
-     	       <Button title="Exit" onPress ={() =>{setModalVis(false)}}/>
-     	   </View>
-     	 }
+      <Modal animationType={"slide"} transparent={true} visible={modalVis}>
+        {firstPage ? (
+          <View style={styles.modal}>
+            <View style={{ marginBottom: 25 }}>
+              <Text style={{ fontSize: 25, fontWeight: "bold" }}>
+                LETS GET VIRAL!
+              </Text>
+            </View>
+            <View style={{ marginBottom: 25 }}>
+              <Text style={{ fontSize: 20 }}>{message1}</Text>
+            </View>
+            <Text>{healthy}</Text>
+            <View style={styles.modalImages}>
+              <View style={styles.imageDisplay}>
+                <Image
+                  source={require("../../assets/images/gloves.png")}
+                  style={{ height: 70, width: 80 }}
+                />
+                <Image
+                  source={require("../../assets/images/sanitizer.png")}
+                  style={{ height: 105, width: 80 }}
+                />
+                <Image
+                  source={require("../../assets/images/mask.png")}
+                  style={{ height: 70, width: 80 }}
+                />
+              </View>
+              <View style={styles.imageDisplay}>
+                <Image
+                  source={require("../../assets/images/syringe.png")}
+                  style={{ height: 70, width: 80 }}
+                />
+                <Image
+                  source={require("../../assets/images/Nebulizer.png")}
+                  style={{ height: 70, width: 80 }}
+                />
+                <Image
+                  source={require("../../assets/images/Tablets.png")}
+                  style={{ height: 70, width: 80 }}
+                />
+              </View>
+            </View>
+            <Button
+              title="Next Page"
+              onPress={() => {
+                setFirstPage(false);
+              }}
+            />
+          </View>
+        ) : (
+          <View style={styles.modal}>
+            <Text style={{ fontSize: 15, marginBottom: 25 }}>
+              Search for your friends and add them to view their location and
+              their current infection status!{" "}
+            </Text>
+            <Image
+              source={require("../../assets/images/friends.jpg")}
+              style={{ height: 400, width: 200, marginBottom: 20 }}
+            />
+            <Button
+              title="Exit"
+              onPress={() => {
+                setModalVis(false);
+              }}
+            />
+          </View>
+        )}
       </Modal>
       <MapView
+        provider={"google"}
+        customMapStyle={mapStyle}
         style={styles.map}
         // where the map will hover when opened Location is St Lucia
         initialRegion={{
@@ -413,7 +743,7 @@ export default function MapScreen() {
         showsUserLocation={true}
         //method that will update the location of user when it changes
         onUserLocationChange={(e) => {
-          let new_points = 0
+          let new_points = 0;
           setPin({
             latitude: e.nativeEvent.coordinate.latitude,
             longitude: e.nativeEvent.coordinate.longitude,
@@ -429,10 +759,10 @@ export default function MapScreen() {
                 items[i].longitude,
                 e.nativeEvent.coordinate.latitude,
                 e.nativeEvent.coordinate.longitude
-              ) < 100
+              ) < 20
             ) {
               addItem(items[i].itemType);
-              console.log("#"+items[i].itemType, "These items")
+              console.log("#" + items[i].itemType, "These items");
               new_points += PointSystem.collect_item(items[i].itemType);
               console.log(
                 "item collected ",
@@ -445,7 +775,7 @@ export default function MapScreen() {
           }
           setItems(nonCollectedItems);
           if (new_points > 0) {
-            addPoints(new_points)
+            addPoints(new_points);
           }
 
           if (
@@ -503,27 +833,8 @@ export default function MapScreen() {
               uq.longitude
             ),
           });
-          
         }}
       >
-        <Marker
-          // marker that shows Birsbane and says Brisbane when hovered
-          coordinate={{ latitude: -27.470125, longitude: 153.021072 }}
-          pinColor="blue"
-        >
-          <Callout>
-            <Text>Brisbane</Text>
-          </Callout>
-        </Marker>
-        <Marker
-          // marker that shows UQ st lucia
-          coordinate={{ latitude: -27.4975, longitude: 153.0137 }}
-          pinColor="#0000FF"
-        >
-          <Callout>
-            <Text>UQ Campus</Text>
-          </Callout>
-        </Marker>
         {friends.map((friend, index) => {
           return (
             <Marker
@@ -531,7 +842,7 @@ export default function MapScreen() {
                 latitude: friend.Latitude,
                 longitude: friend.Longitude,
               }}
-              pinColor={friend.InfectionStatus = screenColors}
+              pinColor={(friend.InfectionStatus = screenColors)}
             >
               <Callout>
                 <Text>{friend.Username}</Text>
@@ -548,21 +859,20 @@ export default function MapScreen() {
                 longitude: item.longitude,
               }}
             >
-              { item.itemType != 3 ?
-                  <Image
+              {item.itemType != 3 ? (
+                <Image
                   source={getItem(item.itemType)}
                   style={{ height: 50, width: 70 }}
                 />
-              :
-                 <Image
-                   source={getItem(item.itemType)}
-                   style={{ height: 70, width: 40 }}
-                 />
-              }
-            <Callout>
-                 <Text>{itemMap[item.itemType]}</Text>
-           </Callout>
-
+              ) : (
+                <Image
+                  source={getItem(item.itemType)}
+                  style={{ height: 70, width: 40 }}
+                />
+              )}
+              <Callout>
+                <Text>{itemMap[item.itemType]}</Text>
+              </Callout>
             </Marker>
           );
         })}
@@ -613,10 +923,10 @@ export default function MapScreen() {
 }
 
 const statusColours = {
-    Cured: "#05cf02",
-    Infected: "#f52718",
-    Immune: "#0aefff",
-  };
+  Cured: "#05cf02",
+  Infected: "#f52718",
+  Immune: "#0aefff",
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -631,16 +941,16 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-before",
     alignItems: "center",
-    padding: 10
+    padding: 10,
   },
 
   modalImages: {
     borderRadius: 40,
     borderWidth: 10,
     borderColor: "grey",
-    backgroundColor: 'lightgrey',
+    backgroundColor: "lightgrey",
     marginBottom: 20,
-    marginTop: 20
+    marginTop: 20,
   },
 
   map: {
@@ -648,17 +958,17 @@ const styles = StyleSheet.create({
     height: Dimensions.get("window").height,
   },
   modal: {
-    //justifyContent: 'center',  
-    alignItems: 'center',   
+    //justifyContent: 'center',
+    alignItems: "center",
 
-    backgroundColor : '#FFFFFF',
+    backgroundColor: "#FFFFFF",
     padding: 10,
-    height: '75%',  
-    width: '85%',  
-    borderRadius:10,  
-    borderWidth: 9,  
-    borderColor: statusColours["Immune"],    
-    marginTop: 80,  
+    height: "75%",
+    width: "85%",
+    borderRadius: 10,
+    borderWidth: 9,
+    borderColor: statusColours["Immune"],
+    marginTop: 80,
     marginLeft: 40,
   },
   map: {
