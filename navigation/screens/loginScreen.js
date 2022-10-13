@@ -19,7 +19,9 @@ export default function LoginScreen({ navigation }) {
   const [password, setPassword] = useState("");
   const { updateStatus } = React.useContext(tabContext)
   const { updatePoints } = React.useContext(tabContext)
+  const { username } = React.useContext(tabContext)
   const { set_active_email } = React.useContext(tabContext)
+  const { set_active_username } = React.useContext(tabContext)
   const { updateDailyBD } = React.useContext(tabContext)
   const { setItems } = React.useContext(tabContext)
   const { setImmunityTimer } = React.useContext(tabContext)
@@ -57,6 +59,7 @@ export default function LoginScreen({ navigation }) {
           //console.log(response.data.stat[0])
           updateStatus(response.data.stat[0].InfectionStatus, response.data.stat[0].ImmunityCountdown)
           setImmunityTimer(response.data.stat[0].ImmunityCountdown)
+          set_active_username(response.data.stat[0].Username)
           //console.log(response.data.stat[0])
           updatePoints(response.data.stat[0].Points+PointSystem.dailyPoints(response.data.stat[0].InfectionStatus, response.data.stat[0].dailyLogin))
           //console.log("The DB points: "+(response.data.stat[0].Points+PointSystem.dailyPoints(response.data.stat[0].InfectionStatus, response.data.stat[0].dailyLogin)))
@@ -68,14 +71,14 @@ export default function LoginScreen({ navigation }) {
 
     });
 
-    Axios.post("https://deco3801-betterlatethannever.uqcloud.net/user/getUserInventory", {
-      email: email,
+    Axios.post("https://deco3801-betterlatethannever.uqcloud.net/user/itemCount", {
+      username: username,
     }).then((response) => {
   
-      if (response.data.message) {
+      if (response.data.err) {
         console.log("Couldn't get items")
       } else {
-        setItems(response.data.items)   
+        setItems(response.data.stat)   
       }
       
     });

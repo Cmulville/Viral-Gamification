@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import CountDown from 'react-native-countdown-component';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import PropTypes from 'prop-types';
@@ -8,10 +8,12 @@ import { tabContext } from '../../tabContext';
 
 
 export default function DetailScreen({navigation}) {
-    const { endEventTime } = React.useContext(tabContext)
-    const { setEventEndTime } = React.useContext(tabContext)
     const { screenColors } = React.useContext(tabContext)
     const { status } = React.useContext(tabContext)
+    const { points } = React.useContext(tabContext)
+    const { username } = React.useContext(tabContext)
+    
+
     const { immunityTimer } = React.useContext(tabContext)
     const { setImmunityTimer } = React.useContext(tabContext)
     const { updateImmunityTimer } = React.useContext(tabContext)
@@ -55,13 +57,40 @@ export default function DetailScreen({navigation}) {
         </View>
     )
   } else {
-    return (<View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-    <Text
-      
-      style={{ fontSize: 26, fontWeight: "bold" }}
-    >
-      Account Screen
-    </Text>
-  </View>)
+    return (
+    <View style={styles.container}>
+            <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+            <View>
+                <Text style={styles.header}>
+                    Your Account
+                </Text>
+            </View>
+            <Text>
+                Username: {username}
+            </Text>
+            <Text>
+                Points: {points}
+            </Text>
+            <Text>
+                Status: {status}    
+            </Text>
+        </View>
+    </View>
+  )
   }
 } 
+
+const styles = StyleSheet.create ({
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        
+    },
+    header: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        margin:10,
+        fontSize: 32,
+        fontWeight: 'bold'
+    },
+})

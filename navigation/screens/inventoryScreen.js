@@ -33,13 +33,13 @@ export default function InventoryScreen({changeStatus}) {
         // console.log(element)
         // console.log ("Split")
         if (element.ItemID == 1) {
-            sumSanitizer = element.Count
+            sumSanitizer = element.Amount
         } 
         else if (element.ItemID == 2) {
-            sumGloves = element.Count
+            sumGloves = element.Amount
         
         } else if (element.ItemID == 3) {
-            sumFaceMask = element.Count
+            sumFaceMask = element.Amount
         }
     }); 
 
