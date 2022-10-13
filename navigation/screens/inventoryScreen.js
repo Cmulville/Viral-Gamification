@@ -52,12 +52,12 @@ export default function InventoryScreen({changeStatus}) {
              status == "Infected")
     
     const cureStatus = () => {
-        // if (Math.random() <= 0.2) {
-        //     statusChange("Immune")
-        // } else {
-            //PointSystem.cure()
+        if (Math.random() <= 0.2) {
+            statusChange("Immune")
+        } else {
+            PointSystem.cure()
             statusChange("Healthy")
-        // }
+        }
         addPoints(PointSystem.cure_bonus())
     }
 
