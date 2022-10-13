@@ -8,6 +8,8 @@ import {
   Image,
   icon,
   Alert,
+  Modal,
+  Button,
 } from "react-native";
 import * as Location from "expo-location";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -17,7 +19,7 @@ import { tabContext } from "../../tabContext";
 import PointSystem from "../../pointSystem";
 
 export default function MapScreen() {
-  const UNIQUEITEMS = 3;
+  const UNIQUEITEMS = 6;
   // constant that stores a pin and method (setpin) that changes it. values are just dummy data
   const birsbane = { latitude: -27.4705, longitude: 153.026 };
   const uq = { latitude: -27.4975, longitude: 153.0137 };
@@ -56,7 +58,16 @@ export default function MapScreen() {
     longitude: 0,
   });
 
-  //Will store user using context
+//Used for the pop up
+  const [modalVis, setModalVis] = React.useState(true);
+  const [firstPage, setFirstPage] = React.useState(true);
+  const infected = "This means that your main goal is to try and cure yourself from being " + 
+		   "infected by collecting items accross the map. You may infect others as you do so!";
+  const healthy = "This means that your main goal is to avoid being infected by other users " +
+		  "in your nearby vicinity and to collect items found accross the map.";
+  const message1 = "Welcome to Lets Get Viral! You have started off the game as HEALTHY";
+  const [seenBefore, setSeenBefore] = React.useState(0);
+
   const getUser = async () => {
     try {
       if (user != "") {
@@ -196,21 +207,21 @@ export default function MapScreen() {
     });
   };
 
-  const getItems = () => {
-    Axios.post(
-      "https://deco3801-betterlatethannever.uqcloud.net/items/get",
-      {}
-    ).then((response) => {
-      if (response) {
-        setItems({
-          ids: response.data.loc[0],
-          itemType: response.data.loc[1],
-          latitude: response.data.loc[3],
-          longitude: response.data.loc[2],
-        });
-      }
-    });
-  };
+//  const getItems = () => {
+//    Axios.post(
+//      "https://deco3801-betterlatethannever.uqcloud.net/items/get",
+//      {}
+//    ).then((response) => {
+//      if (response) {
+//        setItems({
+//          ids: response.data.loc[0],
+//          itemType: response.data.loc[1],
+//          latitude: response.data.loc[3],
+//          longitude: response.data.loc[2],
+//        });
+//      }
+//    });
+//  };
 
   const countItems = () => {
     Axios.post(
@@ -268,17 +279,30 @@ export default function MapScreen() {
   };
 
   function getItem(itemType) {
-    if (itemType == 1) {
-      return require("../../assets/images/sanitizer.png");
+    if (itemType == 0) {
+      return require("../../assets/images/mask.png");
     }
 
     if (itemType == 2) {
       return require("../../assets/images/gloves.png");
     }
 
-    if (itemType == 0) {
-      return require("../../assets/images/mask.png");
+    if (itemType == 2) {
+      return require("../../assets/images/syringe.png");
     }
+    
+    if (itemType == 3) {
+      return require("../../assets/images/sanitizer.png");
+    }
+
+    if (itemType == 4) {
+      return require("../../assets/images/Tablets.png");
+    }
+
+    if (itemType == 5) {
+      return require("../../assets/images/Nebulizer.png");
+    }
+
   }
 
   // event that get asks for permission then gets the users inital location
@@ -306,6 +330,45 @@ export default function MapScreen() {
 
   return (
     <View style={styles.container}>
+      <Modal animationType ={"slide"} transparent = {true} visible = {modalVis}>
+     	 { firstPage ?
+     	   <View style = {styles.modal}>
+     	       <View style={{marginBottom:25}}>
+     	           <Text style={{fontSize:20}}>{message1}</Text>
+     	       </View>
+     	       <Text>{healthy}</Text>
+     	       <View style = {styles.imageDisplay}>
+     	           <Image
+     	             source={require("../../assets/images/gloves.png")}
+     	             style={{ height: 70, width: 80 }}/>
+                   <Image
+     	             source={require("../../assets/images/sanitizer.png")}
+     	             style={{ height: 105, width: 80 }}/>
+                   <Image
+     	             source={require("../../assets/images/mask.png")}
+     	             style={{ height: 70, width: 80 }}/>
+
+     	       </View>
+     	       <View style = {styles.imageDisplay}>
+                   <Image
+     	             source={require("../../assets/images/syringe.png")}
+     	             style={{ height: 70, width: 80 }}/>
+                   <Image
+     	             source={require("../../assets/images/Nebulizer.png")}
+     	             style={{ height: 70, width: 80 }}/>
+                   <Image
+     	             source={require("../../assets/images/Tablets.png")}
+     	             style={{ height: 70, width: 80 }}/>
+               </View>
+     	       <Button title ="Next Page" onPress = {() => {setFirstPage(false)}}/>
+     	   </View>
+     	   :
+     	   <View style={styles.modal}>
+     	       <Text>Exit</Text>
+     	       <Button title="Exit" onPress ={() =>{setModalVis(false)}}/>
+     	   </View>
+     	 }
+      </Modal>
       <MapView
         style={styles.map}
         // where the map will hover when opened Location is St Lucia
@@ -323,6 +386,7 @@ export default function MapScreen() {
             longitude: e.nativeEvent.coordinate.longitude,
           });
 
+          myFriends();
           const nonCollectedItems = [];
 
           for (var i = 0; i < items.length; i++) {
@@ -445,10 +509,18 @@ export default function MapScreen() {
                 longitude: item.longitude,
               }}
             >
+              { item.itemType != 3 ?
               <Image
                 source={getItem(item.itemType)}
-                style={{ height: 50, width: 50 }}
+                style={{ height: 50, width: 70 }}
               />
+              :
+              <Image
+                source={getItem(item.itemType)}
+                style={{ height: 70, width: 40 }}
+              />
+
+              }
             </Marker>
           );
         })}
@@ -483,7 +555,7 @@ export default function MapScreen() {
         <Marker
           // marker that shows the user location and is on top of the user icon from the MapView
           coordinate={pin}
-          pinColor="red"
+          pinColor="blue"
         >
           <Callout>
             <Text>User is {distance.thing} metres away</Text>
@@ -511,15 +583,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+
   imageDisplay: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "space-before"
-  },
-  imageDisplay: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-before"
+    justifyContent: "space-before",
+    alignItems: "center",
+    padding: 10
   },
   map: {
     width: Dimensions.get("window").width,
