@@ -22,6 +22,7 @@ export default function LoginScreen({ navigation }) {
   const { set_active_email } = React.useContext(tabContext)
   const { updateDailyBD } = React.useContext(tabContext)
   const { setItems } = React.useContext(tabContext)
+  const { setImmunityTimer } = React.useContext(tabContext)
 
   const errorAlert = () => {
     Alert.alert("Login failed", "Your email or password is incorrect. Please try again", [
@@ -53,7 +54,9 @@ export default function LoginScreen({ navigation }) {
         errorAlert(); 
       } else {
         if (login_success) {
-          updateStatus(response.data.stat[0].InfectionStatus)
+          //console.log(response.data.stat[0])
+          updateStatus(response.data.stat[0].InfectionStatus, response.data.stat[0].ImmunityCountdown)
+          setImmunityTimer(response.data.stat[0].ImmunityCountdown)
           //console.log(response.data.stat[0])
           updatePoints(response.data.stat[0].Points+PointSystem.dailyPoints(response.data.stat[0].InfectionStatus, response.data.stat[0].dailyLogin))
           //console.log("The DB points: "+(response.data.stat[0].Points+PointSystem.dailyPoints(response.data.stat[0].InfectionStatus, response.data.stat[0].dailyLogin)))

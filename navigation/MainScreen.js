@@ -30,7 +30,6 @@ const timerName = "Event Timer";
 //status and points context
 const { status } = React.useContext(tabContext)
 const { points } = React.useContext(tabContext)
-const Drawer = createDrawerNavigator();
 
   const statusColours = {
   Healthy: "#05cf02",

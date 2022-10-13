@@ -1,6 +1,4 @@
-import React from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { tabContext } from "./tabContext";
 
 const PointSystem = {
     
@@ -21,8 +19,10 @@ const PointSystem = {
             }
         }
     },
-    //Changes the status of the victim from Healthy to user
+    //Changes the status of the user from Healthy to user
     infect: async () => {
+        
+
         try {
             const value = await AsyncStorage.getItem("status")
             if (value === 'Healthy') {
@@ -94,20 +94,21 @@ const PointSystem = {
     },
 
     immunity_interact: (user, immune_user) => {
-
+        return 500
     },
 
     walking_reward: (user) => {
         //Add the reward points to the user.
     },
 
-    friend_interact:(user, friend) => {
-        //Reward based on itneraction
+    
+    friend_interact: () => {
+        return 250
     },
 
-    invite_reward: (user) => {
-        //User is the user who provided the add link
-        //This user receives an award based on the total friends added database link. 
+    //Add points to user from whom a friend request was accepted
+    invite_reward: () => {
+        return 550
     },
 }
 

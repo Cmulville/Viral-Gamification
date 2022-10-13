@@ -59,7 +59,7 @@ return (
         <Drawer.Screen name="Settings" component={SettingsScreen}
         
         />
-        <Drawer.Screen name="Details" component={DetailScreen} 
+        <Drawer.Screen name="Account" component={DetailScreen} 
         
         />
         

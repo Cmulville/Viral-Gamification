@@ -14,6 +14,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
+import moment from "moment/moment";
 
 export default function App() {
   
@@ -22,6 +23,7 @@ export default function App() {
   const [email, setEmail] = React.useState(0)
   const [items, setItems] = React.useState(null)
   const [eventEndTIme, setEventEndTime] = React.useState(0)
+  const [immunityTimer, setImmunityTimer] = React.useState(0)
 
   // Ask about this
   // 6e930c12dc934cbd849bd2be
@@ -109,29 +111,60 @@ export default function App() {
   }
 
   const statusChange = async (new_status) => {
-    try {
-      
-      await AsyncStorage.setItem("status", new_status)
-      setStatus(new_status)
-      updateStatusDB(new_status)
-      console.log("Status Change")
+    // try {
+    //   await AsyncStorage.setItem("status", new_status)
+    if (new_status == "Immune") {
+      const date = moment().utcOffset('+10:00').format('YYYY-MM-DD hh:mm:ss');
+      setImmunityTimer(date)
+      updateImmunityTimer(date)
+    }  
+    
+    setStatus(new_status)
+    updateStatusDB(new_status)
+    console.log("Status Change")
 
-    } catch(e) {
-      alert("Couldn't change the status")
-    }
+    // } catch(e) {
+    // }
+  }
+  
+  const updateImmunityTimer = (time) => {
+    Axios.post("https://deco3801-betterlatethannever.uqcloud.net/user/setImmunityTimer", {
+      time: time,
+      email: email
+    }).then((response) => {
+      if (response.data.message) {
+        alert('Daily fail')
+      } else {
+        console.log("Immunity set!")
+      }
+
+    });
   }
 
-  const updateStatus = async (new_status) => {
-    try {
 
-      await AsyncStorage.setItem("status", new_status)
-      setStatus(new_status)  
-      //updateStatusDB(new_status)
+  const updateStatus = (new_status, ImmunityCountdown) => {
+    //console.log(ImmunityCountdown)
+    if (new_status == "Immune") {
+      const date = moment().utcOffset('+10:00').format('YYYY-MM-DD hh:mm:ss');
 
-    } catch(e) {
-        alert("Error updating status")
-    }
-    
+      const diffr = moment.duration(moment(ImmunityCountdown).diff(moment(date)));
+      const hours = parseInt(diffr.asHours());
+      const minutes = parseInt(diffr.minutes());
+      const seconds = parseInt(diffr.seconds());
+
+      const timeDiff = hours * 60 * 60 + minutes * 60 + seconds;
+
+      if (timeDiff <= 0) {
+        statusChange("Healthy")
+        console.log("Immunity over, time to be healthy")
+      } else {
+        setStatus(new_status)
+        setImmunityTimer(ImmunityCountdown)
+        updateImmunityTimer(ImmunityCountdown)
+      }
+    } else {
+      setStatus(new_status)
+    }  
   }
 
   const addPoints = async (new_points) => {
@@ -171,7 +204,7 @@ export default function App() {
 
 
   return (
-    <tabContext.Provider value={{items, status, points, email, eventEndTIme, screenColors, setEventEndTime, setItems, updateStatus, statusChange, updatePoints, addPoints, set_active_email, updateDailyBD}}>
+    <tabContext.Provider value={{items, status, points, email, eventEndTIme, screenColors, immunityTimer, setEventEndTime, setItems, updateStatus, statusChange, updatePoints, addPoints, set_active_email, updateDailyBD, setImmunityTimer, updateImmunityTimer}}>
       <StatusBar style="dark" />
       <NavigationContainer>
         <RootStackScreen />
