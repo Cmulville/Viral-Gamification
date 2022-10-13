@@ -75,13 +75,13 @@ export default function App() {
     });
   }
 
-  const updatePointsDB = (points) => {
+  const updatePointsDB = async (points) => {
     console.log("These are the points going in: "+points)
-    Axios.post("https://deco3801-betterlatethannever.uqcloud.net/user/updatePoints", {
+    await Axios.post("https://deco3801-betterlatethannever.uqcloud.net/user/updatePoints", {
       email: email,
       points: points,
     }).then((response) => {
-      
+      console.log("Points request made!")
       if (response.data.message) {
         alert('Points fail')
       } else {
@@ -91,7 +91,7 @@ export default function App() {
       }
 
     }).catch((error) => {
-      // console.log(error)
+      console.log("ERROR WITH POINTS UPDATE 1")
     });
   }
 
@@ -147,7 +147,7 @@ export default function App() {
     
   }
 
-  const addPoints = async (new_points) => {
+  const addPoints = (new_points) => {
     console.log(new_points, typeof(new_points))
     try {
       
@@ -155,14 +155,14 @@ export default function App() {
       // console.log(new_points)
       // console.log(value)
             
-      await AsyncStorage.setItem("points", JSON.stringify(value))
+      //await AsyncStorage.setItem("points", JSON.stringify(value))
       
       setPoints(value)
       updatePointsDB(value)
       
       
     } catch(e) {
-      alert(e)
+      alert("TROUBLE ADDING POINTS")
     }
   }
 
@@ -179,7 +179,7 @@ export default function App() {
       //updatePointsDB(new_points)
 
     } catch(e) {
-      alert(e)
+      alert("TROUBLE ADDING POINTS")
     }
   }
 

@@ -413,6 +413,7 @@ export default function MapScreen() {
         showsUserLocation={true}
         //method that will update the location of user when it changes
         onUserLocationChange={(e) => {
+          let new_points = 0
           setPin({
             latitude: e.nativeEvent.coordinate.latitude,
             longitude: e.nativeEvent.coordinate.longitude,
@@ -431,8 +432,9 @@ export default function MapScreen() {
               ) < 100
             ) {
               addItem(items[i].itemType);
-              addPoints(items[i].itemType);
-              Alert.alert(
+              console.log("#"+items[i].itemType, "These items")
+              new_points += PointSystem.collect_item(items[i].itemType);
+              console.log(
                 "item collected ",
                 "You've just collected " + items[i].itemType,
                 [{ text: "OK" }]
@@ -442,6 +444,9 @@ export default function MapScreen() {
             }
           }
           setItems(nonCollectedItems);
+          if (new_points > 0) {
+            addPoints(new_points)
+          }
 
           if (
             calculateDistance(
@@ -498,6 +503,7 @@ export default function MapScreen() {
               uq.longitude
             ),
           });
+          
         }}
       >
         <Marker

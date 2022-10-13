@@ -78,6 +78,7 @@ const PointSystem = {
 
     collect_item: (itemType) => {
         const collect_points = [150, 250, 450, 550, 300, 350, 400]
+        // const collect_points = [1, 2, 3, 4, 5, 6, 7]
         // let points = 0
         // if (itemType == 0) {
         //     points = 150
