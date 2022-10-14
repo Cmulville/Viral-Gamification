@@ -77,7 +77,7 @@ export default function MapScreen() {
   const infected =
     "Try not to infect others but make sure to collect items so that you can " +
     "cure yourself and gather points. You will not be able to see other people's location";
-  const message1 = "Welcome! You have started off the game as "  + status.toUpperCase() + "!";
+  const message1 = "Welcome! You have started off the game as " + status + "!";
   const [seenBefore, setSeenBefore] = React.useState(0);
 
   // const getUser = async () => {
@@ -405,12 +405,12 @@ export default function MapScreen() {
     })();
   }, []);
 
-  const borderStyle = {borderColor: statusColors[status],}
+  const borderStyle = { borderColor: statusColors[status] };
   return (
     <View style={styles.container}>
       <Modal animationType={"slide"} transparent={true} visible={modalVis}>
         {firstPage ? (
-          <View style={{...styles.modal, ...borderStyle}}>
+          <View style={{ ...styles.modal, ...borderStyle }}>
             <View style={{ marginBottom: 25 }}>
               <Text style={{ fontSize: 25, fontWeight: "bold" }}>
                 LETS GET VIRAL!
@@ -420,7 +420,7 @@ export default function MapScreen() {
               <Text style={{ fontSize: 20 }}>{message1}</Text>
             </View>
             <Text>{status == "Healthy" ? healthy : infected}</Text>
-            <View style={{...styles.modalImages, ...borderStyle}}>
+            <View style={{ ...styles.modalImages, ...borderStyle }}>
               <View style={styles.imageDisplay}>
                 <Image
                   source={require("../../assets/images/gloves.png")}
@@ -458,7 +458,7 @@ export default function MapScreen() {
             />
           </View>
         ) : (
-          <View style={{...styles.modal, ...borderStyle}}>
+          <View style={{ ...styles.modal, ...borderStyle }}>
             <Text style={{ fontSize: 15, marginBottom: 25 }}>
               Search for your friends and add them to view their location and
               their current infection status!{" "}
@@ -719,11 +719,11 @@ const styles = StyleSheet.create({
     height: "75%",
     width: "85%",
     borderRadius: 10,
-    borderWidth: 9, 
+    borderWidth: 9,
     marginTop: 100,
     marginLeft: 40,
   },
   test: {
-      borderColor: 'red'
-  }
+    borderColor: "red",
+  },
 });
