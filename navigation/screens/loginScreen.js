@@ -19,13 +19,14 @@ export default function LoginScreen({ navigation }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const { updateStatus } = React.useContext(tabContext);
+  const { updateItems } = React.useContext(tabContext);
   const { updatePoints } = React.useContext(tabContext);
   const { set_active_email } = React.useContext(tabContext);
   const { set_active_username } = React.useContext(tabContext);
   const { updateDailyBD } = React.useContext(tabContext);
   const { setItems } = React.useContext(tabContext);
-  const {myFriends} = React.useContext(tabContext);
-  const {showRequests} = React.useContext(tabContext);
+  const { myFriends } = React.useContext(tabContext);
+  const { showRequests } = React.useContext(tabContext);
 
   const errorAlert = () => {
     Alert.alert(
@@ -35,157 +36,157 @@ export default function LoginScreen({ navigation }) {
     );
   };
   //Context will need to be updated through login
-  
+
   const login = () => {
-    const login_success = true
+    const login_success = true;
+    var loginUsername = "";
     Axios.post("https://deco3801-betterlatethannever.uqcloud.net/login", {
       email: email,
       password: password,
-    }).then((response) => {
-      if (response.data.message) {
-        errorAlert();
-        login_success = false
-      } else {
-        navigation.navigate("MainScreen");
-      }
-    }).catch((error) => {
-      // console.log(error)
-    });    
-    
+    })
+      .then((response) => {
+        if (response.data.message) {
+          errorAlert();
+          login_success = false;
+        } else {
+          navigation.navigate("MainScreen");
+        }
+      })
+      .catch((error) => {
+        // console.log(error)
+      });
+
     //Add user database info to ga e
     Axios.post("https://deco3801-betterlatethannever.uqcloud.net/userStats", {
       email: email,
-    }).then((response) => {
-      
-      if (response.data.message) {
-        errorAlert(); 
-      } else {
-        if (login_success) {
-          set_active_username(response.data.stat[0].Username)
-          updateStatus(response.data.stat[0].InfectionStatus)
-          //console.log(response.data.stat[0])
-          updatePoints(response.data.stat[0].Points+PointSystem.dailyPoints(response.data.stat[0].InfectionStatus, response.data.stat[0].dailyLogin))
-          //console.log("The DB points: "+(response.data.stat[0].Points+PointSystem.dailyPoints(response.data.stat[0].InfectionStatus, response.data.stat[0].dailyLogin)))
-          set_active_email(email)
-          // updatePoints(PointSystem.dailyPoints(response.data.stat[0].InfectionStatus, response.data.stat[0].dailyLogin))
-          updateDailyBD()
-          myFriends();
-          showRequests();
+    })
+      .then((response) => {
+        if (response.data.message) {
+          errorAlert();
+        } else {
+          if (login_success) {
+            loginUsername = response.data.stat[0].Username;
+            set_active_username(response.data.stat[0].Username);
+            updateStatus(response.data.stat[0].InfectionStatus);
+            //console.log(response.data.stat[0])
+            updatePoints(
+              response.data.stat[0].Points +
+                PointSystem.dailyPoints(
+                  response.data.stat[0].InfectionStatus,
+                  response.data.stat[0].dailyLogin
+                )
+            );
+            //console.log("The DB points: "+(response.data.stat[0].Points+PointSystem.dailyPoints(response.data.stat[0].InfectionStatus, response.data.stat[0].dailyLogin)))
+            set_active_email(email);
+            // updatePoints(PointSystem.dailyPoints(response.data.stat[0].InfectionStatus, response.data.stat[0].dailyLogin))
+            updateDailyBD();
+            myFriends();
+            showRequests();
+          }
         }
-      }
-
-    }).catch((error) => {
-      // console.log(error)
-    });
-
-    Axios.post("https://deco3801-betterlatethannever.uqcloud.net/user/itemCount", {
-        username: username,
-    }).then((response) => {
-      if (response.data.err) {
-        console.log("Couldn't get items")
-      } else {
-        console.log('got items');
-        setItems(response.data.result);   
-        console.log(response.data.result);
-      }
-      
-    }).catch((error) => {
-      // console.log(error)
-    });
-    
+      })
+      .catch((error) => {
+        // console.log(error)
+      });
   };
 
-  const CircleButton = props =>(
+  const CircleButton = (props) => (
     <TouchableOpacity
-      style = {{
+      style={{
         margin: props.margin,
         height: props.size,
         width: props.size,
         backgroundColor: props.color,
         alignItems: "center",
         justifyContent: "center",
-        borderRadius: props.size *2,
+        borderRadius: props.size * 2,
       }}
-      onPress={props.onPress}>
-        <Text style = {{color: props.textColor, fontSize: props.fontSize,textAlignVertical:"center",textAlign:"center"}}>
-          LET'S GET VIRAL
-        </Text>
-      </TouchableOpacity>
-  )
+      onPress={props.onPress}
+    >
+      <Text
+        style={{
+          color: props.textColor,
+          fontSize: props.fontSize,
+          textAlignVertical: "center",
+          textAlign: "center",
+        }}
+      >
+        LET'S GET VIRAL
+      </Text>
+    </TouchableOpacity>
+  );
 
   return (
     <>
       <View style={styles.container}>
-      <Text style={styles.titleText}>
-          </Text>
-      <View style = {styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Email" 
-          placeholderTextColor="#003f5c"
-          onChangeText={(email) => setEmail(email)}
+        <Text style={styles.titleText}></Text>
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.TextInput}
+            placeholder="Email"
+            placeholderTextColor="#003f5c"
+            onChangeText={(email) => setEmail(email)}
           />
-      </View>
-      <View style = {styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Password"
-          placeholderTextColor="#003f5c"
-          onChangeText={(password) => setPassword(password)}
+        </View>
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.TextInput}
+            placeholder="Password"
+            placeholderTextColor="#003f5c"
+            onChangeText={(password) => setPassword(password)}
           />
+        </View>
+        <View style={styles.circleView}>
+          <CircleButton
+            size={150}
+            color="#da0f0f"
+            textColor="white"
+            fontSize={30}
+            margin={10}
+            onPress={login}
+          />
+        </View>
+        <TouchableOpacity onPress={() => navigation.navigate("RegisterScreen")}>
+          <Text style={styles.newUserView}>Click here to Sign Up!</Text>
+        </TouchableOpacity>
+        <StatusBar style="auto" />
       </View>
-      <View style = {styles.circleView}>
-        <CircleButton
-        size={150}
-        color="#da0f0f"
-        textColor="white"
-        fontSize={30}
-        margin={10}
-        onPress={login}
-      />
-      </View>
-      <TouchableOpacity onPress={() => navigation.navigate("RegisterScreen")}>
-        <Text style ={styles.newUserView}>Click here to Sign Up!</Text>
-      </TouchableOpacity>
-      <StatusBar style="auto" />
-      </View> 
     </>
-    );
-  }
-  
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: "#0b4c68",
-      alignItems: "center",
-      justifyContent: "center",
-    },
-    titleText:{
-      
-      textAlign:"center",
-      fontSize:20,
-      fontWeight:"bold",
-    },
-    inputView:{
-    backgroundColor:"#d3d3d3",
-    borderRadius:30,
-    width: "70%", 
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#0b4c68",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  titleText: {
+    textAlign: "center",
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  inputView: {
+    backgroundColor: "#d3d3d3",
+    borderRadius: 30,
+    width: "70%",
     height: 45,
     marginBottom: 20,
     alignItems: "flex-start",
-    },
-    TextInput: {
-      height: 50,
-      flex: 1,
-      padding: 0,
-      marginLeft: 15,
-    },
-    circleView: {
-      alignItems:"center",
-    },
-    newUserView:{
-      color: "white",
-      height:50,
-      marginBottom: 30,
-    }
-  });
+  },
+  TextInput: {
+    height: 50,
+    flex: 1,
+    padding: 0,
+    marginLeft: 15,
+  },
+  circleView: {
+    alignItems: "center",
+  },
+  newUserView: {
+    color: "white",
+    height: 50,
+    marginBottom: 30,
+  },
+});

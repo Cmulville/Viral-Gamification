@@ -77,69 +77,8 @@ export default function MapScreen() {
   const infected =
     "Try not to infect others but make sure to collect items so that you can " +
     "cure yourself and gather points. You will not be able to see other people's location";
-  const message1 = "Welcome! You have started off the game as "  + status.toUpperCase() + "!";
+  const message1 = "Welcome! You have started off the game as " + status + "!";
   const [seenBefore, setSeenBefore] = React.useState(0);
-
-  // const getUser = async () => {
-  //   try {
-  //     if (user != "") {
-  //         return;
-  //     }
-  //     const value = await AsyncStorage.getItem("user");
-  //     if (value != null) {
-  //       setUser(JSON.parse(value));
-  //     } else {
-  //       return null;
-  //     }
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
-
-  const distanceUsers = () => {
-    // getUser();
-    Axios.post(
-      "https://deco3801-betterlatethannever.uqcloud.net/users/distance",
-      {
-        username: username,
-      }
-    )
-      .then((response) => {
-        setUsers(response.data.users);
-        console.log("users", username);
-      })
-      .catch((error) => {});
-  };
-
-  const infect = (username) => {
-    Axios.post(
-      "https://deco3801-betterlatethannever.uqcloud.net/users/infect",
-      {
-        username: username,
-      }
-    )
-      .then((response) => {
-        Alert.alert("Infected", "Username must not be empty", [{ text: "Ok" }]);
-        console.log("infected", { username });
-      })
-      .catch((error) => {
-        // console.log(error)
-      });
-  };
-
-  const contact = () => {
-    for (var i = 0; i < users.length; i++) {
-      let dist = calculateDistance(
-        pin.latitude,
-        pin.longitude,
-        users[i].Latitude,
-        users[i].Longitude
-      );
-      if (dist < 100) {
-        infect(users[i].Username);
-      }
-    }
-  };
 
   //Retrieves list of friends from the backend
   const myFriends = () => {
@@ -300,9 +239,6 @@ export default function MapScreen() {
         } else {
           updateItem(itemtype);
         }
-        console.log("HERERHEHRE", "HI");
-        // console.log(itemtype, (PointSystem.collect_item(itemtype)))
-        // console.log(typeof(PointSystem.collect_item(itemtype)), PointSystem.collect_item(itemtype))
       })
       .catch((error) => {
         // console.log(error)
@@ -320,14 +256,8 @@ export default function MapScreen() {
     )
       .then((response) => {
         console.log(response.data);
-        // console.log("New User Item Added");
-        // console.log(itemtype, (PointSystem.collect_item(itemtype)))
-        // console.log(typeof(PointSystem.collect_item(itemtype)), PointSystem.collect_item(itemtype))
-        //addPoints(PointSystem.collect_item(itemtype))
       })
-      .catch((error) => {
-        // console.log(error)
-      });
+      .catch((error) => {});
   };
 
   const updateItem = (itemtype) => {
@@ -395,7 +325,6 @@ export default function MapScreen() {
       }
 
       let location = await Location.getCurrentPositionAsync({});
-      // getUser();
       myFriends();
       // set Pin being used to change the pin
       setPin({
@@ -405,12 +334,12 @@ export default function MapScreen() {
     })();
   }, []);
 
-  const borderStyle = {borderColor: statusColors[status],}
+  const borderStyle = { borderColor: statusColors[status] };
   return (
     <View style={styles.container}>
       <Modal animationType={"slide"} transparent={true} visible={modalVis}>
         {firstPage ? (
-          <View style={{...styles.modal, ...borderStyle}}>
+          <View style={{ ...styles.modal, ...borderStyle }}>
             <View style={{ marginBottom: 25 }}>
               <Text style={{ fontSize: 25, fontWeight: "bold" }}>
                 LETS GET VIRAL!
@@ -420,7 +349,7 @@ export default function MapScreen() {
               <Text style={{ fontSize: 20 }}>{message1}</Text>
             </View>
             <Text>{status == "Healthy" ? healthy : infected}</Text>
-            <View style={{...styles.modalImages, ...borderStyle}}>
+            <View style={{ ...styles.modalImages, ...borderStyle }}>
               <View style={styles.imageDisplay}>
                 <Image
                   source={require("../../assets/images/gloves.png")}
@@ -458,7 +387,7 @@ export default function MapScreen() {
             />
           </View>
         ) : (
-          <View style={{...styles.modal, ...borderStyle}}>
+          <View style={{ ...styles.modal, ...borderStyle }}>
             <Text style={{ fontSize: 15, marginBottom: 25 }}>
               Search for your friends and add them to view their location and
               their current infection status!{" "}
@@ -575,8 +504,6 @@ export default function MapScreen() {
             }
             setItems(newItems);
           }
-          //distanceUsers();
-          //contact();
           UpdateLocation();
           setDistance({
             thing: calculateDistance(
@@ -633,33 +560,6 @@ export default function MapScreen() {
           );
         })}
 
-        {/* <Marker
-          //item marker for mask
-          coordinate={{ latitude: -27.496, longitude: 153.0137 }}
-        >
-          <Image
-            source={require("../../assets/images/mask.jpg")}
-            style={{ height: 50, width: 50 }}
-          />
-          <Callout>
-            <Text>Mask</Text>
-          </Callout>
-        </Marker>
-
-        <Marker
-          // Item marker for gloves
-          coordinate={{ latitude: -27.497, longitude: 153.012 }}
-          pinColor="#00FF00"
-        >
-          <Image
-            source={require("../../assets/images/gloves.png")}
-            style={{ height: 50, width: 50 }}
-          />
-          <Callout>
-            <Text>Gloves</Text>
-          </Callout>
-        </Marker> */}
-
         <Marker
           // marker that shows the user location and is on top of the user icon from the MapView
           coordinate={pin}
@@ -671,7 +571,7 @@ export default function MapScreen() {
         </Marker>
         <Circle //circle that is around the user, maybe can be used as the infection radius
           center={pin}
-          radius={100}
+          radius={20}
         />
       </MapView>
     </View>
@@ -719,11 +619,11 @@ const styles = StyleSheet.create({
     height: "75%",
     width: "85%",
     borderRadius: 10,
-    borderWidth: 9, 
+    borderWidth: 9,
     marginTop: 100,
     marginLeft: 40,
   },
   test: {
-      borderColor: 'red'
-  }
+    borderColor: "red",
+  },
 });
