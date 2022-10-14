@@ -12,6 +12,7 @@ export default function InventoryScreen({changeStatus}) {
     const { statusChange } = React.useContext(tabContext)
     const { addPoints } = React.useContext(tabContext)
     const { items } = React.useContext(tabContext)
+    const { screenColors } = React.useContext(tabContext)
 
     const santizerGoal = 15
     const gloveGoal = 15
@@ -32,13 +33,13 @@ export default function InventoryScreen({changeStatus}) {
         // console.log(element)
         // console.log ("Split")
         if (element.ItemID == 1) {
-            sumSanitizer = element.Count
+            sumSanitizer = element.Amount
         } 
         else if (element.ItemID == 2) {
-            sumGloves = element.Count
+            sumGloves = element.Amount
         
         } else if (element.ItemID == 3) {
-            sumFaceMask = element.Count
+            sumFaceMask = element.Amount
         }
     }); 
 
@@ -51,8 +52,12 @@ export default function InventoryScreen({changeStatus}) {
              status == "Infected")
     
     const cureStatus = () => {
-        PointSystem.cure()
-        statusChange("Healthy")
+        if (Math.random() <= 0.2) {
+            statusChange("Immune")
+        } else {
+            PointSystem.cure()
+            statusChange("Healthy")
+        }
         addPoints(PointSystem.cure_bonus())
     }
 
@@ -67,17 +72,20 @@ export default function InventoryScreen({changeStatus}) {
                 <ScrollView >
                 <View style={styles.item_container}>
                     <View style={styles.items}>
-                        <Button title='Santitizer' />   
+                        <Button title='Santitizer'
+                        color={screenColors} />   
                         <Text style={{fontSize: 22}}>{sumSanitizer}/{santizerGoal} </Text>
                     </View>
                         
                     <View style={styles.items}>
-                        <Button title='Gloves' />
+                        <Button title='Gloves'
+                        color={screenColors} />
                         <Text style={{fontSize: 22}}>{sumGloves}/{gloveGoal} </Text>
                     </View>    
 
                     <View style={styles.items}>
-                        <Button title='Face Masks' />       
+                        <Button title='Face Masks'
+                        color={screenColors} />       
                         <Text co style={{fontSize: 22}}>{sumFaceMask}/{faceMaskGoal} </Text>
                     </View>
                 </View>

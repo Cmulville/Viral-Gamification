@@ -1805,10 +1805,24 @@
     react-is "^16.13.0"
     use-latest-callback "^0.1.5"
 
+"@react-navigation/drawer@^6.5.0":
+  version "6.5.0"
+  resolved "https://registry.yarnpkg.com/@react-navigation/drawer/-/drawer-6.5.0.tgz#6f73a04deca2ce046626a60d9a59b11e8cc97167"
+  integrity sha512-ma3qPjAfbwF07xd1w1gaWdcvYWmT4F+Z098q2J7XGbHw8yTGQYiNTnD1NMKerXwxM24vui2tMuFHA54F1rIvHQ==
+  dependencies:
+    "@react-navigation/elements" "^1.3.6"
+    color "^4.2.3"
+    warn-once "^0.1.0"
+
 "@react-navigation/elements@^1.3.5":
   version "1.3.5"
   resolved "https://registry.npmjs.org/@react-navigation/elements/-/elements-1.3.5.tgz"
   integrity sha512-3Ef5cYuQXqJRco7RG99fkDEciAuYTkAD7go5D8RFYG8rAp2aI/cDnGwFwvFVANlRsbFFPGU3ZLY8EUJihf4Hjw==
+
+"@react-navigation/elements@^1.3.6":
+  version "1.3.6"
+  resolved "https://registry.yarnpkg.com/@react-navigation/elements/-/elements-1.3.6.tgz#fa700318528db93f05144b1be4b691b9c1dd1abe"
+  integrity sha512-pNJ8R9JMga6SXOw6wGVN0tjmE6vegwPmJBL45SEMX2fqTfAk2ykDnlJHodRpHpAgsv0DaI8qX76z3A+aqKSU0w==
 
 "@react-navigation/material-top-tabs@^6.2.3":
   version "6.2.3"
@@ -3130,6 +3144,14 @@ delayed-stream@~1.0.0:
   resolved "https://registry.npmjs.org/delayed-stream/-/delayed-stream-1.0.0.tgz"
   integrity sha512-ZySD7Nf91aLB0RxL4KGrKHBXl7Eds1DAmEdcoVawXnLD7SDhpNgtuII2aAkg7a7QS41jxPSZ17p4VdGnMHk3MQ==
 
+delegate-component@0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/delegate-component/-/delegate-component-0.1.0.tgz#7bb383b0a851efbaaee7f9885f27f0ca3aaccb23"
+  integrity sha512-Vxx0gRLNhVxaP9JI8jELKe7D520A10KsJNtUSlFShF8oZDnBeuepk/KqsKjIbkUKpbkNXqWjk/gxykWhl4wlwQ==
+  dependencies:
+    event-component "*"
+    matches-selector-2 "0.1.0"
+
 denodeify@^1.2.1:
   version "1.2.1"
   resolved "https://registry.npmjs.org/denodeify/-/denodeify-1.2.1.tgz"
@@ -3170,6 +3192,14 @@ dottie@^2.0.2:
   version "2.0.2"
   resolved "https://registry.npmjs.org/dottie/-/dottie-2.0.2.tgz"
   integrity sha512-fmrwR04lsniq/uSr8yikThDTrM7epXHBAAjH9TbeH3rEA8tdCO7mRzB9hdmdGyJCxF8KERo9CITcm3kGuoyMhg==
+
+drawer@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/drawer/-/drawer-0.0.2.tgz#f201d69cdfb0260a3973fe20f4241acdcb67aef3"
+  integrity sha512-nWvDRJ25dDmPjxa5PUsQCdcWPl0wmnNXNtdRzy1I7opMzAsu6TcmXao8Xc/xNJyGFHa0/jA1957r/3mUyH+Mpg==
+  dependencies:
+    events-component-2 "1.0.4"
+    translate-component "*"
 
 ee-first@1.1.1:
   version "1.1.1"
@@ -3270,10 +3300,23 @@ etag@~1.8.1:
   resolved "https://registry.npmjs.org/etag/-/etag-1.8.1.tgz"
   integrity sha512-aIL5Fx7mawVa300al2BnEE4iNvo1qETxLrPI/o05L7z6go7fCw1J6EQmbK4FmJ2AS7kgVF/KEZWufBfdClMcPg==
 
+event-component@*, event-component@0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/event-component/-/event-component-0.1.0.tgz#80455579d134ab27e3bb80bb2869bf96a76e9e68"
+  integrity sha512-nDko83zL1Sfl4gbYJAsFnyla0Ok+llczIyZ9X+lkCIm5yW/hggS9gbYPxhZW1JD8K5VKaFmgeIZvnGE/DQnh2w==
+
 event-target-shim@^5.0.0, event-target-shim@^5.0.1:
   version "5.0.1"
   resolved "https://registry.npmjs.org/event-target-shim/-/event-target-shim-5.0.1.tgz"
   integrity sha512-i/2XbnSz/uxRCU6+NdVJgKWDTM427+MqYbkQzD321DuCQJUqOuJKIA0IM2+W2xtYHdKOmZ4dR6fExsd4SXL+WQ==
+
+events-component-2@1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/events-component-2/-/events-component-2-1.0.4.tgz#7aeca06f587c93b9efd856af753df5b6c38052e8"
+  integrity sha512-GU8YJWH0UB1ABohG6mZRmbgQ2hc+3vNTuRx9WcicWM5/ZNBjbPHlUprNn5LDQoK0DI+qTSC6JpYRDLzhfKR+pQ==
+  dependencies:
+    delegate-component "0.1.0"
+    event-component "0.1.0"
 
 exec-async@^2.2.0:
   version "2.2.0"
@@ -3961,6 +4004,13 @@ has-symbols@^1.0.3:
   version "1.0.3"
   resolved "https://registry.npmjs.org/has-symbols/-/has-symbols-1.0.3.tgz"
   integrity sha512-l3LCuF6MgDNwTDKkdYGEihYjt5pRPbEg46rtlmnSPlUbgmB8LOIrKJbYYFBSbnPaJexMKtiPO8hmeRjRz2Td+A==
+
+has-translate3d@*:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/has-translate3d/-/has-translate3d-0.0.3.tgz#ee0157ad5b4ca8a1a33514a9e7ef45415a132103"
+  integrity sha512-8tA0Rt/VtJaiDxri1oZEIbkmFqJu9GK5pLcL+f6B91MkBgkrRD3IaDSHMu8IOAEn60OUDC2oICcw3Mo1QQk8hw==
+  dependencies:
+    transform-property "0.0.1"
 
 has-value@^0.3.1:
   version "0.3.1"
@@ -4835,6 +4885,13 @@ map-visit@^1.0.0:
   integrity sha512-4y7uGv8bd2WdM9vpQsiQNo41Ln1NvhvDRuVt0k2JZQ+ezN2uaQes7lZeZ+QQUHOLQAtDaBJ+7wCbi+ab/KFs+w==
   dependencies:
     object-visit "^1.0.0"
+
+matches-selector-2@0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/matches-selector-2/-/matches-selector-2-0.1.0.tgz#1c5803a95d8f18ce30f34569e9fd75f969160b43"
+  integrity sha512-wA2i+Hog2ONhyfaPNhV/VDi7iGNdHL1Q9VZiCcHpJyDELm43Qq97y+5OGBWOh5USXDsCcNNJfyP98ye1MImanQ==
+  dependencies:
+    query-component "*"
 
 md5-file@^3.2.3:
   version "3.2.3"
@@ -5906,6 +5963,11 @@ qs@6.7.0:
   resolved "https://registry.npmjs.org/qs/-/qs-6.7.0.tgz"
   integrity sha512-VCdBRNFTX1fyE7Nb6FYoURo/SPe62QCaAyzJvUjwRaIsc+NePBEniHlvxFmmX56+HZphIGtV0XeCirBtpDrTyQ==
 
+query-component@*:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/query-component/-/query-component-0.0.1.tgz#c95975a6d2c7417673e551f2c14f12496cba4c27"
+  integrity sha512-FbBzbrw6ki0iaaW6VcLCZIfNwFW8q6QjuA37hyH52ykY/oj+JcXYxJs4JBSwvRaP34hrGTmCQ6t7k+/D1pqGew==
+
 query-string@^6.13.6:
   version "6.14.1"
   resolved "https://registry.npmjs.org/query-string/-/query-string-6.14.1.tgz"
@@ -5993,6 +6055,13 @@ react-dom@17.0.2:
     object-assign "^4.1.1"
     scheduler "^0.20.2"
 
+react-flexible-sliding-menu@^0.1.9:
+  version "0.1.9"
+  resolved "https://registry.yarnpkg.com/react-flexible-sliding-menu/-/react-flexible-sliding-menu-0.1.9.tgz#fd87b4beb17f4841a10eff0b321e67f0db8fb825"
+  integrity sha512-PSSFZS65NlcTNT480oszyN/pCNrBN05YTPWNY8MIRDVQ96i8ni188gIdOfkWUJ/wbe8OjY1qZGvYtVbfy3wqSQ==
+  dependencies:
+    prop-types "^15.7.2"
+
 "react-is@^16.12.0 || ^17.0.0", react-is@^16.13.0, react-is@^16.13.1, react-is@^16.7.0:
   version "16.13.1"
   resolved "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"
@@ -6022,10 +6091,10 @@ react-native-countdown-component@^2.7.1:
     prop-types "^15.5.8"
     sprintf-js "^1.1.1"
 
-react-native-gesture-handler@^2.6.1:
-  version "2.7.0"
-  resolved "https://registry.npmjs.org/react-native-gesture-handler/-/react-native-gesture-handler-2.7.0.tgz"
-  integrity sha512-0jr3FNm2R3gv/v6XTtENgjv0fewD6LEct8EWmXw/oHw36M3YiIIpxnW57thL+0YiKwyLBXN0QHL4JZbs/heW2Q==
+react-native-gesture-handler@~2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-2.2.1.tgz#672258aa5a40c92a97c736bdde0a8bd6c8c6c692"
+  integrity sha512-P4kAPbSY8VFAjvFNzfePgFsbZEldfEnEfNqOJw6MlpcdXrPGwRbvMqWMVkA9lifdKTZ3XifvAgJ8+R+uEZN0zA==
   dependencies:
     "@egjs/hammerjs" "^2.0.17"
     hoist-non-react-statics "^3.3.0"
@@ -6037,6 +6106,11 @@ react-native-gradle-plugin@^0.0.6:
   version "0.0.6"
   resolved "https://registry.npmjs.org/react-native-gradle-plugin/-/react-native-gradle-plugin-0.0.6.tgz"
   integrity sha512-eIlgtsmDp1jLC24dRn43hB3kEcZVqx6DUQbR0N1ABXGnMEafm9I3V3dUUeD1vh+Dy5WqijSoEwLNUPLgu5zDMg==
+
+react-native-ionicons@^4.6.5:
+  version "4.6.5"
+  resolved "https://registry.yarnpkg.com/react-native-ionicons/-/react-native-ionicons-4.6.5.tgz#b792ec8896381e67ff237eba955e38afe7ceb7a4"
+  integrity sha512-s2Ia7M5t609LE9LWygMj3ALVPUlKhK7R9XcMb67fP4EYJv0oLcwg5pc+8ftv9XXaUuTW/WgL3zJlBYxAvtvMJg==
 
 react-native-maps@0.30.2:
   version "0.30.2"
@@ -6138,6 +6212,10 @@ react-native@0.68.2:
     use-subscription ">=1.0.0 <1.6.0"
     whatwg-fetch "^3.0.0"
     ws "^6.1.4"
+
+react-navigation-drawer@react-navigation/drawer:
+  version "2.3.4"
+  resolved "https://codeload.github.com/react-navigation/drawer/tar.gz/75688a4b6e50e2e884f15b290692166adb1264f3"
 
 react-navigation@^4.4.4:
   version "4.4.4"
@@ -7113,6 +7191,19 @@ tr46@~0.0.3:
   version "0.0.3"
   resolved "https://registry.npmjs.org/tr46/-/tr46-0.0.3.tgz"
   integrity sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==
+
+transform-property@*, transform-property@0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/transform-property/-/transform-property-0.0.1.tgz#4863662f9d5e5bb8f0c00648eff08beb14fd65f2"
+  integrity sha512-L0nMJCwu3/Lpd5t/pRQl+JoYU5V0sYubcn30yWZnHG0HjC6Gdr/Eg/bun1OixYPmsEZdA7Khbq2jiSIjzlEv6Q==
+
+translate-component@*:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/translate-component/-/translate-component-0.0.1.tgz#64a992cfaa03e77c97a4c833222d46d3a9c09076"
+  integrity sha512-KDp9rw+md6mFSCqUrvRfI85QdFEkoWhBZhlJR17OKVDi6Mb4pB9JmJsBEpufsF08ips219LutQihqFaejR/sxw==
+  dependencies:
+    has-translate3d "*"
+    transform-property "*"
 
 traverse@~0.6.6:
   version "0.6.6"
