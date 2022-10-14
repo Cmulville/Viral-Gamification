@@ -21,7 +21,7 @@ export default function App() {
   const [status, setStatus] = React.useState(null)
   const [points, setPoints] = React.useState(0)
   const [email, setEmail] = React.useState(0)
-  const [items, setItems] = React.useState(null)
+  const [items, setItems] = React.useState([0,0,0,0,0,0])
   const [username, setUsername] = React.useState("")
   const [eventEndTIme, setEventEndTime] = React.useState(0)
   const [immunityTimer, setImmunityTimer] = React.useState(0)
@@ -281,7 +281,7 @@ export default function App() {
 
   return (
     <tabContext.Provider value={{items, status, points, email, username, eventEndTIme, screenColors, immunityTimer, setEventEndTime, setItems, 
-    updateStatus, statusChange, updatePoints, addPoints, set_active_email, set_active_username, updateDailyBD, setImmunityTimer, 
+    updateStatus, statusChange, updatePoints, addPoints, set_active_email, set_active_username, updateDailyBD, setImmunityTimer, updateItems,
     updateImmunityTimer, logged_in, setLoggedIn,  set_active_LoggedIn, friends, 
             setFriends, myFriends, requests, setRequests, showRequests, modalVis, setModalVis}}>
       <StatusBar style="dark" />
