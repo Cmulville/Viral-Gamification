@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { View, Text, StyleSheet } from 'react-native'
+
+import { View, Text, StyleSheet, Button } from 'react-native'
 import CountDown from 'react-native-countdown-component';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import PropTypes from 'prop-types';
@@ -13,7 +14,7 @@ export default function DetailScreen({navigation}) {
     const { statusChange } = React.useContext(tabContext)
     const { points } = React.useContext(tabContext)
     const { username } = React.useContext(tabContext)
-    
+    const { logout } = React.useContext(tabContext)
 
     const { immunityTimer } = React.useContext(tabContext)
     const { setImmunityTimer } = React.useContext(tabContext)
@@ -72,11 +73,14 @@ export default function DetailScreen({navigation}) {
         </View>
         {countdown}
     
-        {/* <View>
-          <Button
+        <View style={styles.container}>
+          <Button 
             
+            title='Logout'
+            color={screenColors}
+            //onPress={logout()}
           />
-        </View> */}
+        </View>
     </View>
     
     )
@@ -86,6 +90,7 @@ const styles = StyleSheet.create ({
     container: {
         flex: 1,
         backgroundColor: '#fff',
+        borderColor: "#fff"
         
     },
     header: {
