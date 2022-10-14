@@ -14,7 +14,7 @@ export default function DetailScreen({navigation}) {
     const { statusChange } = React.useContext(tabContext)
     const { points } = React.useContext(tabContext)
     const { username } = React.useContext(tabContext)
-    const { logout } = React.useContext(tabContext)
+    const { setLoggedIn } = React.useContext(tabContext)
 
     const { immunityTimer } = React.useContext(tabContext)
     const { setImmunityTimer } = React.useContext(tabContext)
@@ -31,6 +31,11 @@ export default function DetailScreen({navigation}) {
   const seconds = parseInt(diffr.seconds());
   const endTime = hours * 60 * 60 + minutes * 60 + seconds;
   
+  const logout = () => {
+    setLoggedIn(false)
+    navigation.navigate("LoginScreen")
+  }
+
   const [time, setTime] = React.useState(endTime);
   if (endTime == 0) {
     setTime(endTime +  7 * 24 * 60 * 60)
@@ -78,7 +83,7 @@ export default function DetailScreen({navigation}) {
             
             title='Logout'
             color={screenColors}
-            //onPress={logout()}
+            onPress={navigation.navigate("HomeScreen")}
           />
         </View>
     </View>

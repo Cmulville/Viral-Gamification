@@ -22,6 +22,7 @@ export default function LoginScreen({ navigation }) {
   const { username } = React.useContext(tabContext)
   const { set_active_email } = React.useContext(tabContext)
   const { set_active_username } = React.useContext(tabContext)
+  const {set_active_LoggedIn } = React.useContext(tabContext);
   const { updateDailyBD } = React.useContext(tabContext)
   const { setItems } = React.useContext(tabContext)
   const { setImmunityTimer } = React.useContext(tabContext)
@@ -33,6 +34,16 @@ export default function LoginScreen({ navigation }) {
   };
   //Context will need to be updated through login
   
+  const check_logged_in = () => {
+    if (username == ""){
+      login();
+    } else { 
+      set_active_LoggedIn();
+      navigation.navigate("MainScreen");
+    }
+
+  }
+
   const login = () => {
     const login_success = true
     Axios.post("https://deco3801-betterlatethannever.uqcloud.net/login", {
@@ -115,7 +126,7 @@ export default function LoginScreen({ navigation }) {
 
       <TouchableOpacity
         style={styles.loginBtn}
-        onPress={login}
+        onPress={check_logged_in}
 
       >
         {/* <TouchableOpacity style={styles.loginBtn} onPress={login}> */}

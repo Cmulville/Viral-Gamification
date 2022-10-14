@@ -25,7 +25,7 @@ export default function App() {
   const [username, setUsername] = React.useState("")
   const [eventEndTIme, setEventEndTime] = React.useState(0)
   const [immunityTimer, setImmunityTimer] = React.useState(0)
-
+  const [logged_in, setLoggedIn] = React.useState(false);
   // Ask about this
   // 6e930c12dc934cbd849bd2be
   const statusColours = {
@@ -117,6 +117,10 @@ export default function App() {
   const set_active_username = (userName) => {
     setUsername(userName)
 }
+
+  const set_active_LoggedIn = () => {
+    setLoggedIn(true);
+  }
 
   const statusChange = (new_status) => {
     console.log(new_status, status)
@@ -218,7 +222,9 @@ export default function App() {
 
 
   return (
-    <tabContext.Provider value={{items, status, points, email, username, eventEndTIme, screenColors, immunityTimer, setEventEndTime, setItems, updateStatus, statusChange, updatePoints, addPoints, set_active_email, set_active_username, updateDailyBD, setImmunityTimer, updateImmunityTimer}}>
+    <tabContext.Provider value={{items, status, points, email, username, eventEndTIme, screenColors, immunityTimer, setEventEndTime, setItems, 
+    updateStatus, statusChange, updatePoints, addPoints, set_active_email, set_active_username, updateDailyBD, setImmunityTimer, 
+    updateImmunityTimer, logged_in, setLoggedIn,  set_active_LoggedIn}}>
       <StatusBar style="dark" />
       <NavigationContainer>
         <RootStackScreen />
