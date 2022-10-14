@@ -71,13 +71,13 @@ export default function MapScreen() {
   //Used for the pop up
   const [modalVis, setModalVis] = React.useState(true);
   const [firstPage, setFirstPage] = React.useState(true);
-  const infected =
-    "This means that your main goal is to try and cure yourself from being " +
-    "infected by collecting items accross the map. You may infect others as you do so!";
   const healthy =
     "Avoid being infected by other players who are in the game. You will not " +
     "be able to see their location! Collect items to gather points and keep yourself healthy.";
-  const message1 = "Welcome! You have started off the game as HEALTHY";
+  const infected =
+    "Try not to infect others but make sure to collect items so that you can " +
+    "cure yourself and gather points. You will not be able to see other people's location";
+  const message1 = "Welcome! You have started off the game as "  + status.toUpperCase() + "!";
   const [seenBefore, setSeenBefore] = React.useState(0);
 
   // const getUser = async () => {
@@ -405,11 +405,12 @@ export default function MapScreen() {
     })();
   }, []);
 
+  const borderStyle = {borderColor: statusColors[status],}
   return (
     <View style={styles.container}>
       <Modal animationType={"slide"} transparent={true} visible={modalVis}>
         {firstPage ? (
-          <View style={styles.modal}>
+          <View style={{...styles.modal, ...borderStyle}}>
             <View style={{ marginBottom: 25 }}>
               <Text style={{ fontSize: 25, fontWeight: "bold" }}>
                 LETS GET VIRAL!
@@ -418,8 +419,8 @@ export default function MapScreen() {
             <View style={{ marginBottom: 25 }}>
               <Text style={{ fontSize: 20 }}>{message1}</Text>
             </View>
-            <Text>{healthy}</Text>
-            <View style={styles.modalImages}>
+            <Text>{status == "Healthy" ? healthy : infected}</Text>
+            <View style={{...styles.modalImages, ...borderStyle}}>
               <View style={styles.imageDisplay}>
                 <Image
                   source={require("../../assets/images/gloves.png")}
@@ -457,7 +458,7 @@ export default function MapScreen() {
             />
           </View>
         ) : (
-          <View style={styles.modal}>
+          <View style={{...styles.modal, ...borderStyle}}>
             <Text style={{ fontSize: 15, marginBottom: 25 }}>
               Search for your friends and add them to view their location and
               their current infection status!{" "}
@@ -702,7 +703,6 @@ const styles = StyleSheet.create({
   modalImages: {
     borderRadius: 40,
     borderWidth: 10,
-    borderColor: "grey",
     backgroundColor: "lightgrey",
     marginBottom: 20,
     marginTop: 20,
@@ -713,21 +713,17 @@ const styles = StyleSheet.create({
     height: Dimensions.get("window").height,
   },
   modal: {
-    //justifyContent: 'center',
     alignItems: "center",
-
     backgroundColor: "#FFFFFF",
     padding: 10,
     height: "75%",
     width: "85%",
     borderRadius: 10,
-    borderWidth: 9,
-    borderColor: statusColours["Immune"],
-    marginTop: 80,
+    borderWidth: 9, 
+    marginTop: 100,
     marginLeft: 40,
   },
-  map: {
-    width: Dimensions.get("window").width,
-    height: Dimensions.get("window").height,
-  },
+  test: {
+      borderColor: 'red'
+  }
 });
