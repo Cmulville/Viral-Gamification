@@ -34,10 +34,6 @@ export default function FriendScreen({ navigation }) {
   const {setRequests} = React.useContext(tabContext);
   const {showRequests} = React.useContext(tabContext);
 
-  function loadPage() {
-    myFriends();
-    showRequests();
-  }
 
   //Finds a user for when searching friends to add.
   const searchUsers = () => {
@@ -181,8 +177,8 @@ export default function FriendScreen({ navigation }) {
                                 if (response.data.err) {
                                     console.log(response.data);
                                 } else {
-                                   showRequests(); 
-                                   myFriends();
+                                   showRequests(username); 
+                                   myFriends(username);
                                 }
                           }),
                 },
@@ -210,7 +206,7 @@ export default function FriendScreen({ navigation }) {
                                 if (response.data.err) {
                                     console.log(response.data);
                                 } else {
-                                   showRequests(); 
+                                   showRequests(username); 
                                 }
                           }),
                 },
@@ -243,7 +239,7 @@ export default function FriendScreen({ navigation }) {
                                 if (response.data.err) {
                                     console.log(response.data);
                                 } else {
-                                   myFriends(); 
+                                   myFriends(username); 
                                 }
                           }),
                 },

@@ -27,6 +27,8 @@ export default function LoginScreen({ navigation }) {
   const { setItems } = React.useContext(tabContext);
   const { myFriends } = React.useContext(tabContext);
   const { showRequests } = React.useContext(tabContext);
+  const { setRequests } = React.useContext(tabContext);
+  const { setFriends } = React.useContext(tabContext);
 
   const errorAlert = () => {
     Alert.alert(
@@ -65,7 +67,6 @@ export default function LoginScreen({ navigation }) {
           errorAlert();
         } else {
           if (login_success) {
-            loginUsername = response.data.stat[0].Username;
             set_active_username(response.data.stat[0].Username);
             updateStatus(response.data.stat[0].InfectionStatus);
             //console.log(response.data.stat[0])
@@ -80,14 +81,29 @@ export default function LoginScreen({ navigation }) {
             set_active_email(email);
             // updatePoints(PointSystem.dailyPoints(response.data.stat[0].InfectionStatus, response.data.stat[0].dailyLogin))
             updateDailyBD();
-            myFriends();
-            showRequests();
+            myFriends(response.data.stat[0].Username);
+            showRequests(response.data.stat[0].Username);
           }
         }
       })
       .catch((error) => {
         // console.log(error)
       });
+
+    //    Axios.post("https://deco3801-betterlatethannever.uqcloud.net/user/itemCount", {
+    //        username: username,
+    //    }).then((response) => {
+    //      if (response.data.err) {
+    //        console.log("Couldn't get items")
+    //      } else {
+    //        console.log('got items');
+    //        setItems(response.data.result);
+    //        console.log(response.data.result);
+    //      }
+    //
+    //    }).catch((error) => {
+    //      // console.log(error)
+    //    });
   };
 
   const CircleButton = (props) => (

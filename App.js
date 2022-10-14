@@ -181,24 +181,25 @@ export default function App() {
   };
 
   //Gets a user's current friend list
-  const myFriends = () => {
+  const myFriends = (getUserFriends) => {
     Axios.post(
       "https://deco3801-betterlatethannever.uqcloud.net/friends/approved",
       {
-        username: username,
+        username: getUserFriends,
       }
     ).then((response) => {
+      console.log(email);
       console.log(response.data);
       setFriends(response.data.friends);
     });
   };
 
   //Shows the requests a user currently has from others.
-  const showRequests = () => {
+  const showRequests = (getUserReq) => {
     Axios.post(
       "https://deco3801-betterlatethannever.uqcloud.net/friends/requested",
       {
-        username: username,
+        username: getUserReq,
       }
     ).then((response) => {
       console.log(response.data.friends);
