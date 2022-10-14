@@ -54,7 +54,6 @@ export default function LoginScreen({ navigation }) {
 
   const login = () => {
     const login_success = true
-    const login_success = true
     Axios.post("https://deco3801-betterlatethannever.uqcloud.net/login", {
       email: email,
       password: password,
