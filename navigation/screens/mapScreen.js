@@ -36,7 +36,8 @@ export default function MapScreen() {
   const { username } = React.useContext(tabContext);
   const { status } = React.useContext(tabContext);
   const { statusChange } = React.useContext(tabContext);
-
+  const { modalVis } = React.useContext(tabContext);
+  const { setModalVis } = React.useContext(tabContext);
   // const [items, setItems] = React.useState({
   //   ids: [],
   //   idtypes: [],
@@ -69,7 +70,7 @@ export default function MapScreen() {
   });
 
   //Used for the pop up
-  const [modalVis, setModalVis] = React.useState(true);
+  // const [modalVis, setModalVis] = React.useState(true);
   const [firstPage, setFirstPage] = React.useState(true);
   const healthy =
     "Avoid being infected by other players who are in the game. You will not " +

@@ -29,6 +29,8 @@ export default function LoginScreen({ navigation }) {
   const { showRequests } = React.useContext(tabContext);
   const { setRequests } = React.useContext(tabContext);
   const { setFriends } = React.useContext(tabContext);
+  const { modalVis } = React.useContext(tabContext);
+  const { setModalVis } = React.useContext(tabContext);
 
   const errorAlert = () => {
     Alert.alert(
@@ -84,6 +86,21 @@ export default function LoginScreen({ navigation }) {
             updateItems(response.data.stat[0].Username);
             myFriends(response.data.stat[0].Username);
             showRequests(response.data.stat[0].Username);
+            var usernameTemp = response.data.stat[0].Username;
+            if (response.data.stat[0].FirstTime == 0) {
+              setModalVis(true);
+              Axios.post(
+                "https://deco3801-betterlatethannever.uqcloud.net/updateUserFirst",
+                {
+                  username: usernameTemp,
+                }
+              ).then((response) => {
+                console.log("SEND FIRSTTIME");
+                console.log(response.data);
+              });
+            } else {
+              setModalVis(false);
+            }
           }
         }
       })
@@ -128,7 +145,7 @@ export default function LoginScreen({ navigation }) {
           textAlign: "center",
         }}
       >
-        LET'S GET VIRAL
+        LETS GET VIRAL
       </Text>
     </TouchableOpacity>
   );
