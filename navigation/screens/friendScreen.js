@@ -34,10 +34,6 @@ export default function FriendScreen({ navigation }) {
   const {setRequests} = React.useContext(tabContext);
   const {showRequests} = React.useContext(tabContext);
 
-  function loadPage() {
-    myFriends();
-    showRequests();
-  }
 
   //Finds a user for when searching friends to add.
   const searchUsers = () => {

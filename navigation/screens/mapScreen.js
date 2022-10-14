@@ -76,7 +76,7 @@ export default function MapScreen() {
   const infected =
     "Try not to infect others but make sure to collect items so that you can " +
     "cure yourself and gather points. You will not be able to see other people's location";
-  const message1 = "Welcome! You have started off the game as "  + status.toUpperCase() + "!";
+  const message1 = "Welcome! You have started off the game as "  + status + "!";
   const [seenBefore, setSeenBefore] = React.useState(0);
 
   // const getUser = async () => {

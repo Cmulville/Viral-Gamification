@@ -33,16 +33,18 @@ function RegisterScreen({ navigation }) {
         email: emailReg,
         password: passwordReg,
       }).then((response) => {
-        console.log(response.data);
+        console.log(response);
         if (response.data.existing) {
           Alert.alert(
             "Registration Error",
-            "User already exists, try changing username or email",
+            "+ User already exists, try changing username or email",
             [{ text: "OK" }]
           );
         } else if (response.data.complete) {
           navigation.navigate("LoginScreen");
         }
+      }).catch((e) => {
+          console.log(e);
       });
     }
   };

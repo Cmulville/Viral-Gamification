@@ -26,6 +26,8 @@ export default function LoginScreen({ navigation }) {
   const { setItems } = React.useContext(tabContext);
   const {myFriends} = React.useContext(tabContext);
   const {showRequests} = React.useContext(tabContext);
+  const {setRequests} = React.useContext(tabContext);
+  const {setFriends} = React.useContext(tabContext);
 
   const errorAlert = () => {
     Alert.alert(
