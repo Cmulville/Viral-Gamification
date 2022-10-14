@@ -30,9 +30,7 @@ export default function MapScreen() {
     latitude: -27.470125,
     longitude: 153.021072,
   });
-  const [distance, setDistance] = React.useState({ thing: 0 });
   const [user, setUser] = React.useState("");
-  const [testuser, setTestUser] = React.useState({ latitude: 0, latitude: 0 });
   const { screenColors } = React.useContext(tabContext);
   const { addPoints } = React.useContext(tabContext);
   const { username } = React.useContext(tabContext);
@@ -97,51 +95,6 @@ export default function MapScreen() {
   //     console.log(e);
   //   }
   // };
-
-  const distanceUsers = () => {
-    // getUser();
-    Axios.post(
-      "https://deco3801-betterlatethannever.uqcloud.net/users/distance",
-      {
-        username: username,
-      }
-    )
-      .then((response) => {
-        setUsers(response.data.users);
-        console.log("users", username);
-      })
-      .catch((error) => {});
-  };
-
-  const infect = (username) => {
-    Axios.post(
-      "https://deco3801-betterlatethannever.uqcloud.net/users/infect",
-      {
-        username: username,
-      }
-    )
-      .then((response) => {
-        Alert.alert("Infected", "Username must not be empty", [{ text: "Ok" }]);
-        console.log("infected", { username });
-      })
-      .catch((error) => {
-        // console.log(error)
-      });
-  };
-
-  const contact = () => {
-    for (var i = 0; i < users.length; i++) {
-      let dist = calculateDistance(
-        pin.latitude,
-        pin.longitude,
-        users[i].Latitude,
-        users[i].Longitude
-      );
-      if (dist < 100) {
-        infect(users[i].Username);
-      }
-    }
-  };
 
   //Retrieves list of friends from the backend
   const myFriends = () => {
@@ -215,58 +168,6 @@ export default function MapScreen() {
           errorAlert();
         } else {
           validAlert();
-        }
-      })
-      .catch((error) => {
-        // console.log(error)
-      });
-  };
-
-  const GetLocation = () => {
-    // getUser();
-    Axios.post(
-      "https://deco3801-betterlatethannever.uqcloud.net/location/get",
-      {
-        user: "Test@gamil",
-      }
-    )
-      .then((response) => {
-        if (response) {
-          setTestUser({
-            latitude: response.data.loc[1],
-            longitude: response.data.loc[0],
-          });
-        }
-      })
-      .catch((error) => {
-        // console.log(error)
-      });
-  };
-
-  //  const getItems = () => {
-  //    Axios.post(
-  //      "https://deco3801-betterlatethannever.uqcloud.net/items/get",
-  //      {}
-  //    ).then((response) => {
-  //      if (response) {
-  //        setItems({
-  //          ids: response.data.loc[0],
-  //          itemType: response.data.loc[1],
-  //          latitude: response.data.loc[3],
-  //          longitude: response.data.loc[2],
-  //        });
-  //      }
-  //    });
-  //  };
-
-  const countItems = () => {
-    Axios.post(
-      "https://deco3801-betterlatethannever.uqcloud.net/items/count",
-      {}
-    )
-      .then((response) => {
-        if (response) {
-          setCount(response.data.count[0].count);
         }
       })
       .catch((error) => {
@@ -382,7 +283,6 @@ export default function MapScreen() {
       }
 
       let location = await Location.getCurrentPositionAsync({});
-      // getUser();
       myFriends();
       // set Pin being used to change the pin
       setPin({
@@ -557,17 +457,7 @@ export default function MapScreen() {
             }
             setItems(newItems);
           }
-          //distanceUsers();
-          //contact();
           UpdateLocation();
-          setDistance({
-            thing: calculateDistance(
-              pin.latitude,
-              pin.longitude,
-              uq.latitude,
-              uq.longitude
-            ),
-          });
         }}
       >
         {friends.map((friend, index) => {
@@ -612,45 +502,18 @@ export default function MapScreen() {
           );
         })}
 
-        {/* <Marker
-          //item marker for mask
-          coordinate={{ latitude: -27.496, longitude: 153.0137 }}
-        >
-          <Image
-            source={require("../../assets/images/mask.jpg")}
-            style={{ height: 50, width: 50 }}
-          />
-          <Callout>
-            <Text>Mask</Text>
-          </Callout>
-        </Marker>
-
-        <Marker
-          // Item marker for gloves
-          coordinate={{ latitude: -27.497, longitude: 153.012 }}
-          pinColor="#00FF00"
-        >
-          <Image
-            source={require("../../assets/images/gloves.png")}
-            style={{ height: 50, width: 50 }}
-          />
-          <Callout>
-            <Text>Gloves</Text>
-          </Callout>
-        </Marker> */}
-
         <Marker
           // marker that shows the user location and is on top of the user icon from the MapView
           coordinate={pin}
           pinColor={statusColors[status]}
         >
           <Callout>
-            <Text>User is {distance.thing} metres away</Text>
+            <Text>{username}</Text>
           </Callout>
         </Marker>
         <Circle //circle that is around the user, maybe can be used as the infection radius
           center={pin}
-          radius={100}
+          radius={20}
         />
       </MapView>
     </View>
