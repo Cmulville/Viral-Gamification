@@ -218,9 +218,22 @@ export default function App() {
         if (response.data.err) {
           console.log("Couldn't get items");
         } else {
-          console.log("got items");
-          setItems(response.data.result);
-          console.log(response.data.result);
+          // console.log("item results");
+          // console.log(response.data.result);
+
+          const dbItems = [];
+          for (var i = 0; i < 6; i++) {
+            for (var j = 0; j < response.data.result.length; j++) {
+              if (i == response.data.result[j].ItemID) {
+                dbItems.push(response.data.result[j].Amount);
+                break;
+              }
+            }
+            if (dbItems.length != i + 1) {
+              dbItems.push(0);
+            }
+          }
+          setItems(dbItems);
         }
       })
       .catch((error) => {

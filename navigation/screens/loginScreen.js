@@ -81,6 +81,7 @@ export default function LoginScreen({ navigation }) {
             set_active_email(email);
             // updatePoints(PointSystem.dailyPoints(response.data.stat[0].InfectionStatus, response.data.stat[0].dailyLogin))
             updateDailyBD();
+            updateItems(response.data.stat[0].Username);
             myFriends(response.data.stat[0].Username);
             showRequests(response.data.stat[0].Username);
           }
