@@ -62,7 +62,7 @@ export default function LoginScreen({ navigation }) {
         errorAlert();
         login_success = false
       } else {
-        navigation.navigate("MainScreen");
+        navigation.navigate("Drawer");
       }
     }).catch((error) => {
       // console.log(error)
@@ -105,20 +105,6 @@ export default function LoginScreen({ navigation }) {
       // console.log(error)
     });
 
-//    Axios.post("https://deco3801-betterlatethannever.uqcloud.net/user/itemCount", {
-//        username: username,
-//    }).then((response) => {
-//      if (response.data.err) {
-//        console.log("Couldn't get items")
-//      } else {
-//        console.log('got items');
-//        setItems(response.data.result);   
-//        console.log(response.data.result);
-//      }
-//      
-//    }).catch((error) => {
-//      // console.log(error)
-//    });
     
   };
 
@@ -133,7 +119,7 @@ export default function LoginScreen({ navigation }) {
         justifyContent: "center",
         borderRadius: props.size *2,
       }}
-      onPress={props.onPress}>
+      onPress={check_logged_in}>
         <Text style = {{color: props.textColor, fontSize: props.fontSize,textAlignVertical:"center",textAlign:"center"}}>
           LETS GET VIRAL
         </Text>
