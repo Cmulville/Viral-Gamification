@@ -71,7 +71,14 @@ export default function DetailScreen({navigation}) {
             </Text>
         </View>
         {countdown}
+    
+        {/* <View>
+          <Button
+            
+          />
+        </View> */}
     </View>
+    
     )
 } 
 
