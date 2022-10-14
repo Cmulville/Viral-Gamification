@@ -17,10 +17,9 @@ import Axios from "axios";
 import { randomCirclePoint } from "random-location";
 import { tabContext } from "../../tabContext";
 import PointSystem from "../../pointSystem";
-import {HealthyMap, InfectedMap, ImmuneMap} from "../../mapStyles"
+import { HealthyMap, InfectedMap, ImmuneMap } from "../../mapStyles";
 
 export default function MapScreen() {
-
   const UNIQUEITEMS = 6;
   // constant that stores a pin and method (setpin) that changes it. values are just dummy data
   const birsbane = { latitude: -27.4705, longitude: 153.026 };
@@ -35,7 +34,9 @@ export default function MapScreen() {
   const { screenColors } = React.useContext(tabContext);
   const { addPoints } = React.useContext(tabContext);
   const { username } = React.useContext(tabContext);
-  const {status} = React.useContext(tabContext);
+  const { status } = React.useContext(tabContext);
+  const { statusChange } = React.useContext(tabContext);
+
   // const [items, setItems] = React.useState({
   //   ids: [],
   //   idtypes: [],
@@ -53,9 +54,9 @@ export default function MapScreen() {
     2: "Face Mask",
   };
   const statusColors = {
-    "Healthy" : "#05cf02",
-    "Infected" : "#f52718",
-    "Immune" : "#0aefff",
+    Healthy: "#05cf02",
+    Infected: "#f52718",
+    Immune: "#0aefff",
   };
 
   const getItemName = (itemType) => {
@@ -217,6 +218,21 @@ export default function MapScreen() {
       .catch((error) => {
         // console.log(error)
       });
+
+    if (status == "Healthy") {
+      Axios.post(
+        "https://deco3801-betterlatethannever.uqcloud.net/location/checkInfected",
+        {
+          user: username,
+          latitude: pin.latitude,
+          longitude: pin.longitude,
+        }
+      ).then((response) => {
+        if (response.data.infected) {
+          statusChange("Infected");
+        }
+      });
+    }
   };
 
   const GetLocation = () => {
@@ -461,8 +477,13 @@ export default function MapScreen() {
       </Modal>
       <MapView
         provider={"google"}
-        customMapStyle={ status == "Healthy" ? HealthyMap : 
-                        (status == "Infected" ? InfectedMap : ImmuneMap)}
+        customMapStyle={
+          status == "Healthy"
+            ? HealthyMap
+            : status == "Infected"
+            ? InfectedMap
+            : ImmuneMap
+        }
         style={styles.map}
         // where the map will hover when opened Location is St Lucia
         initialRegion={{
@@ -576,7 +597,10 @@ export default function MapScreen() {
               pinColor={statusColors[friend.InfectionStatus]}
             >
               <Callout>
-                <Text>Username: {friend.Username} {'\n'} Status: {friend.InfectionStatus}</Text>
+                <Text>
+                  Username: {friend.Username} {"\n"} Status:{" "}
+                  {friend.InfectionStatus}
+                </Text>
               </Callout>
             </Marker>
           );
