@@ -16,19 +16,24 @@ import {
 import { useState, useEffect } from "react"; 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import SearchBar from "../components/SearchBar.js";
+import {tabContext} from "../../tabContext";
 
 export default function FriendScreen({ navigation }) {
   const [addUser, setAddUser] = useState("");
-  const [friends, setFriends] = useState([]);
-  const [user, setUser] = useState("");
+  //const [friends, setFriends] = useState([]);
+  //const [user, setUser] = useState("");
   const [foundUser, setFoundUser] = useState([]);
-  const [requests, setRequests] = useState([]);
+//  const [requests, setRequests] = useState([]);
   const [iconName, setIconName] = useState("person-add-outline");
 
-  function loadPage() {
-    myFriends();
-    showRequests();
-  }
+  const {username} = React.useContext(tabContext);
+  const {myFriends} = React.useContext(tabContext);
+  const {friends} = React.useContext(tabContext);
+  const {setFriends} = React.useContext(tabContext);
+  const {requests} = React.useContext(tabContext);
+  const {setRequests} = React.useContext(tabContext);
+  const {showRequests} = React.useContext(tabContext);
+
 
   //Finds a user for when searching friends to add.
   const searchUsers = () => {
@@ -62,49 +67,49 @@ export default function FriendScreen({ navigation }) {
     });
   };
 
-  const getUser = async () => {
-    try {
-      const value = await AsyncStorage.getItem("user");
-      if (value != null) {
-        setUser(JSON.parse(value));
-      } else {
-        return null;
-      }
-    } catch (e) {
-      console.log(e);
-    }
-      console.log(user);
-  };
+//  const getUser = async () => {
+//    try {
+//      const value = await AsyncStorage.getItem("user");
+//      if (value != null) {
+//        setUser(JSON.parse(value));
+//      } else {
+//        return null;
+//      }
+//    } catch (e) {
+//      console.log(e);
+//    }
+//      console.log(user);
+//  };
 
   //Retrieves list of friends from the backend
-  const myFriends = () => {
-    Axios.post(
-      "https://deco3801-betterlatethannever.uqcloud.net/friends/approved",
-      {
-        username: user,
-      }
-    ).then((response) => {
-        console.log(response.data);
-        setFriends(response.data.friends);
-        console.log(response.data.friends);
-    });
-  };
+//  const myFriends = () => {
+//    Axios.post(
+//      "https://deco3801-betterlatethannever.uqcloud.net/friends/approved",
+//      {
+//        username: user,
+//      }
+//    ).then((response) => {
+//        console.log(response.data);
+//        setFriends(response.data.friends);
+//        console.log(response.data.friends);
+//    });
+//  };
 
   //Shows the requests a user currently has from others.
-  const showRequests = () => {
-    Axios.post(
-      "https://deco3801-betterlatethannever.uqcloud.net/friends/requested",
-      {
-        username: user,
-      }
-    ).then((response) => {
-          console.log(response.data.friends);
-          setRequests(response.data.friends);
-        
-    }).catch((err) => {
-        console.log("Error at showReqests");
-    });
-   };
+//  const showRequests = () => {
+//    Axios.post(
+//      "https://deco3801-betterlatethannever.uqcloud.net/friends/requested",
+//      {
+//        username: user,
+//      }
+//    ).then((response) => {
+//          console.log(response.data.friends);
+//          setRequests(response.data.friends);
+//        
+//    }).catch((err) => {
+//        console.log("Error at showReqests");
+//    });
+//   };
 
   //Has an alert message to confirm request. Calls sendFriendRequest
   const makeRequest = () => {
@@ -133,7 +138,7 @@ export default function FriendScreen({ navigation }) {
     Axios.post(
       "https://deco3801-betterlatethannever.uqcloud.net/friends/makeRequest",
       {
-          requestor: user,
+          requestor: username,
           requestee: foundUser[0].Username,
       }
     ).then((response) => {
@@ -166,14 +171,14 @@ export default function FriendScreen({ navigation }) {
                             "https://deco3801-betterlatethannever.uqcloud.net/friends/approve",
                             {
                                 requestor: requests[index].Friend1,
-                                requestee: user,
+                                requestee: username,
                             }
                           ).then((response) => {
                                 if (response.data.err) {
                                     console.log(response.data);
                                 } else {
-                                   showRequests(); 
-                                   myFriends();
+                                   showRequests(username); 
+                                   myFriends(username);
                                 }
                           }),
                 },
@@ -195,13 +200,13 @@ export default function FriendScreen({ navigation }) {
                             "https://deco3801-betterlatethannever.uqcloud.net/friends/deny",
                             {
                                 requestor: requests[index].Friend1,
-                                requestee: user,
+                                requestee: username,
                             }
                           ).then((response) => {
                                 if (response.data.err) {
                                     console.log(response.data);
                                 } else {
-                                   showRequests(); 
+                                   showRequests(username); 
                                 }
                           }),
                 },
@@ -228,13 +233,13 @@ export default function FriendScreen({ navigation }) {
                             "https://deco3801-betterlatethannever.uqcloud.net/friends/delete",
                             {
                                 requestor: friends[index].Username,
-                                requestee: user,
+                                requestee: username,
                             }
                           ).then((response) => {
                                 if (response.data.err) {
                                     console.log(response.data);
                                 } else {
-                                   myFriends(); 
+                                   myFriends(username); 
                                 }
                           }),
                 },
@@ -246,7 +251,6 @@ export default function FriendScreen({ navigation }) {
           );
   }
 
- getUser();
  
   return (
     <ScrollView>
@@ -282,7 +286,10 @@ export default function FriendScreen({ navigation }) {
 		</View>
       }
 
-      <Button title="Refresh Current Friends" onPress={myFriends}/>
+
+      <View style={{alignItems: 'center'}}>
+        <Text style={styles.label}>CURRENT FRIENDS</Text>
+      </View>
       {
         friends.length != 0 ?
       <View style={styles.friendView}>
@@ -304,7 +311,10 @@ export default function FriendScreen({ navigation }) {
 		</View>
       }
 
-      <Button title="Refresh Requested Friends" onPress={showRequests}/>
+      <View style={{alignItems: 'center'}}>
+        <Text style={styles.label}>FRIEND REQUESTS</Text>
+      </View>
+
       {
 	requests.length != 0 ?
       <View style={styles.friendView}>
@@ -352,11 +362,16 @@ const styles = StyleSheet.create({
   },
   
   title: {
-      fontSize: 20, 
+      fontSize: 15, 
       fontWeight: 'bold',
-
   },
-  
+  label: {
+      fontSize: 25, 
+      fontWeight: 'bold',
+      textDecorationLine: 'underline',
+      marginBottom:10,
+  },
+
   friendView: {
     borderRadius: 40,
     padding: 15,

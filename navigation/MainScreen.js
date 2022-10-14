@@ -14,10 +14,10 @@ import DetailScreen from "./screens/detailScreen";
 import MapScreen from "./screens/mapScreen";
 import LoginScreen from "./screens/loginScreen";
 import InventoryScreen from "./screens/inventoryScreen";
+import FriendScreen from "./screens/friendScreen";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import PointSystem from "../pointSystem";
 import { tabContext } from "../tabContext";
-import FriendScreen from "./screens/friendScreen";
 
 export default function MainScreen({ navigation }) {
   

@@ -26,6 +26,9 @@ export default function App() {
   const [eventEndTIme, setEventEndTime] = React.useState(0)
   const [immunityTimer, setImmunityTimer] = React.useState(0)
   const [logged_in, setLoggedIn] = React.useState(false);
+  const [friends, setFriends] = React.useState([]);
+  const [requests, setRequests] = React.useState([]);
+  const [modalVis, setModalVis] = React.useState(true);
   // Ask about this
   // 6e930c12dc934cbd849bd2be
   const statusColours = {
@@ -220,11 +223,39 @@ export default function App() {
     }
   }
 
+   //Gets a user's current friend list
+   const myFriends = (getUserFriends) => {
+    Axios.post(
+      "https://deco3801-betterlatethannever.uqcloud.net/friends/approved",
+      {
+          username: getUserFriends,
+      }
+    ).then((response) => {
+        console.log(email);
+        console.log(response.data);
+        setFriends(response.data.friends);
+    });
+  };
+
+  //Shows the requests a user currently has from others.
+  const showRequests = (getUserReq) => {
+    Axios.post(
+      "https://deco3801-betterlatethannever.uqcloud.net/friends/requested",
+      {
+          username: getUserReq,
+      }
+    ).then((response) => {
+          console.log(response.data);
+          setRequests(response.data.friends);
+    });
+   };
+
 
   return (
     <tabContext.Provider value={{items, status, points, email, username, eventEndTIme, screenColors, immunityTimer, setEventEndTime, setItems, 
     updateStatus, statusChange, updatePoints, addPoints, set_active_email, set_active_username, updateDailyBD, setImmunityTimer, 
-    updateImmunityTimer, logged_in, setLoggedIn,  set_active_LoggedIn}}>
+    updateImmunityTimer, logged_in, setLoggedIn,  set_active_LoggedIn, friends, 
+            setFriends, myFriends, requests, setRequests, showRequests, modalVis, setModalVis}}>
       <StatusBar style="dark" />
       <NavigationContainer>
         <RootStackScreen />
