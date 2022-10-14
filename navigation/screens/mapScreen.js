@@ -472,6 +472,7 @@ export default function MapScreen() {
           latitudeDelta: 0.005,
           longitudeDelta: 0.005,
         }}
+        showsUserLocation={true}
         //method that will update the location of user when it changes
         onUserLocationChange={(e) => {
           let new_points = 0;
@@ -641,12 +642,12 @@ export default function MapScreen() {
           pinColor={statusColors[status]}
         >
           <Callout>
-            <Text>{username}</Text>
+            <Text>User is {distance.thing} metres away</Text>
           </Callout>
         </Marker>
         <Circle //circle that is around the user, maybe can be used as the infection radius
           center={pin}
-          radius={20}
+          radius={100}
         />
       </MapView>
     </View>
