@@ -1,5 +1,6 @@
 import * as React from "react";
 import MapView, { Callout, Circle, Marker } from "react-native-maps";
+import FastImage from 'react-native-fast-image';
 import {
   StyleSheet,
   Text,
@@ -408,29 +409,29 @@ export default function MapScreen() {
             <Text>{status == "Healthy" ? healthy : infected}</Text>
             <View style={{...styles.modalImages, ...borderStyle}}>
               <View style={styles.imageDisplay}>
-                <Image
+                <FastImage
                   source={require("../../assets/images/gloves.png")}
                   style={{ height: 70, width: 80 }}
                 />
-                <Image
+                <FastImage
                   source={require("../../assets/images/sanitizer.png")}
                   style={{ height: 105, width: 80 }}
                 />
-                <Image
+                <FastImage
                   source={require("../../assets/images/mask.png")}
                   style={{ height: 70, width: 80 }}
                 />
               </View>
               <View style={styles.imageDisplay}>
-                <Image
+                <FastImage
                   source={require("../../assets/images/syringe.png")}
                   style={{ height: 70, width: 80 }}
                 />
-                <Image
+                <FastImage
                   source={require("../../assets/images/Nebulizer.png")}
                   style={{ height: 70, width: 80 }}
                 />
-                <Image
+                <FastImage
                   source={require("../../assets/images/Tablets.png")}
                   style={{ height: 70, width: 80 }}
                 />
@@ -449,7 +450,7 @@ export default function MapScreen() {
               Search for your friends and add them to view their location and
               their current infection status!{" "}
             </Text>
-            <Image
+            <FastImage
               source={require("../../assets/images/friends.jpg")}
               style={{ height: 400, width: 200, marginBottom: 20 }}
             />

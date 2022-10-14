@@ -25,6 +25,7 @@
     "react-flexible-sliding-menu": "^0.1.9",
     "react-native": "0.68.2",
     "react-native-countdown-component": "^2.7.1",
+    "react-native-fast-image": "^8.6.1",
     "react-native-gesture-handler": "~2.2.1",
     "react-native-ionicons": "^4.6.5",
     "react-native-maps": "0.30.2",
