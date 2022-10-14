@@ -62,8 +62,9 @@ export default function InventoryScreen({ changeStatus }) {
     sumSanitizer == santizerGoal &&
     sumFaceMask == faceMaskGoal &&
     sumGloves == gloveGoal &&
-    item2 == item2goal &&
-    item3 == item3goal &&
+    sumVaccines == vaccineGoal &&
+    sumNebulizers == nebulizerGoal &&
+    sumPara == paraGoal &&
     status == "Infected"
   );
 
