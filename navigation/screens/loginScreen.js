@@ -89,6 +89,7 @@ export default function LoginScreen({ navigation }) {
           // updatePoints(PointSystem.dailyPoints(response.data.stat[0].InfectionStatus, response.data.stat[0].dailyLogin))
           updateDailyBD();
           myFriends(response.data.stat[0].Username);
+          updateItems(response.data.stat[0].Username);
           showRequests(response.data.stat[0].Username);
           var usernameTemp = response.data.stat[0].Username;
           if (response.data.stat[0].FirstTime == 0) {
@@ -126,7 +127,7 @@ export default function LoginScreen({ navigation }) {
         justifyContent: "center",
         borderRadius: props.size * 2,
       }}
-      onPress={props.onPress}
+      onPress={check_logged_in}
     >
       <Text
         style={{
