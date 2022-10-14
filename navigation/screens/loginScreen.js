@@ -79,7 +79,7 @@ export default function LoginScreen({ navigation }) {
       } else {
         if (login_success) {
           set_active_username(response.data.stat[0].Username)
-          updateStatus(response.data.stat[0].InfectionStatus)
+          updateStatus(email, response.data.stat[0].InfectionStatus)
           //console.log(response.data.stat[0])
           updatePoints(response.data.stat[0].Points+PointSystem.dailyPoints(response.data.stat[0].InfectionStatus, response.data.stat[0].dailyLogin))
           //console.log("The DB points: "+(response.data.stat[0].Points+PointSystem.dailyPoints(response.data.stat[0].InfectionStatus, response.data.stat[0].dailyLogin)))
@@ -119,7 +119,7 @@ export default function LoginScreen({ navigation }) {
         justifyContent: "center",
         borderRadius: props.size *2,
       }}
-      onPress={check_logged_in}>
+      onPress={props.onPress}>
         <Text style = {{color: props.textColor, fontSize: props.fontSize,textAlignVertical:"center",textAlign:"center"}}>
           LETS GET VIRAL
         </Text>
