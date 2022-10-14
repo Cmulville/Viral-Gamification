@@ -78,7 +78,8 @@ export default function LoginScreen({ navigation }) {
       if (response.data.err) {
         console.log("Couldn't get items")
       } else {
-        setItems(response.data.stat)   
+
+        setItems(response.data.result)   
       }
       
     });
