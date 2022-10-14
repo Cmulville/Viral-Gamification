@@ -83,7 +83,7 @@ export default function DetailScreen({navigation}) {
             
             title='Logout'
             color={screenColors}
-            onPress={navigation.navigate("HomeScreen")}
+            onPress={() => navigation.navigate("LoginScreen")}
           />
         </View>
     </View>

@@ -39,7 +39,7 @@ export default function LoginScreen({ navigation }) {
       login();
     } else { 
       set_active_LoggedIn();
-      navigation.navigate("MainScreen");
+      navigation.navigate("Drawer");
     }
 
   }
