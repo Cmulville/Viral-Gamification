@@ -35,6 +35,9 @@ export default function App() {
   };
   const screenColors = statusColours[status];
 
+  // React.useEffect(() => {
+  //   console.log("Status change XD", status)
+  // }, [status])
 
   const getUserInventory = (email) => {
     Axios.post("https://deco3801-betterlatethannever.uqcloud.net/user/getUserInventory", {
@@ -55,11 +58,11 @@ export default function App() {
   });
   }
   
-  const updateStatusDB = (status) => {
-    
+  const updateStatusDB = (email, status) => {
+    console.log("DB status is ", status, email)
     Axios.post("https://deco3801-betterlatethannever.uqcloud.net/user/updateStatus", {
-      email: email,
       infectionStatus: status,
+      email: email,
     }).then((response) => {
       console.log("Here!")
       if (response.data.message) {
@@ -69,7 +72,7 @@ export default function App() {
         alert('Status success')
         
       }
-
+      console.log("Your new status is "+status)
     });
   }
 
@@ -115,18 +118,24 @@ export default function App() {
     setUsername(userName)
 }
 
-  const statusChange = async (new_status) => {
+  const statusChange = (new_status) => {
+    console.log(new_status, status)
     // try {
     //   await AsyncStorage.setItem("status", new_status)
     if (new_status == "Immune") {
       const date = moment().utcOffset('+10:00').format('YYYY-MM-DD hh:mm:ss');
       setImmunityTimer(date)
       updateImmunityTimer(date)
-    }  
+    } else {
+      setImmunityTimer(0)
+      updateImmunityTimer("N/A")
+    }
     
-    setStatus(new_status)
-    updateStatusDB(new_status)
-    console.log("Status Change")
+    setStatus(new_status) 
+    if (email != 0) {
+      updateStatusDB(email, new_status)
+    }
+      console.log("New_status is", new_status)
 
     // } catch(e) {
     // }
@@ -140,14 +149,13 @@ export default function App() {
       if (response.data.message) {
         alert('Daily fail')
       } else {
-        console.log("Immunity set!")
+        console.log("Immunity set to "+ time)
       }
 
     });
   }
 
-
-  const updateStatus = (new_status, ImmunityCountdown) => {
+  const updateStatus = (email, new_status, ImmunityCountdown) => {
     //console.log(ImmunityCountdown)
     if (new_status == "Immune") {
       const date = moment().utcOffset('+10:00').format('YYYY-MM-DD hh:mm:ss');
@@ -161,6 +169,7 @@ export default function App() {
 
       if (timeDiff <= 0) {
         statusChange("Healthy")
+        updateStatusDB(email, "Healthy")
         console.log("Immunity over, time to be healthy")
       } else {
         setStatus(new_status)

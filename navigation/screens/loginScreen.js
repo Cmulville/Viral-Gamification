@@ -57,7 +57,7 @@ export default function LoginScreen({ navigation }) {
       } else {
         if (login_success) {
           //console.log(response.data.stat[0])
-          updateStatus(response.data.stat[0].InfectionStatus, response.data.stat[0].ImmunityCountdown)
+          updateStatus(email, response.data.stat[0].InfectionStatus, response.data.stat[0].ImmunityCountdown)
           setImmunityTimer(response.data.stat[0].ImmunityCountdown)
           set_active_username(response.data.stat[0].Username)
           //console.log(response.data.stat[0])

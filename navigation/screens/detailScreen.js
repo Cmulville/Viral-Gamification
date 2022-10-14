@@ -10,6 +10,7 @@ import { tabContext } from '../../tabContext';
 export default function DetailScreen({navigation}) {
     const { screenColors } = React.useContext(tabContext)
     const { status } = React.useContext(tabContext)
+    const { statusChange } = React.useContext(tabContext)
     const { points } = React.useContext(tabContext)
     const { username } = React.useContext(tabContext)
     
@@ -33,32 +34,26 @@ export default function DetailScreen({navigation}) {
   if (endTime == 0) {
     setTime(endTime +  7 * 24 * 60 * 60)
   }
-
+  var countdown = <View ></View>
   if (status == "Immune") {
+    countdown = <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        <Text style={{ color: screenColors, fontSize: 40, fontWeight: 'bold', marginBottom: 30}}>Immunity ends in:</Text>    
+      <CountDown
+      size={30}
+      until={time}
+      onFinish={() => {
+          setImmunityTimer(0), updateImmunityTimer(0), statusChange("Healthy"), alert("Immunity is over now! You're vulnerable to infection again")
+      }}
+      digitStyle={{backgroundColor: '#FFF', borderWidth: 2, borderColor: screenColors}}
+      //digitTxtStyle={{color: screenColors}}
+      timeLabelStyle={{color: screenColors, fontWeight: 'bold'}}
+      separatorStyle={{color: screenColors}}
+      timeToShow={['D', 'H', 'M', 'S']}
+      showSeparator />
+      </View>
+    }
     return (
-        
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-          <Text style={{ color: screenColors, fontSize: 40, fontWeight: 'bold', marginBottom: 30}}>Immunity ends in:</Text>    
-        <CountDown
-        size={30}
-        until={time}
-        onFinish={() => {
-            setImmunityTimer(0), updateImmunityTimer(0)
-        }}
-        digitStyle={{backgroundColor: '#FFF', borderWidth: 2, borderColor: screenColors}}
-        //digitTxtStyle={{color: screenColors}}
-        timeLabelStyle={{color: screenColors, fontWeight: 'bold'}}
-        separatorStyle={{color: screenColors}}
-        timeToShow={['D', 'H', 'M', 'S']}
-        showSeparator
-      />
-      
-        
-        </View>
-    )
-  } else {
-    return (
-    <View style={styles.container}>
+      <View style={styles.container}>
             <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
             <View>
                 <Text style={styles.header}>
@@ -75,9 +70,9 @@ export default function DetailScreen({navigation}) {
                 Status: {status}    
             </Text>
         </View>
+        {countdown}
     </View>
-  )
-  }
+    )
 } 
 
 const styles = StyleSheet.create ({
