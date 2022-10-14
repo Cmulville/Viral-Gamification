@@ -19,6 +19,7 @@ export default function LoginScreen({ navigation }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const { updateStatus } = React.useContext(tabContext);
+  const { updateItems } = React.useContext(tabContext);
   const { updatePoints } = React.useContext(tabContext);
   const { set_active_email } = React.useContext(tabContext);
   const { set_active_username } = React.useContext(tabContext);
@@ -53,7 +54,8 @@ export default function LoginScreen({ navigation }) {
   }
 
   const login = () => {
-    const login_success = true
+    const login_success = true;
+    var loginUsername = "";
     Axios.post("https://deco3801-betterlatethannever.uqcloud.net/login", {
       email: email,
       password: password,
@@ -91,114 +93,125 @@ export default function LoginScreen({ navigation }) {
           var usernameTemp = response.data.stat[0].Username;
           if (response.data.stat[0].FirstTime == 0) {
               setModalVis(true);
-              Axios.post("https://deco3801-betterlatethannever.uqcloud.net/updateUserFirst", {
-                username: usernameTemp
-              }).then((response) => {console.log('SEND FIRSTTIME'); console.log(response.data)});
-                
-          } else {
+              Axios.post(
+                "https://deco3801-betterlatethannever.uqcloud.net/updateUserFirst",
+                {
+                  username: usernameTemp,
+                }
+              ).then((response) => {
+                console.log("SEND FIRSTTIME");
+                console.log(response.data);
+              });
+            } else {
               setModalVis(false);
+            }
           }
         }
-      }
-
-    }).catch((error) => {
-      // console.log(error)
-    });
+      })
+      .catch((error) => {
+        // console.log(error)
+      });
 
     
   };
 
-  const CircleButton = props =>(
+  const CircleButton = (props) => (
     <TouchableOpacity
-      style = {{
+      style={{
         margin: props.margin,
         height: props.size,
         width: props.size,
         backgroundColor: props.color,
         alignItems: "center",
         justifyContent: "center",
-        borderRadius: props.size *2,
+        borderRadius: props.size * 2,
       }}
-      onPress={props.onPress}>
-        <Text style = {{color: props.textColor, fontSize: props.fontSize,textAlignVertical:"center",textAlign:"center"}}>
-          LETS GET VIRAL
-        </Text>
-      </TouchableOpacity>
-  )
+      onPress={props.onPress}
+    >
+      <Text
+        style={{
+          color: props.textColor,
+          fontSize: props.fontSize,
+          textAlignVertical: "center",
+          textAlign: "center",
+        }}
+      >
+        LETS GET VIRAL
+      </Text>
+    </TouchableOpacity>
+  );
 
   return (
     <>
       <View style={styles.container}>
-      <Text style={styles.titleText}>
-          </Text>
-      <View style = {styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Email" 
-          placeholderTextColor="#003f5c"
-          onChangeText={(email) => setEmail(email)}
+        <Text style={styles.titleText}></Text>
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.TextInput}
+            placeholder="Email"
+            placeholderTextColor="#003f5c"
+            onChangeText={(email) => setEmail(email)}
           />
-      </View>
-      <View style = {styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Password"
-          placeholderTextColor="#003f5c"
-          onChangeText={(password) => setPassword(password)}
+        </View>
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.TextInput}
+            placeholder="Password"
+            placeholderTextColor="#003f5c"
+            onChangeText={(password) => setPassword(password)}
           />
+        </View>
+        <View style={styles.circleView}>
+          <CircleButton
+            size={150}
+            color="#da0f0f"
+            textColor="white"
+            fontSize={30}
+            margin={10}
+            onPress={login}
+          />
+        </View>
+        <TouchableOpacity onPress={() => navigation.navigate("RegisterScreen")}>
+          <Text style={styles.newUserView}>Click here to Sign Up!</Text>
+        </TouchableOpacity>
+        <StatusBar style="auto" />
       </View>
-      <View style = {styles.circleView}>
-        <CircleButton
-        size={150}
-        color="#da0f0f"
-        textColor="white"
-        fontSize={30}
-        margin={10}
-        onPress={login}
-      />
-      </View>
-      <TouchableOpacity onPress={() => navigation.navigate("RegisterScreen")}>
-        <Text style ={styles.newUserView}>Click here to Sign Up!</Text>
-      </TouchableOpacity>
-      <StatusBar style="auto" />
-      </View> 
     </>
-    );
-  }
-  
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: "#0b4c68",
-      alignItems: "center",
-      justifyContent: "center",
-    },
-    titleText:{
-      
-      textAlign:"center",
-      fontSize:20,
-      fontWeight:"bold",
-    },
-    inputView:{
-    backgroundColor:"#d3d3d3",
-    borderRadius:30,
-    width: "70%", 
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#0b4c68",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  titleText: {
+    textAlign: "center",
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  inputView: {
+    backgroundColor: "#d3d3d3",
+    borderRadius: 30,
+    width: "70%",
     height: 45,
     marginBottom: 20,
     alignItems: "flex-start",
-    },
-    TextInput: {
-      height: 50,
-      flex: 1,
-      padding: 0,
-      marginLeft: 15,
-    },
-    circleView: {
-      alignItems:"center",
-    },
-    newUserView:{
-      color: "white",
-      height:50,
-      marginBottom: 30,
-    }
-  });
+  },
+  TextInput: {
+    height: 50,
+    flex: 1,
+    padding: 0,
+    marginLeft: 15,
+  },
+  circleView: {
+    alignItems: "center",
+  },
+  newUserView: {
+    color: "white",
+    height: 50,
+    marginBottom: 30,
+  },
+});

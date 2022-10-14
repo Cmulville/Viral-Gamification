@@ -3,7 +3,7 @@ import * as React from "react";
 import { tabContext } from "./tabContext";
 import RootStackScreen from "./navigation/RootStackScreen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import Axios from 'axios';
+import Axios from "axios";
 import {
   StyleSheet,
   Text,
@@ -37,10 +37,6 @@ export default function App() {
     Immune: "#0aefff",
   };
   const screenColors = statusColours[status];
-
-  // React.useEffect(() => {
-  //   console.log("Status change XD", status)
-  // }, [status])
 
   const getUserInventory = (email) => {
     Axios.post("https://deco3801-betterlatethannever.uqcloud.net/user/getUserInventory", {
@@ -98,28 +94,31 @@ export default function App() {
   }
 
   const updateDailyBD = () => {
-
-    Axios.post("https://deco3801-betterlatethannever.uqcloud.net/user/updateDaily", {
-      email: email,
-    }).then((response) => {
-      
-      if (response.data.message) {
-        alert('Daily fail')
-      } else {
-        //alert('Daily success')
-        
+    Axios.post(
+      "https://deco3801-betterlatethannever.uqcloud.net/user/updateDaily",
+      {
+        email: email,
       }
-
-    });
-  }
+    )
+      .then((response) => {
+        if (response.data.message) {
+          alert("Daily fail");
+        } else {
+          //alert('Daily success')
+        }
+      })
+      .catch((error) => {
+        // console.log(error)
+      });
+  };
 
   const set_active_email = (userEmail) => {
-      setEmail(userEmail)
-  }
+    setEmail(userEmail);
+  };
 
   const set_active_username = (userName) => {
-    setUsername(userName)
-}
+    setUsername(userName);
+  };
 
   const set_active_LoggedIn = () => {
     setLoggedIn(true);
@@ -188,38 +187,34 @@ export default function App() {
     }  
   }
 
-  const addPoints = async (new_points) => {
+  const addPoints = (new_points) => {
+    console.log(new_points, typeof new_points);
     try {
-      
-      const value = parseInt(points) + new_points
+      const value = parseInt(points) + new_points;
       // console.log(new_points)
       // console.log(value)
-            
-      await AsyncStorage.setItem("points", JSON.stringify(value))
-      
-      setPoints(value)
-      updatePointsDB(value)
-      
-      
-    } catch(e) {
-      alert(e)
+
+      //await AsyncStorage.setItem("points", JSON.stringify(value))
+
+      setPoints(value);
+      updatePointsDB(value);
+    } catch (e) {
+      alert("TROUBLE ADDING POINTS");
     }
-  }
+  };
 
   const updatePoints = async (new_points) => {
     try {
-            
       //console.log(new_points)
-            
-      await AsyncStorage.setItem("points", JSON.stringify(new_points))
-      
-      setPoints(new_points)
-      
+
+      await AsyncStorage.setItem("points", JSON.stringify(new_points));
+
+      setPoints(new_points);
+
       //console.log(points)
       //updatePointsDB(new_points)
-
-    } catch(e) {
-      alert(e)
+    } catch (e) {
+      alert("TROUBLE ADDING POINTS");
     }
   }
 
@@ -228,12 +223,12 @@ export default function App() {
     Axios.post(
       "https://deco3801-betterlatethannever.uqcloud.net/friends/approved",
       {
-          username: getUserFriends,
+        username: getUserFriends,
       }
     ).then((response) => {
-        console.log(email);
-        console.log(response.data);
-        setFriends(response.data.friends);
+      console.log(email);
+      console.log(response.data);
+      setFriends(response.data.friends);
     });
   };
 
@@ -242,14 +237,47 @@ export default function App() {
     Axios.post(
       "https://deco3801-betterlatethannever.uqcloud.net/friends/requested",
       {
-          username: getUserReq,
+        username: getUserReq,
       }
     ).then((response) => {
-          console.log(response.data);
-          setRequests(response.data.friends);
+      console.log(response.data.friends);
+      setRequests(response.data.friends);
     });
-   };
+  };
 
+  const updateItems = (theUsername) => {
+    Axios.post(
+      "https://deco3801-betterlatethannever.uqcloud.net/user/itemCount",
+      {
+        username: theUsername,
+      }
+    )
+      .then((response) => {
+        if (response.data.err) {
+          console.log("Couldn't get items");
+        } else {
+          // console.log("item results");
+          // console.log(response.data.result);
+
+          const dbItems = [];
+          for (var i = 0; i < 6; i++) {
+            for (var j = 0; j < response.data.result.length; j++) {
+              if (i == response.data.result[j].ItemID) {
+                dbItems.push(response.data.result[j].Amount);
+                break;
+              }
+            }
+            if (dbItems.length != i + 1) {
+              dbItems.push(0);
+            }
+          }
+          setItems(dbItems);
+        }
+      })
+      .catch((error) => {
+        // console.log(error)
+      });
+  };
 
   return (
     <tabContext.Provider value={{items, status, points, email, username, eventEndTIme, screenColors, immunityTimer, setEventEndTime, setItems, 
