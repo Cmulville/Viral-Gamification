@@ -671,7 +671,7 @@ const styles = StyleSheet.create({
   imageDisplay: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "space-before",
+    justifyContent: "center",
     alignItems: "center",
     padding: 10,
   },
