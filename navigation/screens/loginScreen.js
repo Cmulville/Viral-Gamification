@@ -70,9 +70,9 @@ export default function LoginScreen({ navigation }) {
           //console.log("The DB points: "+(response.data.stat[0].Points+PointSystem.dailyPoints(response.data.stat[0].InfectionStatus, response.data.stat[0].dailyLogin)))
           set_active_email(email)
           // updatePoints(PointSystem.dailyPoints(response.data.stat[0].InfectionStatus, response.data.stat[0].dailyLogin))
-          updateDailyBD()
-          myFriends();
-          showRequests();
+          updateDailyBD();
+          myFriends(response.data.stat[0].Username);
+          showRequests(response.data.stat[0].Username);
         }
       }
 
@@ -80,20 +80,20 @@ export default function LoginScreen({ navigation }) {
       // console.log(error)
     });
 
-    Axios.post("https://deco3801-betterlatethannever.uqcloud.net/user/itemCount", {
-        username: username,
-    }).then((response) => {
-      if (response.data.err) {
-        console.log("Couldn't get items")
-      } else {
-        console.log('got items');
-        setItems(response.data.result);   
-        console.log(response.data.result);
-      }
-      
-    }).catch((error) => {
-      // console.log(error)
-    });
+//    Axios.post("https://deco3801-betterlatethannever.uqcloud.net/user/itemCount", {
+//        username: username,
+//    }).then((response) => {
+//      if (response.data.err) {
+//        console.log("Couldn't get items")
+//      } else {
+//        console.log('got items');
+//        setItems(response.data.result);   
+//        console.log(response.data.result);
+//      }
+//      
+//    }).catch((error) => {
+//      // console.log(error)
+//    });
     
   };
 

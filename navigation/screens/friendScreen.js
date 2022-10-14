@@ -177,8 +177,8 @@ export default function FriendScreen({ navigation }) {
                                 if (response.data.err) {
                                     console.log(response.data);
                                 } else {
-                                   showRequests(); 
-                                   myFriends();
+                                   showRequests(username); 
+                                   myFriends(username);
                                 }
                           }),
                 },
@@ -206,7 +206,7 @@ export default function FriendScreen({ navigation }) {
                                 if (response.data.err) {
                                     console.log(response.data);
                                 } else {
-                                   showRequests(); 
+                                   showRequests(username); 
                                 }
                           }),
                 },
@@ -239,7 +239,7 @@ export default function FriendScreen({ navigation }) {
                                 if (response.data.err) {
                                     console.log(response.data);
                                 } else {
-                                   myFriends(); 
+                                   myFriends(username); 
                                 }
                           }),
                 },
