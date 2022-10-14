@@ -25,6 +25,7 @@ export default function App() {
   const [eventEndTIme, setEventEndTime] = React.useState(0)
   const [friends, setFriends] = React.useState([]);
   const [requests, setRequests] = React.useState([]);
+  const [modalVis, setModalVis] = React.useState(true);
   // Ask about this
   // 6e930c12dc934cbd849bd2be
   const statusColours = {
@@ -214,7 +215,7 @@ export default function App() {
   return (
     <tabContext.Provider value={{items, status, points, email, username, eventEndTIme, screenColors, setEventEndTime, setItems, 
           updateStatus, statusChange, updatePoints, addPoints, set_active_email, set_active_username, updateDailyBD, friends, 
-            setFriends, myFriends, requests, setRequests, showRequests}}>
+            setFriends, myFriends, requests, setRequests, showRequests, modalVis, setModalVis}}>
       <StatusBar style="dark" />
       <NavigationContainer>
         <RootStackScreen />
