@@ -126,10 +126,10 @@ export default function App() {
 
   const statusChange = (new_status) => {
     console.log(new_status, status)
-    // try {
-    //   await AsyncStorage.setItem("status", new_status)
+
     if (new_status == "Immune") {
-      const date = moment().utcOffset('+10:00').format('YYYY-MM-DD hh:mm:ss');
+      const date = moment().add(3, 'd').utcOffset('+10:00').format('YYYY-MM-DD hh:mm:ss')
+      
       setImmunityTimer(date)
       updateImmunityTimer(date)
     } else {
@@ -191,11 +191,7 @@ export default function App() {
     console.log(new_points, typeof new_points);
     try {
       const value = parseInt(points) + new_points;
-      // console.log(new_points)
-      // console.log(value)
-
-      //await AsyncStorage.setItem("points", JSON.stringify(value))
-
+ 
       setPoints(value);
       updatePointsDB(value);
     } catch (e) {
@@ -279,10 +275,38 @@ export default function App() {
       });
   };
 
+  const cure_user = () => {
+    console.log("HERE")
+    console.log(username)
+    Axios.post("https://deco3801-betterlatethannever.uqcloud.net/user/cure_user", {
+        username: username,
+      }).then((response) => {
+        console.log("HERE 2")
+        if (response.data.err) {
+          console.log("Couldn't cure you. Sorry");
+        } else {
+          const new_items = []
+          console.log(items.length)
+          for (var i = 0; i < items.length; i++) {
+            // if (items[i] < 5) {
+            //   new_items.push(0)
+            // } else {
+            //   new_items.push(items[i] - 5)
+            // }
+            new_items.push(items[i] - 5)
+          }
+          setItems(new_items);
+        }
+      })
+      .catch((error) => {
+        // console.log(error)
+      });
+  }
+
   return (
     <tabContext.Provider value={{items, status, points, email, username, eventEndTIme, screenColors, immunityTimer, setEventEndTime, setItems, 
     updateStatus, statusChange, updatePoints, addPoints, set_active_email, set_active_username, updateDailyBD, setImmunityTimer, updateItems,
-    updateImmunityTimer, logged_in, setLoggedIn,  set_active_LoggedIn, friends, 
+    updateImmunityTimer, cure_user, logged_in, setLoggedIn,  set_active_LoggedIn, friends, 
             setFriends, myFriends, requests, setRequests, showRequests, modalVis, setModalVis}}>
       <StatusBar style="dark" />
       <NavigationContainer>

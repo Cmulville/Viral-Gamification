@@ -168,9 +168,9 @@ export default function MapScreen() {
           longitude: pin.longitude,
         }
       ).then((response) => {
-        if (response.data.infected) {
-          statusChange("Infected");
-        }
+        // if (response.data.infected) {
+        //   statusChange("Infected");
+        // }
       });
     }
   };
@@ -446,7 +446,7 @@ export default function MapScreen() {
             ) {
               addItem(items[i].itemType);
               console.log("#" + items[i].itemType, "These items");
-              new_points += PointSystem.collect_item(items[i].itemType);
+              new_points += PointSystem.collect_item(items[i].itemType, status);
               console.log(
                 "item collected ",
                 "You've just collected " + items[i].itemType,

@@ -13,6 +13,7 @@ export default function InventoryScreen({ changeStatus }) {
   const { addPoints } = React.useContext(tabContext);
   const { items } = React.useContext(tabContext);
   const { screenColors } = React.useContext(tabContext);
+  const { cure_user } = React.useContext(tabContext);
 
   const santizerGoal = 5;
   const gloveGoal = 5;
@@ -58,20 +59,23 @@ export default function InventoryScreen({ changeStatus }) {
   //   });
 
   //Determine if conditions are set for user to be cleared
-  const cureMe = !(
-    sumSanitizer == santizerGoal &&
-    sumFaceMask == faceMaskGoal &&
-    sumGloves == gloveGoal &&
-    sumVaccines == vaccineGoal &&
-    sumNebulizers == nebulizerGoal &&
-    sumPara == paraGoal &&
+  const cureMe = 
+    sumSanitizer >= santizerGoal &&
+    sumFaceMask >= faceMaskGoal &&
+    sumGloves >= gloveGoal &&
+    sumVaccines >= vaccineGoal &&
+    sumNebulizers >= nebulizerGoal &&
+    sumPara >= paraGoal &&
     status == "Infected"
-  );
+  
 
   const cureStatus = () => {
-    PointSystem.cure();
-    statusChange("Healthy");
-    addPoints(PointSystem.cure_bonus());
+    if (status == "Infected") {
+      PointSystem.cure();
+      statusChange("Healthy");
+      cure_user()
+      addPoints(PointSystem.cure_bonus());
+    }
   };
 
   return (
