@@ -60,7 +60,7 @@ export default function DetailScreen({navigation}) {
     }
     return (
       <View style={styles.container}>
-            <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
             <View>
                 <Text style={styles.header}>
                     Your Account

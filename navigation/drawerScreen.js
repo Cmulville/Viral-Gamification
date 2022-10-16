@@ -56,9 +56,9 @@ return (
                 drawerLabel: "Event Countdown",
             }}
         />
-        <Drawer.Screen name="Settings" component={SettingsScreen}
+        {/* <Drawer.Screen name="Settings" component={SettingsScreen}
         
-        />
+        /> */}
         <Drawer.Screen name="Account" component={DetailScreen} 
         
         />
