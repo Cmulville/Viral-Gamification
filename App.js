@@ -3,7 +3,7 @@ import * as React from "react";
 import { tabContext } from "./tabContext";
 import RootStackScreen from "./navigation/RootStackScreen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import Axios from 'axios';
+import Axios from "axios";
 import {
   StyleSheet,
   Text,
@@ -21,11 +21,14 @@ export default function App() {
   const [status, setStatus] = React.useState(null)
   const [points, setPoints] = React.useState(0)
   const [email, setEmail] = React.useState(0)
-  const [items, setItems] = React.useState(null)
+  const [items, setItems] = React.useState([0,0,0,0,0,0])
   const [username, setUsername] = React.useState("")
   const [eventEndTIme, setEventEndTime] = React.useState(0)
   const [immunityTimer, setImmunityTimer] = React.useState(0)
-
+  const [logged_in, setLoggedIn] = React.useState(false);
+  const [friends, setFriends] = React.useState([]);
+  const [requests, setRequests] = React.useState([]);
+  const [modalVis, setModalVis] = React.useState(true);
   // Ask about this
   // 6e930c12dc934cbd849bd2be
   const statusColours = {
@@ -34,7 +37,6 @@ export default function App() {
     Immune: "#0aefff",
   };
   const screenColors = statusColours[status];
-
 
   const getUserInventory = (email) => {
     Axios.post("https://deco3801-betterlatethannever.uqcloud.net/user/getUserInventory", {
@@ -55,11 +57,11 @@ export default function App() {
   });
   }
   
-  const updateStatusDB = (status) => {
-    
+  const updateStatusDB = (email, status) => {
+    console.log("DB status is ", status, email)
     Axios.post("https://deco3801-betterlatethannever.uqcloud.net/user/updateStatus", {
-      email: email,
       infectionStatus: status,
+      email: email,
     }).then((response) => {
       console.log("Here!")
       if (response.data.message) {
@@ -69,7 +71,7 @@ export default function App() {
         alert('Status success')
         
       }
-
+      console.log("Your new status is "+status)
     });
   }
 
@@ -92,41 +94,54 @@ export default function App() {
   }
 
   const updateDailyBD = () => {
-
-    Axios.post("https://deco3801-betterlatethannever.uqcloud.net/user/updateDaily", {
-      email: email,
-    }).then((response) => {
-      
-      if (response.data.message) {
-        alert('Daily fail')
-      } else {
-        //alert('Daily success')
-        
+    Axios.post(
+      "https://deco3801-betterlatethannever.uqcloud.net/user/updateDaily",
+      {
+        email: email,
       }
-
-    });
-  }
+    )
+      .then((response) => {
+        if (response.data.message) {
+          alert("Daily fail");
+        } else {
+          //alert('Daily success')
+        }
+      })
+      .catch((error) => {
+        // console.log(error)
+      });
+  };
 
   const set_active_email = (userEmail) => {
-      setEmail(userEmail)
-  }
+    setEmail(userEmail);
+  };
 
   const set_active_username = (userName) => {
-    setUsername(userName)
-}
+    setUsername(userName);
+  };
 
-  const statusChange = async (new_status) => {
+  const set_active_LoggedIn = () => {
+    setLoggedIn(true);
+  }
+
+  const statusChange = (new_status) => {
+    console.log(new_status, status)
     // try {
     //   await AsyncStorage.setItem("status", new_status)
     if (new_status == "Immune") {
       const date = moment().utcOffset('+10:00').format('YYYY-MM-DD hh:mm:ss');
       setImmunityTimer(date)
       updateImmunityTimer(date)
-    }  
+    } else {
+      setImmunityTimer(0)
+      updateImmunityTimer("N/A")
+    }
     
-    setStatus(new_status)
-    updateStatusDB(new_status)
-    console.log("Status Change")
+    setStatus(new_status) 
+    if (email != 0) {
+      updateStatusDB(email, new_status)
+    }
+      console.log("New_status is", new_status)
 
     // } catch(e) {
     // }
@@ -140,14 +155,13 @@ export default function App() {
       if (response.data.message) {
         alert('Daily fail')
       } else {
-        console.log("Immunity set!")
+        console.log("Immunity set to "+ time)
       }
 
     });
   }
 
-
-  const updateStatus = (new_status, ImmunityCountdown) => {
+  const updateStatus = (email, new_status, ImmunityCountdown) => {
     //console.log(ImmunityCountdown)
     if (new_status == "Immune") {
       const date = moment().utcOffset('+10:00').format('YYYY-MM-DD hh:mm:ss');
@@ -161,6 +175,7 @@ export default function App() {
 
       if (timeDiff <= 0) {
         statusChange("Healthy")
+        updateStatusDB(email, "Healthy")
         console.log("Immunity over, time to be healthy")
       } else {
         setStatus(new_status)
@@ -172,44 +187,103 @@ export default function App() {
     }  
   }
 
-  const addPoints = async (new_points) => {
+  const addPoints = (new_points) => {
+    console.log(new_points, typeof new_points);
     try {
-      
-      const value = parseInt(points) + new_points
+      const value = parseInt(points) + new_points;
       // console.log(new_points)
       // console.log(value)
-            
-      await AsyncStorage.setItem("points", JSON.stringify(value))
-      
-      setPoints(value)
-      updatePointsDB(value)
-      
-      
-    } catch(e) {
-      alert(e)
+
+      //await AsyncStorage.setItem("points", JSON.stringify(value))
+
+      setPoints(value);
+      updatePointsDB(value);
+    } catch (e) {
+      alert("TROUBLE ADDING POINTS");
     }
-  }
+  };
 
   const updatePoints = async (new_points) => {
     try {
-            
       //console.log(new_points)
-            
-      await AsyncStorage.setItem("points", JSON.stringify(new_points))
-      
-      setPoints(new_points)
-      
+
+      await AsyncStorage.setItem("points", JSON.stringify(new_points));
+
+      setPoints(new_points);
+
       //console.log(points)
       //updatePointsDB(new_points)
-
-    } catch(e) {
-      alert(e)
+    } catch (e) {
+      alert("TROUBLE ADDING POINTS");
     }
   }
 
+   //Gets a user's current friend list
+   const myFriends = (getUserFriends) => {
+    Axios.post(
+      "https://deco3801-betterlatethannever.uqcloud.net/friends/approved",
+      {
+        username: getUserFriends,
+      }
+    ).then((response) => {
+      console.log(email);
+      console.log(response.data);
+      setFriends(response.data.friends);
+    });
+  };
+
+  //Shows the requests a user currently has from others.
+  const showRequests = (getUserReq) => {
+    Axios.post(
+      "https://deco3801-betterlatethannever.uqcloud.net/friends/requested",
+      {
+        username: getUserReq,
+      }
+    ).then((response) => {
+      console.log(response.data.friends);
+      setRequests(response.data.friends);
+    });
+  };
+
+  const updateItems = (theUsername) => {
+    Axios.post(
+      "https://deco3801-betterlatethannever.uqcloud.net/user/itemCount",
+      {
+        username: theUsername,
+      }
+    )
+      .then((response) => {
+        if (response.data.err) {
+          console.log("Couldn't get items");
+        } else {
+          // console.log("item results");
+          // console.log(response.data.result);
+
+          const dbItems = [];
+          for (var i = 0; i < 6; i++) {
+            for (var j = 0; j < response.data.result.length; j++) {
+              if (i == response.data.result[j].ItemID) {
+                dbItems.push(response.data.result[j].Amount);
+                break;
+              }
+            }
+            if (dbItems.length != i + 1) {
+              dbItems.push(0);
+            }
+          }
+          setItems(dbItems);
+        }
+      })
+      .catch((error) => {
+        // console.log(error)
+      });
+  };
 
   return (
-    <tabContext.Provider value={{items, status, points, email, username, eventEndTIme, screenColors, immunityTimer, setEventEndTime, setItems, updateStatus, statusChange, updatePoints, addPoints, set_active_email, set_active_username, updateDailyBD, setImmunityTimer, updateImmunityTimer}}>
+    <tabContext.Provider value={{items, status, points, email, username, eventEndTIme, screenColors, immunityTimer, setEventEndTime, setItems, 
+    updateStatus, statusChange, updatePoints, addPoints, set_active_email, set_active_username, updateDailyBD, setImmunityTimer, updateItems,
+    updateImmunityTimer, logged_in, setLoggedIn,  set_active_LoggedIn, friends, 
+            setFriends, myFriends, requests, setRequests, showRequests, modalVis, setModalVis}}>
       <StatusBar style="dark" />
       <NavigationContainer>
         <RootStackScreen />

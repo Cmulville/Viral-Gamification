@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { View, Text, StyleSheet } from 'react-native'
+
+import { View, Text, StyleSheet, Button } from 'react-native'
 import CountDown from 'react-native-countdown-component';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import PropTypes from 'prop-types';
@@ -10,9 +11,10 @@ import { tabContext } from '../../tabContext';
 export default function DetailScreen({navigation}) {
     const { screenColors } = React.useContext(tabContext)
     const { status } = React.useContext(tabContext)
+    const { statusChange } = React.useContext(tabContext)
     const { points } = React.useContext(tabContext)
     const { username } = React.useContext(tabContext)
-    
+    const { setLoggedIn } = React.useContext(tabContext)
 
     const { immunityTimer } = React.useContext(tabContext)
     const { setImmunityTimer } = React.useContext(tabContext)
@@ -29,36 +31,35 @@ export default function DetailScreen({navigation}) {
   const seconds = parseInt(diffr.seconds());
   const endTime = hours * 60 * 60 + minutes * 60 + seconds;
   
+  const logout = () => {
+    setLoggedIn(false)
+    navigation.navigate("LoginScreen")
+  }
+
   const [time, setTime] = React.useState(endTime);
   if (endTime == 0) {
     setTime(endTime +  7 * 24 * 60 * 60)
   }
-
+  var countdown = <View ></View>
   if (status == "Immune") {
+    countdown = <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        <Text style={{ color: screenColors, fontSize: 40, fontWeight: 'bold', marginBottom: 30}}>Immunity ends in:</Text>    
+      <CountDown
+      size={30}
+      until={time}
+      onFinish={() => {
+          setImmunityTimer(0), updateImmunityTimer(0), statusChange("Healthy"), alert("Immunity is over now! You're vulnerable to infection again")
+      }}
+      digitStyle={{backgroundColor: '#FFF', borderWidth: 2, borderColor: screenColors}}
+      //digitTxtStyle={{color: screenColors}}
+      timeLabelStyle={{color: screenColors, fontWeight: 'bold'}}
+      separatorStyle={{color: screenColors}}
+      timeToShow={['D', 'H', 'M', 'S']}
+      showSeparator />
+      </View>
+    }
     return (
-        
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-          <Text style={{ color: screenColors, fontSize: 40, fontWeight: 'bold', marginBottom: 30}}>Immunity ends in:</Text>    
-        <CountDown
-        size={30}
-        until={time}
-        onFinish={() => {
-            setImmunityTimer(0), updateImmunityTimer(0)
-        }}
-        digitStyle={{backgroundColor: '#FFF', borderWidth: 2, borderColor: screenColors}}
-        //digitTxtStyle={{color: screenColors}}
-        timeLabelStyle={{color: screenColors, fontWeight: 'bold'}}
-        separatorStyle={{color: screenColors}}
-        timeToShow={['D', 'H', 'M', 'S']}
-        showSeparator
-      />
-      
-        
-        </View>
-    )
-  } else {
-    return (
-    <View style={styles.container}>
+      <View style={styles.container}>
             <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
             <View>
                 <Text style={styles.header}>
@@ -75,15 +76,26 @@ export default function DetailScreen({navigation}) {
                 Status: {status}    
             </Text>
         </View>
+        {countdown}
+    
+        <View style={styles.container}>
+          <Button 
+            
+            title='Logout'
+            color={screenColors}
+            onPress={() => navigation.navigate("LoginScreen")}
+          />
+        </View>
     </View>
-  )
-  }
+    
+    )
 } 
 
 const styles = StyleSheet.create ({
     container: {
         flex: 1,
         backgroundColor: '#fff',
+        borderColor: "#fff"
         
     },
     header: {

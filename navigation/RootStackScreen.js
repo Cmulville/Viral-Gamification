@@ -27,6 +27,11 @@ const RootStackScreen = ({ navigationx }) => {
   return (
 
     <RootStack.Navigator>
+      {/* <RootStack.Screen
+        name="MainScreen"
+        component={MainScreen}
+        options={{ headerShown: false }}
+      /> */}
       <RootStack.Screen
         name="LoginScreen"
         component={LoginScreen}

@@ -1,4 +1,6 @@
+import React from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { tabContext } from "./tabContext";
 
 const PointSystem = {
     
@@ -19,10 +21,8 @@ const PointSystem = {
             }
         }
     },
-    //Changes the status of the user from Healthy to user
+    //Changes the status of the victim from Healthy to user
     infect: async () => {
-        
-
         try {
             const value = await AsyncStorage.getItem("status")
             if (value === 'Healthy') {
@@ -76,39 +76,41 @@ const PointSystem = {
             }
         },
 
-    collect_item: async (item) => {
-        const points = 0
-        if (item == "Gloves") {
-            points == 150
-        } else if (item == "Sanitizier") {
-            points = 500
-        } else if (item == "Face Mask") {
-            points = 300
-        }
-        try {
-            await AsyncStorage.setItem("Points", points)
-        } catch(e) {
-            alert("Couldn't update points")
-        }
-        return points
+    collect_item: (itemType) => {
+        const collect_points = [150, 250, 450, 550, 300, 350, 400]
+        // const collect_points = [1, 2, 3, 4, 5, 6, 7]
+        // let points = 0
+        // if (itemType == 0) {
+        //     points = 150
+        // } else if (itemType == 1) {
+        //     points = 500
+        // } else if (itemType == 2) {
+        //     points = 300
+        // }
+        // try {
+        //     await AsyncStorage.setItem("Points", points)
+        // } catch(e) {
+        //     alert("Couldn't update points")
+        // }
+        //console.log("The item type was "+itemType+" and the points received were "+collect_points[itemType])
+        return collect_points[itemType]
     },
 
     immunity_interact: (user, immune_user) => {
-        return 500
+
     },
 
     walking_reward: (user) => {
         //Add the reward points to the user.
     },
 
-    
-    friend_interact: () => {
-        return 250
+    friend_interact:(user, friend) => {
+        //Reward based on itneraction
     },
 
-    //Add points to user from whom a friend request was accepted
-    invite_reward: () => {
-        return 550
+    invite_reward: (user) => {
+        //User is the user who provided the add link
+        //This user receives an award based on the total friends added database link. 
     },
 }
 
