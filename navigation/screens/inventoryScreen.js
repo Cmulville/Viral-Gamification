@@ -7,6 +7,7 @@ import {
   Button,
   TouchableOpacity,
   Image,
+  Modal,
 } from "react-native";
 import PointSystem from "../../pointSystem";
 import { tabContext } from "../../tabContext";
@@ -35,35 +36,8 @@ export default function InventoryScreen({ changeStatus }) {
   const [sumVaccines, setsumVaccines] = React.useState(0);
   const [sumNebulizers, setsumNebulizers] = React.useState(0);
   const [sumPara, setsumPara] = React.useState(0);
-
-  //   let sumSanitizer = 0;
-  //   let sumGloves = 0;
-  //   let sumFaceMask = 0;
-  //   let sumVaccines = 0;
-  //   let sumNebuilzers = 0;
-  //   let sumPara = 0;
-
-  //   items.forEach((element) => {
-  //     if (element.ItemID == 0) {
-  //       setsumFaceMask(element.Amount);
-  //       //   sumFaceMask = element.Amount;
-  //     } else if (element.ItemID == 1) {
-  //       setsumGloves(element.Amount);
-  //       //   sumGloves = element.Amount;
-  //     } else if (element.ItemID == 2) {
-  //       setsumVaccines(element.Amount);
-  //       //   sumVaccines = element.Amount;
-  //     } else if (element.ItemID == 3) {
-  //       setSumSanitizer(element.Amount);
-  //       //   sumSanitizer = element.Amount;
-  //     } else if (element.ItemID == 4) {
-  //       setsumPara(element.Amount);
-  //       //   sumPara = element.Amount;
-  //     } else if (element.ItemID == 5) {
-  //       setsumNebulizers(element.Amount);
-  //       //   sumNebulizers = element.Amount;
-  //     }
-  //   });
+  const [modalVis, setModalVis] = React.useState(false);
+  const [modalImage, setModalImage] = React.useState(0);
 
   //Determine if conditions are set for user to be cleared
   const cureMe = !(
@@ -82,15 +56,34 @@ export default function InventoryScreen({ changeStatus }) {
     addPoints(PointSystem.cure_bonus());
   };
 
+  const toggleVisible = () => {
+    setModalVis(!modalVis);
+  };
+
   return (
     <View style={styles.container}>
+      <Modal animationType={"fade"} transparent={true} visible={modalVis}>
+        <View style={styles.modal}>
+          <TouchableOpacity activeOpacity={0.5} onPress={() => toggleVisible()}>
+            <Image
+              style={styles.modalImage}
+              source={require("../../assets/images/sanitizerdesc.png")}
+            />
+          </TouchableOpacity>
+        </View>
+      </Modal>
+
       <View style={styles.header}>
         <Text style={styles.header}>Inventory </Text>
       </View>
 
       <View>
         <View style={styles.item_container}>
-          <TouchableOpacity style={styles.items} activeOpacity={0.5}>
+          <TouchableOpacity
+            style={styles.items}
+            activeOpacity={0.5}
+            onPress={() => toggleVisible()}
+          >
             <Image
               source={require("../../assets/images/sanitizer.png")}
               style={styles.ImageIconStyle}
@@ -109,13 +102,6 @@ export default function InventoryScreen({ changeStatus }) {
               {items[1]}/{gloveGoal}{" "}
             </Text>
           </TouchableOpacity>
-
-          {/* <View style={styles.items}>
-            <Button title="Face Masks" color={screenColors} />
-            <Text co style={{ fontSize: 22 }}>
-              {items[0]}/{faceMaskGoal}{" "}
-            </Text>
-          </View> */}
         </View>
         <View style={styles.item_container}>
           <TouchableOpacity style={styles.items} activeOpacity={0.5}>
@@ -140,13 +126,6 @@ export default function InventoryScreen({ changeStatus }) {
         </View>
 
         <View style={styles.item_container}>
-          {/* <View style={styles.items}>
-            <Button title="Vaccines" color={screenColors} />
-            <Text style={{ fontSize: 22 }}>
-              {items[2]}/{vaccineGoal}{" "}
-            </Text>
-          </View> */}
-
           <TouchableOpacity style={styles.items} activeOpacity={0.5}>
             <Image
               source={require("../../assets/images/Nebulizer.png")}
@@ -157,13 +136,6 @@ export default function InventoryScreen({ changeStatus }) {
             </Text>
           </TouchableOpacity>
 
-          {/* <View style={styles.items}>
-            <Button title="Nebulizers" color={screenColors} />
-            <Text style={{ fontSize: 22 }}>
-              {items[5]}/{nebulizerGoal}{" "}
-            </Text>
-          </View> */}
-
           <TouchableOpacity style={styles.items} activeOpacity={0.5}>
             <Image
               source={require("../../assets/images/Tablets.png")}
@@ -173,13 +145,6 @@ export default function InventoryScreen({ changeStatus }) {
               {items[4]}/{paraGoal}{" "}
             </Text>
           </TouchableOpacity>
-
-          {/* <View style={styles.items}>
-            <Button title="Paracetamol" color={screenColors} />
-            <Text co style={{ fontSize: 22 }}>
-              {items[4]}/{paraGoal}{" "}
-            </Text>
-          </View> */}
         </View>
         <View>
           <Button
@@ -197,8 +162,8 @@ export default function InventoryScreen({ changeStatus }) {
 const styles = StyleSheet.create({
   ImageIconStyle: {
     resizeMode: "contain",
-    height: 150,
-    width: 150,
+    height: 130,
+    width: 130,
   },
   container: {
     flex: 1,
@@ -222,5 +187,23 @@ const styles = StyleSheet.create({
   },
   button: {
     marginVertical: 16,
+  },
+  modal: {
+    alignItems: "center",
+    backgroundColor: "#FFFFFF",
+    padding: 10,
+    height: "30%",
+    width: "80%",
+    // borderRadius: 5,
+    // borderWidth: 5,
+    marginTop: 300,
+    marginLeft: 40,
+  },
+  modalImage: {
+    display: "flex",
+    height: 300,
+    width: 350,
+    resizeMode: "contain",
+    // alignItems: "center",
   },
 });
