@@ -1,6 +1,7 @@
 import Axios from "axios";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import * as React from "react";
+import { useFonts } from "expo-font";
 import {
   StyleSheet,
   View,
@@ -33,6 +34,9 @@ export default function FriendScreen({ navigation }) {
   const {requests} = React.useContext(tabContext);
   const {setRequests} = React.useContext(tabContext);
   const {showRequests} = React.useContext(tabContext);
+  const [loaded] = useFonts({
+    Montserrat: require('../../assets/fonts/LakkiReddy-Regular.ttf'),
+  });
 
 
   //Finds a user for when searching friends to add.
@@ -253,8 +257,8 @@ export default function FriendScreen({ navigation }) {
 
  
   return (
-    <ScrollView>
-    <View>
+   
+    <ScrollView style={styles.pageView}>
       <SearchBar searchPhrase={addUser} setSearchPhrase={setAddUser}/>
       <View style={{paddingBottom:15}}>
         <Button title="Search Friend" onPress={searchUsers}/>
@@ -274,7 +278,7 @@ export default function FriendScreen({ navigation }) {
               <TouchableHighlight underlayColor='none' 
                     onPressIn={()=>setIconName("person-add-sharp")} 
                     onPressOut={makeRequest}>
-                <Ionicons name={iconName} color={"#43ff64d9"} size={35} />
+                <Ionicons name={iconName} color={""} size={35} />
               </TouchableHighlight>
             </View>
           );
@@ -287,7 +291,7 @@ export default function FriendScreen({ navigation }) {
       }
 
 
-      <View style={{alignItems: 'center'}}>
+      <View style={{alignItems: "flex-start"}}>
         <Text style={styles.label}>CURRENT FRIENDS</Text>
       </View>
       {
@@ -296,7 +300,7 @@ export default function FriendScreen({ navigation }) {
         {friends.map((friend, index) => {
           return (
             <View style={styles.container}>
-              <Text style={{fontWeight: 'bold'}}>{friend.Username}</Text>
+              <Text style={styles.TextInput}>{friend.Username}</Text>
               <Text>{friend.InfectionStatus}</Text>
               <TouchableOpacity onPress={() => deleteFriend(index)}>
                   <Ionicons name={'trash-outline'} color={"#ff0000cc"} size={35} />
@@ -311,7 +315,7 @@ export default function FriendScreen({ navigation }) {
 		</View>
       }
 
-      <View style={{alignItems: 'center'}}>
+      <View style={{alignItems: "flex-start"}}>
         <Text style={styles.label}>FRIEND REQUESTS</Text>
       </View>
 
@@ -321,12 +325,12 @@ export default function FriendScreen({ navigation }) {
         {requests.map((request, index) => {
           return (
             <View style={styles.container}>
-              <Text>{request.Friend1}</Text>
+              <Text style={styles.label}>{request.Friend1}</Text>
                 <TouchableOpacity onPress={() => handleRequest(index, true)}>
-                    <Ionicons name={'checkmark-circle-outline'} color={"#43ff64d9"} size={35} />
+                    <Ionicons name={'checkmark-circle-outline'} color={"#0b4c68"} size={35} />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => handleRequest(index, false)}>
-                    <Ionicons name={'close-circle-outline'} color={"#ff0000cc"} size={35} />
+                    <Ionicons name={'close-circle-outline'} color={"#0b4c68"} size={35} />
                 </TouchableOpacity>
             </View>
           );
@@ -336,8 +340,9 @@ export default function FriendScreen({ navigation }) {
 			<Text style={styles.title}>NO REQUESTS</Text>
 		</View>
 	}
-    </View>
+    
     </ScrollView>
+    
   );
 }
 
@@ -348,13 +353,15 @@ const styles = StyleSheet.create({
     width: "70%",
     height: 45,
     marginBottom: 20,
-
     alignItems: "center",
     justifyContent: "center",
   },
-
+  pageView:{
+    backgroundColor: "#0b4c68",
+  },
   container: {
       display: "flex",
+      color:"#fff",
       justifyContent: "space-between",
       flexDirection: "row",
       alignItems: "center",
@@ -364,25 +371,30 @@ const styles = StyleSheet.create({
   title: {
       fontSize: 15, 
       fontWeight: 'bold',
+      color:"#fff",
   },
   label: {
       fontSize: 25, 
+      color: "#fff",
       fontWeight: 'bold',
       textDecorationLine: 'underline',
       marginBottom:10,
+      marginLeft:20,
   },
 
   friendView: {
     borderRadius: 40,
     padding: 15,
     borderWidth: 10,
-    borderColor: "#fff",
-    marginBottom: 20
+    borderColor: "#0b4c68",
+    marginBottom: 20,
+    marginLeft: 20,
   },
 
   TextInput: {
     height: 50,
     flex: 1,
+    color:"#fff",
     padding: 10,
     marginLeft: 20,
     width: "100%",
