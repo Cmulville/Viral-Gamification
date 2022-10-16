@@ -22,6 +22,7 @@ export default function InventoryScreen({ changeStatus }) {
   const { addPoints } = React.useContext(tabContext);
   const { items } = React.useContext(tabContext);
   const { screenColors } = React.useContext(tabContext);
+  const { cure_user } = React.useContext(tabContext);
 
   const santizerGoal = 5;
   const gloveGoal = 5;
@@ -40,20 +41,23 @@ export default function InventoryScreen({ changeStatus }) {
   const [modalImage, setModalImage] = React.useState(0);
 
   //Determine if conditions are set for user to be cleared
-  const cureMe = !(
-    sumSanitizer == santizerGoal &&
-    sumFaceMask == faceMaskGoal &&
-    sumGloves == gloveGoal &&
-    sumVaccines == vaccineGoal &&
-    sumNebulizers == nebulizerGoal &&
-    sumPara == paraGoal &&
+  const cureMe = 
+    sumSanitizer >= santizerGoal &&
+    sumFaceMask >= faceMaskGoal &&
+    sumGloves >= gloveGoal &&
+    sumVaccines >= vaccineGoal &&
+    sumNebulizers >= nebulizerGoal &&
+    sumPara >= paraGoal &&
     status == "Infected"
-  );
+  
 
   const cureStatus = () => {
-    PointSystem.cure();
-    statusChange("Healthy");
-    addPoints(PointSystem.cure_bonus());
+    if (status == "Infected") {
+      PointSystem.cure();
+      statusChange("Healthy");
+      cure_user()
+      addPoints(PointSystem.cure_bonus());
+    }
   };
 
   const toggleVisible = () => {
@@ -88,7 +92,7 @@ export default function InventoryScreen({ changeStatus }) {
               source={require("../../assets/images/sanitizer.png")}
               style={styles.ImageIconStyle}
             />
-            <Text style={{ fontSize: 22 }}>
+            <Text style={{ fontSize: 22 , color:"#fff",}}>
               {items[3]}/{santizerGoal}{" "}
             </Text>
           </TouchableOpacity>
@@ -98,7 +102,7 @@ export default function InventoryScreen({ changeStatus }) {
               source={require("../../assets/images/gloves.png")}
               style={styles.ImageIconStyle}
             />
-            <Text style={{ fontSize: 22 }}>
+            <Text style={{ fontSize: 22, color:"#fff", }}>
               {items[1]}/{gloveGoal}{" "}
             </Text>
           </TouchableOpacity>
@@ -109,7 +113,7 @@ export default function InventoryScreen({ changeStatus }) {
               source={require("../../assets/images/mask.png")}
               style={styles.ImageIconStyle}
             />
-            <Text style={{ fontSize: 22 }}>
+            <Text style={{ fontSize: 22, color:"#fff", }}>
               {items[0]}/{faceMaskGoal}{" "}
             </Text>
           </TouchableOpacity>
@@ -119,7 +123,7 @@ export default function InventoryScreen({ changeStatus }) {
               source={require("../../assets/images/syringe.png")}
               style={styles.ImageIconStyle}
             />
-            <Text style={{ fontSize: 22 }}>
+            <Text style={{ fontSize: 22, color:"#fff", }}>
               {items[2]}/{vaccineGoal}{" "}
             </Text>
           </TouchableOpacity>
@@ -131,7 +135,7 @@ export default function InventoryScreen({ changeStatus }) {
               source={require("../../assets/images/Nebulizer.png")}
               style={styles.ImageIconStyle}
             />
-            <Text style={{ fontSize: 22 }}>
+            <Text style={{ fontSize: 22, color:"#fff",}}>
               {items[5]}/{nebulizerGoal}{" "}
             </Text>
           </TouchableOpacity>
@@ -141,7 +145,7 @@ export default function InventoryScreen({ changeStatus }) {
               source={require("../../assets/images/Tablets.png")}
               style={styles.ImageIconStyle}
             />
-            <Text style={{ fontSize: 22 }}>
+            <Text style={{ fontSize: 22 ,color:"#fff",}}>
               {items[4]}/{paraGoal}{" "}
             </Text>
           </TouchableOpacity>
@@ -167,7 +171,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#0b4c68",
   },
   item_container: {
     flexDirection: "row",
@@ -178,6 +182,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     margin: 10,
     fontSize: 32,
+    color:"#fff",
     fontWeight: "bold",
   },
   items: {
