@@ -137,7 +137,7 @@ export default function LoginScreen({ navigation }) {
           textAlign: "center",
         }}
       >
-        LETS GET VIRAL
+        LET'S GET VIRAL
       </Text>
     </TouchableOpacity>
   );

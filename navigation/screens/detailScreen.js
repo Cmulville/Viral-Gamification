@@ -1,6 +1,5 @@
 import * as React from 'react';
-
-import { View, Text, StyleSheet, Button } from 'react-native'
+import { View, Image,Text, StyleSheet, Button } from 'react-native'
 import CountDown from 'react-native-countdown-component';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import PropTypes from 'prop-types';
@@ -60,32 +59,37 @@ export default function DetailScreen({navigation}) {
     }
     return (
       <View style={styles.container}>
-        <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <View style={{ flex: 1, alignItems: "center", justifyContent: "flex-start" }}>
             <View>
                 <Text style={styles.header}>
                     Your Account
                 </Text>
             </View>
-            <Text>
+            
+            <Image source={require("../../assets/images/Avatar.png")}
+              style={styles.ImageStyle}
+            />
+            
+            <Text style={styles.label}>
                 Username: {username}
             </Text>
-            <Text>
+            <Text style={styles.label}>
                 Points: {points}
             </Text>
-            <Text>
+            <Text style={styles.label}>
                 Status: {status}    
             </Text>
         </View>
         {countdown}
     
-        <View style={styles.container}>
+        
           <Button 
-            
+            width={50}
             title='Logout'
             color={screenColors}
             onPress={() => navigation.navigate("LoginScreen")}
           />
-        </View>
+        
     </View>
     
     )
@@ -94,15 +98,29 @@ export default function DetailScreen({navigation}) {
 const styles = StyleSheet.create ({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
-        borderColor: "#fff"
+        backgroundColor: '#0b4c68',
+        borderColor: "#fff",
+        //alignContent:'center',
         
     },
     header: {
         alignItems: 'center',
         justifyContent: 'center',
+        color:'#fff',
         margin:10,
         fontSize: 32,
         fontWeight: 'bold'
+    },
+    label:{
+      color:"#fff",
+      textAlign:'left',
+      marginLeft:20,
+      fontSize:14,
+    },
+    ImageStyle: {
+      resizeMode: "contain",
+      height: 150,
+      width: 150,
+      alignItems:"center",
     },
 })
