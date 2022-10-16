@@ -1,5 +1,13 @@
 import * as React from "react";
-import { ScrollView, StyleSheet, Text, View, Button } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  TouchableOpacity,
+  Image,
+} from "react-native";
 import PointSystem from "../../pointSystem";
 import { tabContext } from "../../tabContext";
 import Axios from "axios";
@@ -76,54 +84,102 @@ export default function InventoryScreen({ changeStatus }) {
 
   return (
     <View style={styles.container}>
-      <View>
+      <View style={styles.header}>
         <Text style={styles.header}>Inventory </Text>
       </View>
 
-      <ScrollView>
+      <View>
         <View style={styles.item_container}>
-          <View style={styles.items}>
-            <Button title="Santitizer" color={screenColors} />
+          <TouchableOpacity style={styles.items} activeOpacity={0.5}>
+            <Image
+              source={require("../../assets/images/sanitizer.png")}
+              style={styles.ImageIconStyle}
+            />
             <Text style={{ fontSize: 22 }}>
               {items[3]}/{santizerGoal}{" "}
             </Text>
-          </View>
+          </TouchableOpacity>
 
-          <View style={styles.items}>
-            <Button title="Gloves" color={screenColors} />
+          <TouchableOpacity style={styles.items} activeOpacity={0.5}>
+            <Image
+              source={require("../../assets/images/gloves.png")}
+              style={styles.ImageIconStyle}
+            />
             <Text style={{ fontSize: 22 }}>
               {items[1]}/{gloveGoal}{" "}
             </Text>
-          </View>
+          </TouchableOpacity>
 
-          <View style={styles.items}>
+          {/* <View style={styles.items}>
             <Button title="Face Masks" color={screenColors} />
             <Text co style={{ fontSize: 22 }}>
               {items[0]}/{faceMaskGoal}{" "}
             </Text>
-          </View>
+          </View> */}
         </View>
         <View style={styles.item_container}>
-          <View style={styles.items}>
+          <TouchableOpacity style={styles.items} activeOpacity={0.5}>
+            <Image
+              source={require("../../assets/images/mask.png")}
+              style={styles.ImageIconStyle}
+            />
+            <Text style={{ fontSize: 22 }}>
+              {items[0]}/{faceMaskGoal}{" "}
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.items} activeOpacity={0.5}>
+            <Image
+              source={require("../../assets/images/syringe.png")}
+              style={styles.ImageIconStyle}
+            />
+            <Text style={{ fontSize: 22 }}>
+              {items[2]}/{vaccineGoal}{" "}
+            </Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.item_container}>
+          {/* <View style={styles.items}>
             <Button title="Vaccines" color={screenColors} />
             <Text style={{ fontSize: 22 }}>
               {items[2]}/{vaccineGoal}{" "}
             </Text>
-          </View>
+          </View> */}
 
-          <View style={styles.items}>
+          <TouchableOpacity style={styles.items} activeOpacity={0.5}>
+            <Image
+              source={require("../../assets/images/Nebulizer.png")}
+              style={styles.ImageIconStyle}
+            />
+            <Text style={{ fontSize: 22 }}>
+              {items[5]}/{nebulizerGoal}{" "}
+            </Text>
+          </TouchableOpacity>
+
+          {/* <View style={styles.items}>
             <Button title="Nebulizers" color={screenColors} />
             <Text style={{ fontSize: 22 }}>
               {items[5]}/{nebulizerGoal}{" "}
             </Text>
-          </View>
+          </View> */}
 
-          <View style={styles.items}>
+          <TouchableOpacity style={styles.items} activeOpacity={0.5}>
+            <Image
+              source={require("../../assets/images/Tablets.png")}
+              style={styles.ImageIconStyle}
+            />
+            <Text style={{ fontSize: 22 }}>
+              {items[4]}/{paraGoal}{" "}
+            </Text>
+          </TouchableOpacity>
+
+          {/* <View style={styles.items}>
             <Button title="Paracetamol" color={screenColors} />
             <Text co style={{ fontSize: 22 }}>
               {items[4]}/{paraGoal}{" "}
             </Text>
-          </View>
+          </View> */}
         </View>
         <View>
           <Button
@@ -133,19 +189,24 @@ export default function InventoryScreen({ changeStatus }) {
             disabled={cureMe}
           ></Button>
         </View>
-      </ScrollView>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  ImageIconStyle: {
+    resizeMode: "contain",
+    height: 150,
+    width: 150,
+  },
   container: {
     flex: 1,
     backgroundColor: "#fff",
   },
   item_container: {
     flexDirection: "row",
-    justifyContent: "center",
+    justifyContent: "space-around",
   },
   header: {
     alignItems: "center",
