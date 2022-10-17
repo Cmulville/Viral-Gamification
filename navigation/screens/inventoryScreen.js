@@ -22,7 +22,6 @@ export default function InventoryScreen({ changeStatus }) {
   const { addPoints } = React.useContext(tabContext);
   const { items } = React.useContext(tabContext);
   const { screenColors } = React.useContext(tabContext);
-  const { cure_user } = React.useContext(tabContext);
 
   const santizerGoal = 5;
   const gloveGoal = 5;
@@ -41,23 +40,20 @@ export default function InventoryScreen({ changeStatus }) {
   const [modalImage, setModalImage] = React.useState(0);
 
   //Determine if conditions are set for user to be cleared
-  const cureMe = 
-    sumSanitizer >= santizerGoal &&
-    sumFaceMask >= faceMaskGoal &&
-    sumGloves >= gloveGoal &&
-    sumVaccines >= vaccineGoal &&
-    sumNebulizers >= nebulizerGoal &&
-    sumPara >= paraGoal &&
+  const cureMe = !(
+    sumSanitizer == santizerGoal &&
+    sumFaceMask == faceMaskGoal &&
+    sumGloves == gloveGoal &&
+    sumVaccines == vaccineGoal &&
+    sumNebulizers == nebulizerGoal &&
+    sumPara == paraGoal &&
     status == "Infected"
-  
+  );
 
   const cureStatus = () => {
-    if (status == "Infected") {
-      PointSystem.cure();
-      statusChange("Healthy");
-      cure_user()
-      addPoints(PointSystem.cure_bonus());
-    }
+    PointSystem.cure();
+    statusChange("Healthy");
+    addPoints(PointSystem.cure_bonus());
   };
 
   const toggleVisible = () => {
@@ -71,7 +67,7 @@ export default function InventoryScreen({ changeStatus }) {
           <TouchableOpacity activeOpacity={0.5} onPress={() => toggleVisible()}>
             <Image
               style={styles.modalImage}
-              source={require("../../assets/images/sanitizerdesc.png")}
+              source={require("../../assets/images/nebulizerdesc.png")}
             />
           </TouchableOpacity>
         </View>
@@ -92,7 +88,7 @@ export default function InventoryScreen({ changeStatus }) {
               source={require("../../assets/images/sanitizer.png")}
               style={styles.ImageIconStyle}
             />
-            <Text style={{ fontSize: 22 , color:"#fff",}}>
+            <Text style={{ fontSize: 22 }}>
               {items[3]}/{santizerGoal}{" "}
             </Text>
           </TouchableOpacity>
@@ -102,7 +98,7 @@ export default function InventoryScreen({ changeStatus }) {
               source={require("../../assets/images/gloves.png")}
               style={styles.ImageIconStyle}
             />
-            <Text style={{ fontSize: 22, color:"#fff", }}>
+            <Text style={{ fontSize: 22 }}>
               {items[1]}/{gloveGoal}{" "}
             </Text>
           </TouchableOpacity>
@@ -113,7 +109,7 @@ export default function InventoryScreen({ changeStatus }) {
               source={require("../../assets/images/mask.png")}
               style={styles.ImageIconStyle}
             />
-            <Text style={{ fontSize: 22, color:"#fff", }}>
+            <Text style={{ fontSize: 22 }}>
               {items[0]}/{faceMaskGoal}{" "}
             </Text>
           </TouchableOpacity>
@@ -123,7 +119,7 @@ export default function InventoryScreen({ changeStatus }) {
               source={require("../../assets/images/syringe.png")}
               style={styles.ImageIconStyle}
             />
-            <Text style={{ fontSize: 22, color:"#fff", }}>
+            <Text style={{ fontSize: 22 }}>
               {items[2]}/{vaccineGoal}{" "}
             </Text>
           </TouchableOpacity>
@@ -135,7 +131,7 @@ export default function InventoryScreen({ changeStatus }) {
               source={require("../../assets/images/Nebulizer.png")}
               style={styles.ImageIconStyle}
             />
-            <Text style={{ fontSize: 22, color:"#fff",}}>
+            <Text style={{ fontSize: 22 }}>
               {items[5]}/{nebulizerGoal}{" "}
             </Text>
           </TouchableOpacity>
@@ -145,7 +141,7 @@ export default function InventoryScreen({ changeStatus }) {
               source={require("../../assets/images/Tablets.png")}
               style={styles.ImageIconStyle}
             />
-            <Text style={{ fontSize: 22 ,color:"#fff",}}>
+            <Text style={{ fontSize: 22 }}>
               {items[4]}/{paraGoal}{" "}
             </Text>
           </TouchableOpacity>
@@ -171,7 +167,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: "#0b4c68",
+    backgroundColor: "#fff",
   },
   item_container: {
     flexDirection: "row",
@@ -182,7 +178,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     margin: 10,
     fontSize: 32,
-    color:"#fff",
     fontWeight: "bold",
   },
   items: {
@@ -195,20 +190,23 @@ const styles = StyleSheet.create({
   },
   modal: {
     alignItems: "center",
-    backgroundColor: "#FFFFFF",
-    padding: 10,
-    height: "30%",
-    width: "80%",
+    // backgroundColor: "#FFFFFF",
+    // padding: 10,
+    // height: "30%",
+    // width: "80%",
     // borderRadius: 5,
     // borderWidth: 5,
-    marginTop: 300,
-    marginLeft: 40,
+    paddingLeft: 110,
+    paddingTop: 150,
+    // marginTop: 200,
+    // marginLeft: 40,
   },
   modalImage: {
-    display: "flex",
-    height: 300,
-    width: 350,
+    // display: "flex",
+    height: 550,
+    width: 500,
     resizeMode: "contain",
-    // alignItems: "center",
+    alignItems: "center",
+    paddingLeft: 100,
   },
 });
