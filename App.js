@@ -29,6 +29,7 @@ export default function App() {
   const [friends, setFriends] = React.useState([]);
   const [requests, setRequests] = React.useState([]);
   const [modalVis, setModalVis] = React.useState(true);
+  const [game_expiry, set_game_expiry] = React.useState(0)
   // Ask about this
   // 6e930c12dc934cbd849bd2be
   const statusColours = {
@@ -303,10 +304,26 @@ export default function App() {
       });
   }
 
+  const reset_game_stats = () => {
+    Axios.post("https://deco3801-betterlatethannever.uqcloud.net/reset_game_stats", {
+      }).then((response) => {
+        console.log("HERE 2")
+        if (response.data.err) {
+          console.log("Couldn't cure you. Sorry");
+        } else {
+          alert("Round Over!")
+          set_game_expiry(moment().add(7, 'd').utcOffset('+10:00').format('YYYY-MM-DD hh:mm:ss'))  
+        }
+      })
+      .catch((error) => {
+        // console.log(error)
+      });
+  }
+
   return (
     <tabContext.Provider value={{items, status, points, email, username, eventEndTIme, screenColors, immunityTimer, setEventEndTime, setItems, 
     updateStatus, statusChange, updatePoints, addPoints, set_active_email, set_active_username, updateDailyBD, setImmunityTimer, updateItems,
-    updateImmunityTimer, cure_user, logged_in, setLoggedIn,  set_active_LoggedIn, friends, 
+    updateImmunityTimer, cure_user, logged_in, setLoggedIn,  set_active_LoggedIn, friends, reset_game_stats, game_expiry, set_game_expiry,
             setFriends, myFriends, requests, setRequests, showRequests, modalVis, setModalVis}}>
       <StatusBar style="dark" />
       <NavigationContainer>
