@@ -439,14 +439,6 @@ export default function MapScreen() {
             setItems(newItems);
           }
           UpdateLocation();
-          setDistance({
-            thing: calculateDistance(
-              pin.latitude,
-              pin.longitude,
-              uq.latitude,
-              uq.longitude
-            ),
-          });
         }}
       >
         {friends.map((friend, index) => {
