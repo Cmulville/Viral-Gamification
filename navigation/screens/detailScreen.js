@@ -59,26 +59,30 @@ export default function DetailScreen({navigation}) {
     }
     return (
       <View style={styles.container}>
-        <View style={{ flex: 1, alignItems: "center", justifyContent: "flex-start" }}>
-            <View>
+        <View style={{ flex: 1,  justifyContent: "flex-start" ,}}>
+            <View style={{ alignItems: "center"}}>
                 <Text style={styles.header}>
-                    Your Account
+                    ACCOUNT DETAILS
                 </Text>
             </View>
-            
+            <View style={{ alignItems: "center"}}>
             <Image source={require("../../assets/images/Avatar.png")}
               style={styles.ImageStyle}
             />
+            </View>
             
             <Text style={styles.label}>
-                Username: {username}
+                USERNAME: {username}
             </Text>
+            
             <Text style={styles.label}>
-                Points: {points}
+                POINTS: {points}
             </Text>
+           
             <Text style={styles.label}>
-                Status: {status}    
+                STATUS: {status}    
             </Text>
+            
         </View>
         {countdown}
     
@@ -113,9 +117,17 @@ const styles = StyleSheet.create ({
     },
     label:{
       color:"#fff",
+      backgroundColor:"#113b4d",
       textAlign:'left',
+      justifyContent:'flex-start',
       marginLeft:20,
-      fontSize:14,
+      marginRight:20,
+      fontSize:20,
+      borderWidth: 5,
+      borderColor: "#113b4d",
+      borderRadius: 10,
+      padding:15,
+      margin:5,
     },
     ImageStyle: {
       resizeMode: "contain",
