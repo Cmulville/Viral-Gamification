@@ -67,7 +67,7 @@ export default function InventoryScreen({ changeStatus }) {
   //   });
 
   //Determine if conditions are set for user to be cleared
-  const cureMe = 
+  let cureMe = 
     sumSanitizer >= santizerGoal &&
     sumFaceMask >= faceMaskGoal &&
     sumGloves >= gloveGoal &&
@@ -87,7 +87,9 @@ export default function InventoryScreen({ changeStatus }) {
   };
 
   return (
+    
     <View style={styles.container}>
+    <ScrollView>
       <View style={styles.header}>
         <Text style={styles.header}>Inventory </Text>
       </View>
@@ -194,7 +196,9 @@ export default function InventoryScreen({ changeStatus }) {
           ></Button>
         </View>
       </View>
+      </ScrollView>
     </View>
+    
   );
 }
 
