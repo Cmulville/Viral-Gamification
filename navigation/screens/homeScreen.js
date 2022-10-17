@@ -27,7 +27,7 @@ export default function HomeScreen({navigation}) {
   const endTime = hours * 60 * 60 + minutes * 60 + seconds;
    
     return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        <View style={{ flex: 1,backgroundColor:'#0b4c68', alignItems: 'center', justifyContent: 'center'}}>
           <Text style={{ color: screenColors, fontSize: 40, fontWeight: 'bold', marginBottom: 30}}>Event ends in:</Text>    
         <CountDown
         size={30}
