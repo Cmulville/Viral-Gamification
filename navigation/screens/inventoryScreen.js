@@ -89,7 +89,7 @@ export default function InventoryScreen({ changeStatus }) {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.header}>Inventory </Text>
+        <Text style={styles.header}>INVENTORY </Text>
       </View>
 
       <View>
@@ -219,6 +219,10 @@ const styles = StyleSheet.create({
     fontSize: 32,
     color:"#fff",
     fontWeight: "bold",
+    borderSize: 5,
+    borderRadius: 20,
+    padding:5,
+    backgroundColor: "#113b4d",
   },
   items: {
     marginBottom: 30,
