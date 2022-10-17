@@ -40,15 +40,14 @@ export default function InventoryScreen({ changeStatus }) {
   const [modalImage, setModalImage] = React.useState(0);
 
   //Determine if conditions are set for user to be cleared
-  const cureMe = !(
-    sumSanitizer == santizerGoal &&
-    sumFaceMask == faceMaskGoal &&
-    sumGloves == gloveGoal &&
-    sumVaccines == vaccineGoal &&
-    sumNebulizers == nebulizerGoal &&
-    sumPara == paraGoal &&
-    status == "Infected"
-  );
+  let cureMe =
+    sumSanitizer >= santizerGoal &&
+    sumFaceMask >= faceMaskGoal &&
+    sumGloves >= gloveGoal &&
+    sumVaccines >= vaccineGoal &&
+    sumNebulizers >= nebulizerGoal &&
+    sumPara >= paraGoal &&
+    status == "Infected";
 
   const cureStatus = () => {
     PointSystem.cure();
@@ -73,88 +72,90 @@ export default function InventoryScreen({ changeStatus }) {
         </View>
       </Modal>
 
-      <View style={styles.header}>
-        <Text style={styles.header}>Inventory </Text>
-      </View>
-
-      <View>
-        <View style={styles.item_container}>
-          <TouchableOpacity
-            style={styles.items}
-            activeOpacity={0.5}
-            onPress={() => toggleVisible()}
-          >
-            <Image
-              source={require("../../assets/images/sanitizer.png")}
-              style={styles.ImageIconStyle}
-            />
-            <Text style={{ fontSize: 22 }}>
-              {items[3]}/{santizerGoal}{" "}
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.items} activeOpacity={0.5}>
-            <Image
-              source={require("../../assets/images/gloves.png")}
-              style={styles.ImageIconStyle}
-            />
-            <Text style={{ fontSize: 22 }}>
-              {items[1]}/{gloveGoal}{" "}
-            </Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.item_container}>
-          <TouchableOpacity style={styles.items} activeOpacity={0.5}>
-            <Image
-              source={require("../../assets/images/mask.png")}
-              style={styles.ImageIconStyle}
-            />
-            <Text style={{ fontSize: 22 }}>
-              {items[0]}/{faceMaskGoal}{" "}
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.items} activeOpacity={0.5}>
-            <Image
-              source={require("../../assets/images/syringe.png")}
-              style={styles.ImageIconStyle}
-            />
-            <Text style={{ fontSize: 22 }}>
-              {items[2]}/{vaccineGoal}{" "}
-            </Text>
-          </TouchableOpacity>
+      <ScrollView>
+        <View style={styles.header}>
+          <Text style={styles.header}>INVENTORY </Text>
         </View>
 
-        <View style={styles.item_container}>
-          <TouchableOpacity style={styles.items} activeOpacity={0.5}>
-            <Image
-              source={require("../../assets/images/Nebulizer.png")}
-              style={styles.ImageIconStyle}
-            />
-            <Text style={{ fontSize: 22 }}>
-              {items[5]}/{nebulizerGoal}{" "}
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.items} activeOpacity={0.5}>
-            <Image
-              source={require("../../assets/images/Tablets.png")}
-              style={styles.ImageIconStyle}
-            />
-            <Text style={{ fontSize: 22 }}>
-              {items[4]}/{paraGoal}{" "}
-            </Text>
-          </TouchableOpacity>
-        </View>
         <View>
-          <Button
-            onPress={cureStatus}
-            color="#00c749"
-            title="Cure Yourself"
-            disabled={cureMe}
-          ></Button>
+          <View style={styles.item_container}>
+            <TouchableOpacity
+              style={styles.items}
+              activeOpacity={0.5}
+              onPress={() => toggleVisible()}
+            >
+              <Image
+                source={require("../../assets/images/sanitizer.png")}
+                style={styles.ImageIconStyle}
+              />
+              <Text style={{ fontSize: 22 }}>
+                {items[3]}/{santizerGoal}{" "}
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.items} activeOpacity={0.5}>
+              <Image
+                source={require("../../assets/images/gloves.png")}
+                style={styles.ImageIconStyle}
+              />
+              <Text style={{ fontSize: 22 }}>
+                {items[1]}/{gloveGoal}{" "}
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.item_container}>
+            <TouchableOpacity style={styles.items} activeOpacity={0.5}>
+              <Image
+                source={require("../../assets/images/mask.png")}
+                style={styles.ImageIconStyle}
+              />
+              <Text style={{ fontSize: 22 }}>
+                {items[0]}/{faceMaskGoal}{" "}
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.items} activeOpacity={0.5}>
+              <Image
+                source={require("../../assets/images/syringe.png")}
+                style={styles.ImageIconStyle}
+              />
+              <Text style={{ fontSize: 22 }}>
+                {items[2]}/{vaccineGoal}{" "}
+              </Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.item_container}>
+            <TouchableOpacity style={styles.items} activeOpacity={0.5}>
+              <Image
+                source={require("../../assets/images/Nebulizer.png")}
+                style={styles.ImageIconStyle}
+              />
+              <Text style={{ fontSize: 22 }}>
+                {items[5]}/{nebulizerGoal}{" "}
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.items} activeOpacity={0.5}>
+              <Image
+                source={require("../../assets/images/Tablets.png")}
+                style={styles.ImageIconStyle}
+              />
+              <Text style={{ fontSize: 22 }}>
+                {items[4]}/{paraGoal}{" "}
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View>
+            <Button
+              onPress={cureStatus}
+              color="#00c749"
+              title="Cure Yourself"
+              disabled={cureMe}
+            ></Button>
+          </View>
         </View>
-      </View>
+      </ScrollView>
     </View>
   );
 }
@@ -179,6 +180,10 @@ const styles = StyleSheet.create({
     margin: 10,
     fontSize: 32,
     fontWeight: "bold",
+    borderSize: 5,
+    borderRadius: 20,
+    padding: 5,
+    backgroundColor: "#113b4d",
   },
   items: {
     marginBottom: 30,

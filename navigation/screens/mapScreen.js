@@ -28,9 +28,6 @@ export default function MapScreen() {
     latitude: -27.470125,
     longitude: 153.021072,
   });
-  const [distance, setDistance] = React.useState({ thing: 0 });
-  const [user, setUser] = React.useState("");
-  const [testuser, setTestUser] = React.useState({ latitude: 0, latitude: 0 });
   const { screenColors } = React.useContext(tabContext);
   const { addPoints } = React.useContext(tabContext);
   const { username } = React.useContext(tabContext);
@@ -38,12 +35,6 @@ export default function MapScreen() {
   const { statusChange } = React.useContext(tabContext);
   const { modalVis } = React.useContext(tabContext);
   const { setModalVis } = React.useContext(tabContext);
-  // const [items, setItems] = React.useState({
-  //   ids: [],
-  //   idtypes: [],
-  //   latitude: [],
-  //   latitude: [],
-  // });
   const [friends, setFriends] = React.useState([]);
   const [users, setUsers] = React.useState([]);
   const [count, setCount] = React.useState(0);
@@ -56,7 +47,7 @@ export default function MapScreen() {
   };
   const statusColors = {
     Healthy: "#05cf02",
-    Infected: "#f52718",
+    Infected: "#d3d3d3",
     Immune: "#0aefff",
   };
 
@@ -98,12 +89,6 @@ export default function MapScreen() {
         // console.log(error)
       });
   };
-
-  function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
-  }
 
   const calculateDistance = (lat1, long1, lat2, long2) => {
     //birsbane is lat 1
@@ -175,58 +160,6 @@ export default function MapScreen() {
     }
   };
 
-  const GetLocation = () => {
-    // getUser();
-    Axios.post(
-      "https://deco3801-betterlatethannever.uqcloud.net/location/get",
-      {
-        user: "Test@gamil",
-      }
-    )
-      .then((response) => {
-        if (response) {
-          setTestUser({
-            latitude: response.data.loc[1],
-            longitude: response.data.loc[0],
-          });
-        }
-      })
-      .catch((error) => {
-        // console.log(error)
-      });
-  };
-
-  //  const getItems = () => {
-  //    Axios.post(
-  //      "https://deco3801-betterlatethannever.uqcloud.net/items/get",
-  //      {}
-  //    ).then((response) => {
-  //      if (response) {
-  //        setItems({
-  //          ids: response.data.loc[0],
-  //          itemType: response.data.loc[1],
-  //          latitude: response.data.loc[3],
-  //          longitude: response.data.loc[2],
-  //        });
-  //      }
-  //    });
-  //  };
-
-  const countItems = () => {
-    Axios.post(
-      "https://deco3801-betterlatethannever.uqcloud.net/items/count",
-      {}
-    )
-      .then((response) => {
-        if (response) {
-          setCount(response.data.count[0].count);
-        }
-      })
-      .catch((error) => {
-        // console.log(error)
-      });
-  };
-
   const addItem = (itemtype) => {
     Axios.post("https://deco3801-betterlatethannever.uqcloud.net/user/item", {
       itemid: itemtype,
@@ -271,10 +204,6 @@ export default function MapScreen() {
     )
       .then((response) => {
         console.log(response.data);
-        // console.log("Updated Item Count");
-        // console.log(itemtype + "This is that number")
-        // console.log(typeof(PointSystem.collect_item(itemtype)), PointSystem.collect_item(itemtype))
-        // addPoints(PointSystem.collect_item(itemtype))
       })
       .catch((error) => {
         // console.log(error)
@@ -506,14 +435,6 @@ export default function MapScreen() {
             setItems(newItems);
           }
           UpdateLocation();
-          setDistance({
-            thing: calculateDistance(
-              pin.latitude,
-              pin.longitude,
-              uq.latitude,
-              uq.longitude
-            ),
-          });
         }}
       >
         {friends.map((friend, index) => {
@@ -567,7 +488,7 @@ export default function MapScreen() {
           pinColor={statusColors[status]}
         >
           <Callout>
-            <Text>User is {distance.thing} metres away</Text>
+            <Text>{username}</Text>
           </Callout>
         </Marker>
         <Circle //circle that is around the user, maybe can be used as the infection radius
@@ -596,7 +517,7 @@ const styles = StyleSheet.create({
   imageDisplay: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "space-before",
+    justifyContent: "center",
     alignItems: "center",
     padding: 10,
   },

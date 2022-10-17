@@ -34,6 +34,8 @@ export default function FriendScreen({ navigation }) {
   const { requests } = React.useContext(tabContext);
   const { setRequests } = React.useContext(tabContext);
   const { showRequests } = React.useContext(tabContext);
+  const { screenColors } = React.useContext(tabContext);
+  const { friendStat } = friendStatusColor();
 
   //Finds a user for when searching friends to add.
   const searchUsers = () => {
@@ -217,6 +219,12 @@ export default function FriendScreen({ navigation }) {
       ]);
     }
   }
+  function friendStatusColor() {
+    if (friends.InfectionStatus == "Healthy") friendStatColor = "#05cf02";
+    else if (friends.InfectionStatus == "Infected") friendStatColor = "#d3d3d3";
+    else friendStatColor = "#0aefff";
+    return friendStatColor;
+  }
 
   function deleteFriend(index) {
     const message =
@@ -252,7 +260,11 @@ export default function FriendScreen({ navigation }) {
     <ScrollView style={styles.pageView}>
       <SearchBar searchPhrase={addUser} setSearchPhrase={setAddUser} />
       <View style={{ paddingBottom: 15 }}>
-        <Button title="Search Friend" onPress={searchUsers} />
+        <Button
+          title="Search Friend"
+          style={styles.SearchButton}
+          onPress={searchUsers}
+        />
       </View>
       {foundUser.length != 0 ? (
         <View style={styles.friendView}>
@@ -284,9 +296,7 @@ export default function FriendScreen({ navigation }) {
           })}
         </View>
       ) : (
-        <View style={{ alignItems: "center", paddingBottom: 40 }}>
-          <Text style={styles.title}>NO USER</Text>
-        </View>
+        <View style={{ alignItems: "center", paddingBottom: 10 }}></View>
       )}
 
       <View style={{ alignItems: "flex-start" }}>
@@ -298,7 +308,18 @@ export default function FriendScreen({ navigation }) {
             return (
               <View style={styles.container}>
                 <Text style={styles.TextInput}>{friend.Username}</Text>
-                <Text>{friend.InfectionStatus}</Text>
+                <Text
+                  style={{
+                    color: "#fff",
+                    backgroundColor: friendStat,
+                    borderWidth: 1,
+                    borderRadius: 40,
+                    padding: 15,
+                    borderColor: friendStat,
+                  }}
+                >
+                  {friend.InfectionStatus}
+                </Text>
                 <TouchableOpacity onPress={() => deleteFriend(index)}>
                   <Ionicons
                     name={"trash-outline"}
@@ -383,10 +404,15 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 25,
     color: "#fff",
+    backgroundColor: "#113b4d",
     fontWeight: "bold",
     textDecorationLine: "underline",
     marginBottom: 10,
     marginLeft: 20,
+    borderWidth: 5,
+    borderRadius: 20,
+    padding: 10,
+    borderColor: "#113b4d",
   },
 
   friendView: {
@@ -397,13 +423,22 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     marginLeft: 20,
   },
+  SearchButton: {
+    borderRadius: 10,
+    color: "#fff",
+  },
 
   TextInput: {
     height: 50,
+    fontSize: 15,
     flex: 1,
     color: "#fff",
     padding: 10,
-    marginLeft: 20,
+    marginLeft: -20,
     width: "100%",
+    borderWidth: 5,
+    borderRadius: 40,
+    padding: 15,
+    borderColor: "#113b4d",
   },
 });

@@ -44,7 +44,7 @@ return (
           <Text
               style={styles.container}
               onPress={() => navigation.dispatch(DrawerActions.toggleDrawer)}
-              color="#fff"
+              color="#0b4c68"
             ><Ionicons name="menu-outline" size={40} color="white" /></Text>,
           headerStyle: {
             backgroundColor: screenColors
