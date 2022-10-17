@@ -204,10 +204,6 @@ export default function MapScreen() {
     )
       .then((response) => {
         console.log(response.data);
-        // console.log("Updated Item Count");
-        // console.log(itemtype + "This is that number")
-        // console.log(typeof(PointSystem.collect_item(itemtype)), PointSystem.collect_item(itemtype))
-        // addPoints(PointSystem.collect_item(itemtype))
       })
       .catch((error) => {
         // console.log(error)
