@@ -72,15 +72,15 @@ export default function DetailScreen({navigation}) {
             </View>
             
             <Text style={styles.label}>
-                Username: {username}
+                USERNAME: {username}
             </Text>
             
             <Text style={styles.label}>
-                Points: {points}
+                POINTS: {points}
             </Text>
            
             <Text style={styles.label}>
-                Status: {status}    
+                STATUS: {status}    
             </Text>
             
         </View>
@@ -117,6 +117,7 @@ const styles = StyleSheet.create ({
     },
     label:{
       color:"#fff",
+      backgroundColor:"#113b4d",
       textAlign:'left',
       justifyContent:'flex-start',
       marginLeft:20,
