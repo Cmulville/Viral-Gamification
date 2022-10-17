@@ -30,7 +30,7 @@ const status = "Immune";
 const points = 0;
 const statusColours = {
   'Healthy': '#05cf02',
-  'Infected' : '#f52718',
+  'Infected' : '#d3d3d3',
   'Immune' : '#0aefff'
 }
 const screenColors = statusColours[status]

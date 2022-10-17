@@ -47,7 +47,7 @@ export default function MapScreen() {
   };
   const statusColors = {
     Healthy: "#05cf02",
-    Infected: "#f52718",
+    Infected: "#d3d3d3",
     Immune: "#0aefff",
   };
 
