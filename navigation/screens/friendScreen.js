@@ -373,10 +373,15 @@ const styles = StyleSheet.create({
   label: {
       fontSize: 25, 
       color: "#fff",
+      backgroundColor:"#113b4d",
       fontWeight: 'bold',
       textDecorationLine: 'underline',
       marginBottom:10,
       marginLeft:20,
+      borderWidth : 5,
+      borderRadius : 20,
+      padding:10,
+      borderColor: "#113b4d",
   },
 
   friendView: {
