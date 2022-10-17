@@ -34,9 +34,7 @@ export default function FriendScreen({ navigation }) {
   const {requests} = React.useContext(tabContext);
   const {setRequests} = React.useContext(tabContext);
   const {showRequests} = React.useContext(tabContext);
-  const [loaded] = useFonts({
-    Montserrat: require('../../assets/fonts/LakkiReddy-Regular.ttf'),
-  });
+
 
 
   //Finds a user for when searching friends to add.
