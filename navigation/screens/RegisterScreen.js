@@ -103,6 +103,7 @@ function RegisterScreen({ navigation }) {
           onChangeText={setPassword}
           placeholderTextColor="#003f5c"
           placeholder="Password"
+          //The text does not show up when typing
           secureTextEntry={true}
         />
       </View>

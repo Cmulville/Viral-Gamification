@@ -2,7 +2,7 @@ import React from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { Text, StyleSheet, Button } from "react-native";
 import HomeScreen from "./screens/homeScreen";
-import SettingsScreen from "./screens/settingsScreen";
+
 import DetailScreen from "./screens/detailScreen";
 import MainScreen from "./MainScreen";
 import { DrawerActions, useNavigation } from "@react-navigation/native";
@@ -43,7 +43,6 @@ export default function DrawerNav({}) {
           drawerLabel: "Game",
           gestureEnabled: false,
           title: status + " | Points: " + points,
-          //headerLeft: () => null,
           headerLeft: () => (
             <Text
               style={styles.container}
@@ -66,9 +65,7 @@ export default function DrawerNav({}) {
           drawerLabel: "Event Countdown",
         }}
       />
-      {/* <Drawer.Screen name="Settings" component={SettingsScreen}
-        
-        /> */}
+
       <Drawer.Screen name="Account" component={DetailScreen} />
     </Drawer.Navigator>
   );
