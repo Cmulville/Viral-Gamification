@@ -35,6 +35,7 @@ export default function MapScreen() {
   const { statusChange } = React.useContext(tabContext);
   const { modalVis } = React.useContext(tabContext);
   const { setModalVis } = React.useContext(tabContext);
+  const { updateItems } = React.useContext(tabContext);
   const [friends, setFriends] = React.useState([]);
   const [users, setUsers] = React.useState([]);
   const [count, setCount] = React.useState(0);
@@ -381,6 +382,10 @@ export default function MapScreen() {
                 "You've just collected " + items[i].itemType,
                 [{ text: "OK" }]
               );
+              Alert.alert("Item Collected", "You've just collected an item", [
+                { text: "OK" },
+              ]);
+              updateItems(username);
             } else {
               nonCollectedItems.push(items[i]);
             }

@@ -5,16 +5,7 @@ import RootStackScreen from "./navigation/RootStackScreen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Axios from "axios";
 
-import {
-  StyleSheet,
-  LogBox,
-  Text,
-  View,
-  Image,
-  TextInput,
-  Button,
-  TouchableOpacity,
-} from "react-native";
+import { StyleSheet, LogBox } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import moment from "moment/moment";
 
@@ -33,8 +24,8 @@ export default function App() {
   const [requests, setRequests] = React.useState([]);
   const [modalVis, setModalVis] = React.useState(true);
   const [game_expiry, set_game_expiry] = React.useState(0);
-  // Ask about this
-  // 6e930c12dc934cbd849bd2be
+
+  // Our 3 main statuses in the game
   const statusColours = {
     Healthy: "#05cf02",
     Infected: "#f52718",
@@ -42,6 +33,10 @@ export default function App() {
   };
   const screenColors = statusColours[status];
 
+  /**
+   *
+   * @param {*} email
+   */
   const getUserInventory = (email) => {
     Axios.post(
       "https://deco3801-betterlatethannever.uqcloud.net/user/getUserInventory",
