@@ -344,17 +344,12 @@ export default function MapScreen() {
             ? InfectedMap
             : ImmuneMap
         }
+        scrollDuringRotateOrZoomEnabled={false}
         style={styles.map}
         // where the map will hover when opened Location is St Lucia
         initialRegion={{
           latitude: -27.4975,
           longitude: 153.0137,
-          latitudeDelta: 0.005,
-          longitudeDelta: 0.005,
-        }}
-        Region={{
-          latitude: pin.latitude,
-          longitude: pin.longitude,
           latitudeDelta: 0.005,
           longitudeDelta: 0.005,
         }}
@@ -440,6 +435,7 @@ export default function MapScreen() {
             }
             setItems(newItems);
           }
+
           UpdateLocation();
         }}
       >
