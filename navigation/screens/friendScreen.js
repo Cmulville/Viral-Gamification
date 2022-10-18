@@ -270,12 +270,20 @@ export default function FriendScreen({ navigation }) {
         <View style={styles.friendView}>
           <View style={styles.container}>
             <Text
-              style={{ fontWeight: "bold", textDecorationLine: "underline" }}
+              style={{
+                fontWeight: "bold",
+                textDecorationLine: "underline",
+                color: "white",
+              }}
             >
               USERNAME
             </Text>
             <Text
-              style={{ fontWeight: "bold", textDecorationLine: "underline" }}
+              style={{
+                fontWeight: "bold",
+                textDecorationLine: "underline",
+                color: "white",
+              }}
             >
               ADD USER
             </Text>
@@ -283,13 +291,13 @@ export default function FriendScreen({ navigation }) {
           {foundUser.map((friend) => {
             return (
               <View style={styles.container}>
-                <Text>{friend.Username}</Text>
+                <Text style={{ color: "white" }}>{friend.Username}</Text>
                 <TouchableHighlight
                   underlayColor="none"
                   onPressIn={() => setIconName("person-add-sharp")}
                   onPressOut={makeRequest}
                 >
-                  <Ionicons name={iconName} color={""} size={35} />
+                  <Ionicons name={iconName} color={"white"} size={35} />
                 </TouchableHighlight>
               </View>
             );
@@ -346,18 +354,27 @@ export default function FriendScreen({ navigation }) {
           {requests.map((request, index) => {
             return (
               <View style={styles.container}>
-                <Text style={styles.label}>{request.Friend1}</Text>
+                <Text
+                  style={{
+                    textDecorationLine: "underline",
+                    fontWeight: "bold",
+                    fontSize: 15,
+                    color: "white",
+                  }}
+                >
+                  {request.Friend1}
+                </Text>
                 <TouchableOpacity onPress={() => handleRequest(index, true)}>
                   <Ionicons
                     name={"checkmark-circle-outline"}
-                    color={"#0b4c68"}
+                    color={"green"}
                     size={35}
                   />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => handleRequest(index, false)}>
                   <Ionicons
                     name={"close-circle-outline"}
-                    color={"#0b4c68"}
+                    color={"red"}
                     size={35}
                   />
                 </TouchableOpacity>

@@ -47,7 +47,7 @@ export default function MapScreen() {
   };
   const statusColors = {
     Healthy: "#05cf02",
-    Infected: "#d3d3d3",
+    Infected: "#f52718",
     Immune: "#0aefff",
   };
 
@@ -153,9 +153,9 @@ export default function MapScreen() {
           longitude: pin.longitude,
         }
       ).then((response) => {
-        // if (response.data.infected) {
-        //   statusChange("Infected");
-        // }
+        if (response.data.infected) {
+          statusChange("Infected");
+        }
       });
     }
   };
@@ -344,7 +344,6 @@ export default function MapScreen() {
             ? InfectedMap
             : ImmuneMap
         }
-        scrollDuringRotateOrZoomEnabled={false}
         style={styles.map}
         // where the map will hover when opened Location is St Lucia
         initialRegion={{

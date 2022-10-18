@@ -17,11 +17,13 @@ export default function InventoryScreen({ changeStatus }) {
   //session = retrieveUserSession();
   //Session should include a username/email which will be used to access these inventory stats
   const { status } = React.useContext(tabContext);
+  const { username } = React.useContext(tabContext);
   const { updateStatus } = React.useContext(tabContext);
   const { statusChange } = React.useContext(tabContext);
   const { addPoints } = React.useContext(tabContext);
   const { items } = React.useContext(tabContext);
   const { screenColors } = React.useContext(tabContext);
+  const { updateItems } = React.useContext(tabContext);
 
   const santizerGoal = 5;
   const gloveGoal = 5;
@@ -42,14 +44,15 @@ export default function InventoryScreen({ changeStatus }) {
   );
 
   //Determine if conditions are set for user to be cleared
-  let cureMe =
-    sumSanitizer >= santizerGoal &&
-    sumFaceMask >= faceMaskGoal &&
-    sumGloves >= gloveGoal &&
-    sumVaccines >= vaccineGoal &&
-    sumNebulizers >= nebulizerGoal &&
-    sumPara >= paraGoal &&
-    status == "Infected";
+  let cureMe = !(
+    items[0] >= santizerGoal &&
+    items[1] >= faceMaskGoal &&
+    items[2] >= gloveGoal &&
+    items[3] >= vaccineGoal &&
+    items[4] >= nebulizerGoal &&
+    items[5] >= paraGoal &&
+    status == "Infected"
+  );
 
   const itemImages = [
     require("../../assets/images/sanitizerdesc.png"),
@@ -62,7 +65,18 @@ export default function InventoryScreen({ changeStatus }) {
 
   const cureStatus = () => {
     PointSystem.cure();
-    statusChange("Healthy");
+    if (Math.random <= 0.25) {
+      statusChange("Healthy");
+    } else {
+      statusChange("Immune");
+    }
+    Axios.post(
+      "https://deco3801-betterlatethannever.uqcloud.net/user/cure_user",
+      {
+        username: username,
+      }
+    ).then((response) => {});
+    updateItems(username);
     addPoints(PointSystem.cure_bonus());
   };
 
@@ -217,6 +231,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 5,
     backgroundColor: "#113b4d",
+    color: "white",
   },
   items: {
     marginBottom: 30,
