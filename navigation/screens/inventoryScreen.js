@@ -37,7 +37,9 @@ export default function InventoryScreen({ changeStatus }) {
   const [sumNebulizers, setsumNebulizers] = React.useState(0);
   const [sumPara, setsumPara] = React.useState(0);
   const [modalVis, setModalVis] = React.useState(false);
-  const [modalImage, setModalImage] = React.useState(0);
+  const [modalImage, setModalImage] = React.useState(
+    require("../../assets/images/nebulizerdesc.png")
+  );
 
   //Determine if conditions are set for user to be cleared
   let cureMe =
@@ -49,6 +51,15 @@ export default function InventoryScreen({ changeStatus }) {
     sumPara >= paraGoal &&
     status == "Infected";
 
+  const itemImages = [
+    require("../../assets/images/sanitizerdesc.png"),
+    require("../../assets/images/glovesdesc.png"),
+    require("../../assets/images/maskdesc.png"),
+    require("../../assets/images/vaccinedesc.png"),
+    require("../../assets/images/nebulizerdesc.png"),
+    require("../../assets/images/paracetamoldesc.png"),
+  ];
+
   const cureStatus = () => {
     PointSystem.cure();
     statusChange("Healthy");
@@ -59,15 +70,17 @@ export default function InventoryScreen({ changeStatus }) {
     setModalVis(!modalVis);
   };
 
+  const setAndtoggle = (itemType) => {
+    setModalImage(itemImages[itemType]);
+    toggleVisible();
+  };
+
   return (
     <View style={styles.container}>
       <Modal animationType={"fade"} transparent={true} visible={modalVis}>
         <View style={styles.modal}>
           <TouchableOpacity activeOpacity={0.5} onPress={() => toggleVisible()}>
-            <Image
-              style={styles.modalImage}
-              source={require("../../assets/images/nebulizerdesc.png")}
-            />
+            <Image style={styles.modalImage} source={modalImage} />
           </TouchableOpacity>
         </View>
       </Modal>
@@ -82,7 +95,7 @@ export default function InventoryScreen({ changeStatus }) {
             <TouchableOpacity
               style={styles.items}
               activeOpacity={0.5}
-              onPress={() => toggleVisible()}
+              onPress={() => setAndtoggle(0)}
             >
               <Image
                 source={require("../../assets/images/sanitizer.png")}
@@ -93,7 +106,11 @@ export default function InventoryScreen({ changeStatus }) {
               </Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.items} activeOpacity={0.5}>
+            <TouchableOpacity
+              style={styles.items}
+              activeOpacity={0.5}
+              onPress={() => setAndtoggle(1)}
+            >
               <Image
                 source={require("../../assets/images/gloves.png")}
                 style={styles.ImageIconStyle}
@@ -104,7 +121,11 @@ export default function InventoryScreen({ changeStatus }) {
             </TouchableOpacity>
           </View>
           <View style={styles.item_container}>
-            <TouchableOpacity style={styles.items} activeOpacity={0.5}>
+            <TouchableOpacity
+              style={styles.items}
+              activeOpacity={0.5}
+              onPress={() => setAndtoggle(2)}
+            >
               <Image
                 source={require("../../assets/images/mask.png")}
                 style={styles.ImageIconStyle}
@@ -114,7 +135,11 @@ export default function InventoryScreen({ changeStatus }) {
               </Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.items} activeOpacity={0.5}>
+            <TouchableOpacity
+              style={styles.items}
+              activeOpacity={0.5}
+              onPress={() => setAndtoggle(3)}
+            >
               <Image
                 source={require("../../assets/images/syringe.png")}
                 style={styles.ImageIconStyle}
@@ -126,7 +151,11 @@ export default function InventoryScreen({ changeStatus }) {
           </View>
 
           <View style={styles.item_container}>
-            <TouchableOpacity style={styles.items} activeOpacity={0.5}>
+            <TouchableOpacity
+              style={styles.items}
+              activeOpacity={0.5}
+              onPress={() => setAndtoggle(4)}
+            >
               <Image
                 source={require("../../assets/images/Nebulizer.png")}
                 style={styles.ImageIconStyle}
@@ -136,7 +165,11 @@ export default function InventoryScreen({ changeStatus }) {
               </Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.items} activeOpacity={0.5}>
+            <TouchableOpacity
+              style={styles.items}
+              activeOpacity={0.5}
+              onPress={() => setAndtoggle(5)}
+            >
               <Image
                 source={require("../../assets/images/Tablets.png")}
                 style={styles.ImageIconStyle}

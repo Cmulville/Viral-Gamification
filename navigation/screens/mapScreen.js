@@ -352,6 +352,12 @@ export default function MapScreen() {
           latitudeDelta: 0.005,
           longitudeDelta: 0.005,
         }}
+        Region={{
+          latitude: pin.latitude,
+          longitude: pin.longitude,
+          latitudeDelta: 0.005,
+          longitudeDelta: 0.005,
+        }}
         showsUserLocation={true}
         //method that will update the location of user when it changes
         onUserLocationChange={(e) => {
