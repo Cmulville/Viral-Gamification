@@ -38,6 +38,8 @@ export default function MapScreen() {
   const [count, setCount] = React.useState(0);
   const [items, setItems] = React.useState([]);
 
+  const mapRef = React.createRef();
+
   //coordinates that are used for the item functionality
   const [initialCentre, setInitialCentre] = React.useState({
     latitude: 0,
@@ -345,7 +347,9 @@ export default function MapScreen() {
         )}
       </Modal>
       <MapView
+        ref={mapRef}
         provider={"google"}
+        //Map changes according to your status
         customMapStyle={
           status == "Healthy"
             ? HealthyMap
@@ -411,6 +415,13 @@ export default function MapScreen() {
               e.nativeEvent.coordinate.longitude
             ) > 300
           ) {
+            mapRef.current.animateToRegion({
+              latitude: e.nativeEvent.coordinate.latitude,
+              longitude: e.nativeEvent.coordinate.longitude,
+              latitudeDelta: 0.005,
+              longitudeDelta: 0.005,
+            });
+
             setInitialCentre({
               latitude: e.nativeEvent.coordinate.latitude,
               longitude: e.nativeEvent.coordinate.longitude,
@@ -510,16 +521,6 @@ export default function MapScreen() {
           radius={20}
         />
       </MapView>
-
-      <View
-        style={{
-          position: "absolute", //use absolute position to show button on top of the map
-          top: "50%", //for center align
-          alignSelf: "flex-end", //for align to right
-        }}
-      >
-        <Button title="Learn More" />
-      </View>
     </View>
   );
 }
