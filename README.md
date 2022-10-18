@@ -2,7 +2,7 @@ Welcome, this readme file will explain how to run the code which is found in
 this project. 
 
 Step 1: Installing NodeJS and Npm
-go to https://nodejs.org/en/ and download version 16.18.0 from the website.
+go to https://nodejs.org/en/ and download version 16.18.0 from the website. \n
 Once dowloaded open the installer and follow these instuctions:
 agree to terms of service
 set desired location to install (default is fine) then click next twice
