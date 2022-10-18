@@ -1,5 +1,5 @@
 Welcome, this readme file will explain how to run the code which is found in
-this project. 
+this project for Let's Get Viral. 
 
 Step 1: Installing NodeJS and Npm
 go to https://nodejs.org/en/ and download version 16.18.0 from the website.
@@ -16,7 +16,7 @@ Open a terminal and run the command: 'npm i -g expo-cli' or 'sudo npm i -g expo-
 While this is installing on the mobile device that you want to run the app on, go to the app store or the play store and install the Expo Go app
 
 Step 3: Running the app
-Unzip the folder with the source code and move into that directory with the code in it. Once in that folder run 'yarn install' this will install the dependencies needed to run the app. Once dependencies are installed run either 'npm start' or 'expo r -c' to start the code running on a server. If you are using an android device with a mac or an iPhone with windows computer run the command 'expo start --tunnel' instead. Now that the code is running a QR code will appear on the screen using the expo go app on your phone scan the QR code and you will be able to use our app.
+Unzip the folder with the source code and move into that directory with the code in it. Once in that folder run 'yarn install' this will install the dependencies needed to run the app. Once dependencies are installed run either 'npm start' or 'expo r -c' to start the code running on a server. If you are using an android device with a mac or an iPhone with windows computer run the command 'expo start --tunnel' instead. Now that the code is running a QR code will appear on the screen using the expo go app on your phone scan the QR code and you will be able to use our app. Sometimes the tunnel mode may crash or timeout, if this is the case then continue to try running 'expo start --tunnel' until it works correctly.
 
 Step 4: Enjoy
 You now have access to our app and will be able to play Let's Get Viral.
