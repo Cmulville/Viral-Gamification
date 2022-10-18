@@ -20,9 +20,9 @@ export default function LoginScreen({ navigation }) {
   const [password, setPassword] = useState("");
   const { updateStatus } = React.useContext(tabContext);
   const { updateItems } = React.useContext(tabContext);
-  const { updatePoints } = React.useContext(tabContext);
   const { set_active_email } = React.useContext(tabContext);
   const { set_active_username } = React.useContext(tabContext);
+  const { updatePoints } = React.useContext(tabContext);
   const { updateDailyBD } = React.useContext(tabContext);
   const { setItems } = React.useContext(tabContext);
   const { myFriends } = React.useContext(tabContext);
@@ -34,6 +34,7 @@ export default function LoginScreen({ navigation }) {
   const { set_active_LoggedIn } = React.useContext(tabContext);
   const { setImmunityTimer } = React.useContext(tabContext);
 
+  //Alerts the user when login has failed
   const errorAlert = () => {
     Alert.alert(
       "Login failed",
@@ -41,7 +42,6 @@ export default function LoginScreen({ navigation }) {
       [{ text: "OK" }]
     );
   };
-  //Context will need to be updated through login
 
   const check_logged_in = () => {
     if (username == "") {
@@ -52,6 +52,10 @@ export default function LoginScreen({ navigation }) {
     }
   };
 
+  /**
+   * Sends a request to login with given email and password then receives information about the
+   * user and set variables accordingly in the application e.g. username, status, items
+   */
   const login = () => {
     const login_success = true;
     var loginUsername = "";
@@ -121,6 +125,10 @@ export default function LoginScreen({ navigation }) {
       });
   };
 
+  /**
+   * Our login button that is also our logo for the game
+   */
+
   const CircleButton = (props) => (
     <TouchableOpacity
       style={{
@@ -147,6 +155,9 @@ export default function LoginScreen({ navigation }) {
     </TouchableOpacity>
   );
 
+  /**
+   * A simple page with two text input handlers and a button to login. Also includes a link to the sign up page for new players
+   */
   return (
     <>
       <View style={styles.container}>
@@ -187,6 +198,7 @@ export default function LoginScreen({ navigation }) {
   );
 }
 
+//Our styles for the login screen
 const styles = StyleSheet.create({
   container: {
     flex: 1,

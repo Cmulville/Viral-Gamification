@@ -20,6 +20,10 @@ function RegisterScreen({ navigation }) {
   const [firstNameReg, setFirstName] = useState("");
   const [lastNameReg, setLastName] = useState("");
 
+  /**
+   * Sends a request to the server for there to be a new user under the details entered on this page
+   * Checks conditions are met for the account
+   */
   const register = () => {
     if (confirmPasswordReg != passwordReg) {
       Alert.alert("Password Error", "Passwords entered must match", [
@@ -51,6 +55,9 @@ function RegisterScreen({ navigation }) {
     }
   };
 
+  /**
+   * 6 text inputs for entering your deatils as well as a button to send the request
+   */
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />

@@ -25,7 +25,7 @@ export default function App() {
   const [modalVis, setModalVis] = React.useState(true);
   const [game_expiry, set_game_expiry] = React.useState(0);
 
-  // Our 3 main statuses in the game
+  // Our 3 main statuses and their corresponding colours in the game
   const statusColours = {
     Healthy: "#05cf02",
     Infected: "#f52718",
@@ -34,28 +34,11 @@ export default function App() {
   const screenColors = statusColours[status];
 
   /**
+   * Sends a request to the server to change the users status
    *
-   * @param {*} email
+   * @param {*} email the currunt accounts email
+   * @param {*} status the new status we want to update to
    */
-  const getUserInventory = (email) => {
-    Axios.post(
-      "https://deco3801-betterlatethannever.uqcloud.net/user/getUserInventory",
-      {
-        email: email,
-      }
-    ).then((response) => {
-      if (response.data.message) {
-        console.log("Couldn't get items");
-      } else {
-        const userInventory = [];
-        console.log(response.data.items);
-        response.data.items.forEach((element) => {
-          console.log(element.ItemID);
-        });
-      }
-    });
-  };
-
   const updateStatusDB = (email, status) => {
     console.log("DB status is ", status, email);
     Axios.post(
@@ -76,6 +59,11 @@ export default function App() {
     });
   };
 
+  /**
+   * Sends a request to the server that updates the points of a given user by email
+   *
+   * @param {*} points the amount of points the user now has
+   */
   const updatePointsDB = (points) => {
     console.log("These are the points going in: " + points);
     Axios.post(
@@ -94,6 +82,9 @@ export default function App() {
     });
   };
 
+  /**
+   * Requests the server to set the login bonus to 0 for the current user
+   */
   const updateDailyBD = () => {
     Axios.post(
       "https://deco3801-betterlatethannever.uqcloud.net/user/updateDaily",
@@ -113,18 +104,28 @@ export default function App() {
       });
   };
 
+  //Sets email when logging in
   const set_active_email = (userEmail) => {
     setEmail(userEmail);
   };
 
+  //sets username when logging in
   const set_active_username = (userName) => {
     setUsername(userName);
   };
 
+  /**
+   * Used as a function tell our processes that we are logged in
+   */
   const set_active_LoggedIn = () => {
     setLoggedIn(true);
   };
 
+  /**
+   * Set certain conditions for setting our status to being immune (how long our immunity lasts)
+   *
+   * @param {String} new_status The status we are changing it to
+   */
   const statusChange = (new_status) => {
     console.log(new_status, status);
 
@@ -146,11 +147,13 @@ export default function App() {
       updateStatusDB(email, new_status);
     }
     console.log("New_status is", new_status);
-
-    // } catch(e) {
-    // }
   };
 
+  /**
+   * Sends a request to set a date our immunity is activated/when it should go down
+   *
+   * @param {String} time A string that contains the current date
+   */
   const updateImmunityTimer = (time) => {
     Axios.post(
       "https://deco3801-betterlatethannever.uqcloud.net/user/setImmunityTimer",
@@ -167,6 +170,14 @@ export default function App() {
     });
   };
 
+  /**
+   * Sets the status of the application right after logging in. The new_status and ImmunityCountdown is both
+   * pulled from the server when logging in
+   *
+   * @param {String} email the email of the current user
+   * @param {String} new_status the status of the user
+   * @param {String} ImmunityCountdown
+   */
   const updateStatus = (email, new_status, ImmunityCountdown) => {
     //console.log(ImmunityCountdown)
     if (new_status == "Immune") {
@@ -195,6 +206,11 @@ export default function App() {
     }
   };
 
+  /**
+   * Called when the user has made a move that accumulated points
+   *
+   * @param {int} new_points Points to be added to our current points
+   */
   const addPoints = (new_points) => {
     console.log(new_points, typeof new_points);
     try {
@@ -230,8 +246,6 @@ export default function App() {
         username: getUserFriends,
       }
     ).then((response) => {
-      console.log(email);
-      console.log(response.data);
       setFriends(response.data.friends);
     });
   };
@@ -249,6 +263,11 @@ export default function App() {
     });
   };
 
+  /**
+   * Sends a request to the server to get items and updates the array locally to match the server for item amounts
+   *
+   * @param {String} theUsername username to query on database
+   */
   const updateItems = (theUsername) => {
     Axios.post(
       "https://deco3801-betterlatethannever.uqcloud.net/user/itemCount",
@@ -283,9 +302,10 @@ export default function App() {
       });
   };
 
+  /**
+   * Request a cure action which reduces items on the database
+   */
   const cure_user = () => {
-    console.log("HERE");
-    console.log(username);
     Axios.post(
       "https://deco3801-betterlatethannever.uqcloud.net/user/cure_user",
       {
@@ -315,6 +335,9 @@ export default function App() {
       });
   };
 
+  /**
+   * At the end of each game interval, this function is called to reset the users status for the next game interval
+   */
   const reset_game_stats = () => {
     Axios.post(
       "https://deco3801-betterlatethannever.uqcloud.net/reset_game_stats",
