@@ -12,6 +12,7 @@ import {
 import PointSystem from "../../pointSystem";
 import { tabContext } from "../../tabContext";
 import Axios from "axios";
+import { Alert } from "react-native-web";
 
 export default function InventoryScreen({ changeStatus }) {
   //session = retrieveUserSession();
@@ -65,10 +66,10 @@ export default function InventoryScreen({ changeStatus }) {
 
   const cureStatus = () => {
     PointSystem.cure();
-    if (Math.random <= 0.25) {
-      statusChange("Healthy");
-    } else {
+    if (Math.random <= 0.2) {
       statusChange("Immune");
+    } else {
+      statusChange("Healthy");
     }
     Axios.post(
       "https://deco3801-betterlatethannever.uqcloud.net/user/cure_user",
@@ -78,6 +79,12 @@ export default function InventoryScreen({ changeStatus }) {
     ).then((response) => {});
     updateItems(username);
     addPoints(PointSystem.cure_bonus());
+
+    Alert.alert(
+      "Cured!",
+      "You have been cured from the virus, your new status is " + status,
+      [{ text: "Ok" }]
+    );
   };
 
   const toggleVisible = () => {
