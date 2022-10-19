@@ -33,6 +33,7 @@ export default function LoginScreen({ navigation }) {
   const { setModalVis } = React.useContext(tabContext);
   const { set_active_LoggedIn } = React.useContext(tabContext);
   const { setImmunityTimer } = React.useContext(tabContext);
+  const { getEndDate } = React.useContext(tabContext);
 
   //Alerts the user when login has failed
   const errorAlert = () => {
@@ -95,13 +96,13 @@ export default function LoginScreen({ navigation }) {
                   response.data.stat[0].dailyLogin
                 )
             );
-            //console.log("The DB points: "+(response.data.stat[0].Points+PointSystem.dailyPoints(response.data.stat[0].InfectionStatus, response.data.stat[0].dailyLogin)))
+
             set_active_email(email);
-            // updatePoints(PointSystem.dailyPoints(response.data.stat[0].InfectionStatus, response.data.stat[0].dailyLogin))
             updateDailyBD();
             myFriends(response.data.stat[0].Username);
             updateItems(response.data.stat[0].Username);
             showRequests(response.data.stat[0].Username);
+            
             var usernameTemp = response.data.stat[0].Username;
             if (response.data.stat[0].FirstTime == 0) {
               setModalVis(true);
@@ -123,6 +124,7 @@ export default function LoginScreen({ navigation }) {
       .catch((error) => {
         // console.log(error)
       });
+      //getEndDate();
   };
 
   /**

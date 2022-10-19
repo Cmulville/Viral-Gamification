@@ -58,9 +58,9 @@ export default function InventoryScreen({}) {
   ];
 
   /**
-  * Cures user upon pressing cure button; adds points to user
-  * 20% change user is bestowed with "Immunity" over being healthy
-  */
+   * Cures user upon pressing cure button; adds points to user
+   * 20% change user is bestowed with "Immunity" over being healthy
+   */
   const cureStatus = () => {
     PointSystem.cure();
     if (Math.random <= 0.2) {
@@ -97,7 +97,7 @@ export default function InventoryScreen({}) {
    */
   const setAndtoggle = (itemType) => {
     setModalImage(itemImages[itemType]);
-    
+
     toggleVisible();
   };
 

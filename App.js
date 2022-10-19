@@ -336,6 +336,69 @@ export default function App() {
   };
 
   /**
+   *  Get the vaild end date to set for the countdown timer
+   */
+  const getEndDate = () => {
+    Axios.post(
+      "https://deco3801-betterlatethannever.uqcloud.net/event/getEndDate",
+      {}
+    ).then((response) => {
+      if (response.data.err) {
+        console.log("Couldn't get the End date.");
+        set_game_expiry(
+          moment()
+            .add(7, "d")
+            .utcOffset("+10:00")
+            .format("YYYY-MM-DD hh:mm:ss")
+        );
+      } else {
+        var endDate = "";
+        const date = moment().utcOffset("+10:00").format("YYYY-MM-DD hh:mm:ss");
+
+        for (let i = 0; i < response.data.result.length; i++) {
+          //Find the moment difference of this.
+          const diffr = moment.duration(moment(response.data.result[i].Event_timestamp).diff(moment(date)));
+          const hours = parseInt(diffr.asHours());
+          const minutes = parseInt(diffr.minutes());
+          const seconds = parseInt(diffr.seconds());
+          const endTime = hours * 60 * 60 + minutes * 60 + seconds;
+          
+          if (endTime > 0) {
+            endDate = response.data.result[i].Event_timestamp;
+            break
+          }
+        };
+
+        if (endDate == "") {
+          endDate = moment().add(7, 'd').utcOffset("+10:00").format("YYYY-MM-DD hh:mm:ss");
+        }
+
+        console.log(endDate)
+        updateEndDate(endDate)
+        // set_game_expiry(endDate);
+      }
+    })
+  }
+
+  const updateEndDate = (endDate) => {
+    
+    Axios.post(
+      "https://deco3801-betterlatethannever.uqcloud.net/event/updateEndDate",
+      {
+        endDate: endDate
+      }
+    ).then((response) => {
+      if (response.data.err) {
+        console.log("Couldn't update End Time.");
+      } else {
+        set_game_expiry(
+          endDate
+        );
+      }
+    })
+  }
+
+  /**
    * At the end of each game interval, this function is called to reset the users status for the next game interval
    */
   const reset_game_stats = () => {
@@ -344,12 +407,11 @@ export default function App() {
       {}
     )
       .then((response) => {
-        console.log("HERE 2");
         if (response.data.err) {
-          console.log("Couldn't cure you. Sorry");
+          console.log("Couldn't reset game.");
         } else {
           alert("Round Over!");
-          set_game_expiry(
+          updateEndDate(
             moment()
               .add(7, "d")
               .utcOffset("+10:00")
@@ -400,6 +462,7 @@ export default function App() {
         showRequests,
         modalVis,
         setModalVis,
+        getEndDate
       }}
     >
       <StatusBar style="dark" />
