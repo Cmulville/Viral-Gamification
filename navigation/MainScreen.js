@@ -54,6 +54,7 @@ export default function MainScreen({ navigation }) {
           let iconName;
           let rn = route.name;
 
+          //Icons that navigate between the screens
           if (rn === mapName) {
             iconName = focused ? "navigate" : "navigate-outline";
           } else if (rn === inventoryName) {
@@ -76,6 +77,7 @@ export default function MainScreen({ navigation }) {
       })}
     >
       <Tab.Screen
+        //
         name={mapName}
         component={MapScreen}
         options={{

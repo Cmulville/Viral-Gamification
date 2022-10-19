@@ -21,6 +21,7 @@ export default function DrawerNav({}) {
    */
   return (
     <Drawer.Navigator
+      //Main navigator class
       screenOptions={({ route }) => ({
         headerLeft: () => (
           <Text
@@ -37,6 +38,7 @@ export default function DrawerNav({}) {
       })}
     >
       <Drawer.Screen
+        // Switches to the main game
         name="MainScreen"
         component={MainScreen}
         options={{
@@ -59,6 +61,7 @@ export default function DrawerNav({}) {
       />
 
       <Drawer.Screen
+        //switches to screen with the phase countdown
         name="Event Countdown"
         component={HomeScreen}
         options={{
@@ -66,7 +69,11 @@ export default function DrawerNav({}) {
         }}
       />
 
-      <Drawer.Screen name="Account" component={DetailScreen} />
+      <Drawer.Screen
+        //Switches to screen about the user
+        name="Account"
+        component={DetailScreen}
+      />
     </Drawer.Navigator>
   );
 }

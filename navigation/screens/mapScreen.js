@@ -278,7 +278,13 @@ export default function MapScreen() {
   const borderStyle = { borderColor: statusColors[status] };
   return (
     <View style={styles.container}>
-      <Modal animationType={"slide"} transparent={true} visible={modalVis}>
+      <Modal
+        //This modal pops up if its the first time logging in
+        // An explanation of the rules of the game
+        animationType={"slide"}
+        transparent={true}
+        visible={modalVis}
+      >
         {firstPage ? (
           <View style={{ ...styles.modal, ...borderStyle }}>
             <View style={{ marginBottom: 25 }}>
@@ -346,7 +352,11 @@ export default function MapScreen() {
           </View>
         )}
       </Modal>
+
       <MapView
+        /**
+         * The Main function of this page being the map with items spawning on it and user locations
+         */
         ref={mapRef}
         provider={"google"}
         //Map changes according to your status
@@ -369,6 +379,7 @@ export default function MapScreen() {
         //method that will update the location of user when it changes
         onUserLocationChange={(e) => {
           let new_points = 0;
+          //Changes user pin location
           setPin({
             latitude: e.nativeEvent.coordinate.latitude,
             longitude: e.nativeEvent.coordinate.longitude,
@@ -378,6 +389,7 @@ export default function MapScreen() {
           const nonCollectedItems = [];
 
           for (var i = 0; i < items.length; i++) {
+            //If you are within 20m of an item collect it
             if (
               calculateDistance(
                 items[i].latitude,
@@ -407,6 +419,10 @@ export default function MapScreen() {
             addPoints(new_points);
           }
 
+          /**
+           * Pans map region to your location and spawns more items if you move past a certain point
+           * from your initial spawn and thereafter if you keep moving
+           * */
           if (
             calculateDistance(
               initialCentre.latitude,
@@ -429,6 +445,7 @@ export default function MapScreen() {
 
             const newItems = [];
 
+            //Keep items where they are if they are within 300m
             for (var i = 0; i < items.length; i++) {
               if (
                 calculateDistance(
@@ -436,12 +453,13 @@ export default function MapScreen() {
                   items[i].longitude,
                   e.nativeEvent.coordinate.latitude,
                   e.nativeEvent.coordinate.longitude
-                ) < 500
+                ) < 300
               ) {
                 newItems.push(items[i]);
               }
             }
 
+            //Spawn items if you have less than 7
             if (newItems.length < 7) {
               for (var x = newItems.length; x < 8; x++) {
                 const distance = Math.floor(Math.random() * 440) + 70;
@@ -459,53 +477,60 @@ export default function MapScreen() {
             setItems(newItems);
           }
 
+          //Updates location to the backend
           UpdateLocation();
         }}
       >
-        {friends.map((friend, index) => {
-          return (
-            <Marker
-              coordinate={{
-                latitude: friend.Latitude,
-                longitude: friend.Longitude,
-              }}
-              pinColor={statusColors[friend.InfectionStatus]}
-            >
-              <Callout>
-                <Text>
-                  Username: {friend.Username} {"\n"} Status:{" "}
-                  {friend.InfectionStatus}
-                </Text>
-              </Callout>
-            </Marker>
-          );
-        })}
+        {
+          // Spawn your friends on the map as markers
+          friends.map((friend, index) => {
+            return (
+              <Marker
+                coordinate={{
+                  latitude: friend.Latitude,
+                  longitude: friend.Longitude,
+                }}
+                pinColor={statusColors[friend.InfectionStatus]}
+              >
+                <Callout>
+                  <Text>
+                    Username: {friend.Username} {"\n"} Status:{" "}
+                    {friend.InfectionStatus}
+                  </Text>
+                </Callout>
+              </Marker>
+            );
+          })
+        }
 
-        {items.map((item) => {
-          return (
-            <Marker
-              coordinate={{
-                latitude: item.latitude,
-                longitude: item.longitude,
-              }}
-            >
-              {item.itemType != 3 ? (
-                <Image
-                  source={getItem(item.itemType)}
-                  style={{ height: 50, width: 70 }}
-                />
-              ) : (
-                <Image
-                  source={getItem(item.itemType)}
-                  style={{ height: 70, width: 40 }}
-                />
-              )}
-              <Callout>
-                <Text>{itemMap[item.itemType]}</Text>
-              </Callout>
-            </Marker>
-          );
-        })}
+        {
+          //spawns items on the map as their respective images
+          items.map((item) => {
+            return (
+              <Marker
+                coordinate={{
+                  latitude: item.latitude,
+                  longitude: item.longitude,
+                }}
+              >
+                {item.itemType != 3 ? (
+                  <Image
+                    source={getItem(item.itemType)}
+                    style={{ height: 50, width: 70 }}
+                  />
+                ) : (
+                  <Image
+                    source={getItem(item.itemType)}
+                    style={{ height: 70, width: 40 }}
+                  />
+                )}
+                <Callout>
+                  <Text>{itemMap[item.itemType]}</Text>
+                </Callout>
+              </Marker>
+            );
+          })
+        }
 
         <Marker
           // marker that shows the user location and is on top of the user icon from the MapView
@@ -516,7 +541,8 @@ export default function MapScreen() {
             <Text>{username}</Text>
           </Callout>
         </Marker>
-        <Circle //circle that is around the user, maybe can be used as the infection radius
+
+        <Circle //circle that is around the user, maybe can be used as the infection and collection radius
           center={pin}
           radius={20}
         />
