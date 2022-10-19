@@ -14,18 +14,16 @@ import { tabContext } from "../../tabContext";
 import Axios from "axios";
 import { Alert } from "react-native-web";
 
-export default function InventoryScreen({ changeStatus }) {
-  //session = retrieveUserSession();
-  //Session should include a username/email which will be used to access these inventory stats
+export default function InventoryScreen({}) {
+  // Context variables
   const { status } = React.useContext(tabContext);
   const { username } = React.useContext(tabContext);
-  const { updateStatus } = React.useContext(tabContext);
   const { statusChange } = React.useContext(tabContext);
   const { addPoints } = React.useContext(tabContext);
   const { items } = React.useContext(tabContext);
-  const { screenColors } = React.useContext(tabContext);
   const { updateItems } = React.useContext(tabContext);
 
+  // Item goal for curing
   const santizerGoal = 5;
   const gloveGoal = 5;
   const faceMaskGoal = 5;
@@ -33,12 +31,6 @@ export default function InventoryScreen({ changeStatus }) {
   const nebulizerGoal = 5;
   const paraGoal = 5;
 
-  const [sumSanitizer, setSumSanitizer] = React.useState(0);
-  const [sumGloves, setsumGloves] = React.useState(0);
-  const [sumFaceMask, setsumFaceMask] = React.useState(0);
-  const [sumVaccines, setsumVaccines] = React.useState(0);
-  const [sumNebulizers, setsumNebulizers] = React.useState(0);
-  const [sumPara, setsumPara] = React.useState(0);
   const [modalVis, setModalVis] = React.useState(false);
   const [modalImage, setModalImage] = React.useState(
     require("../../assets/images/nebulizerdesc.png")
@@ -55,6 +47,7 @@ export default function InventoryScreen({ changeStatus }) {
     status == "Infected"
   );
 
+  //Requires item images for startup.
   const itemImages = [
     require("../../assets/images/sanitizerdesc.png"),
     require("../../assets/images/glovesdesc.png"),
@@ -64,6 +57,10 @@ export default function InventoryScreen({ changeStatus }) {
     require("../../assets/images/paracetamoldesc.png"),
   ];
 
+  /**
+  * Cures user upon pressing cure button; adds points to user
+  * 20% change user is bestowed with "Immunity" over being healthy
+  */
   const cureStatus = () => {
     PointSystem.cure();
     if (Math.random <= 0.2) {
@@ -76,7 +73,7 @@ export default function InventoryScreen({ changeStatus }) {
       {
         username: username,
       }
-    ).then((response) => {});
+    ).then((respone) => {});
     updateItems(username);
     addPoints(PointSystem.cure_bonus());
 
@@ -87,12 +84,20 @@ export default function InventoryScreen({ changeStatus }) {
     );
   };
 
+  /**
+   *  Toggles the visibility of the item information upon pressing the item image
+   */
   const toggleVisible = () => {
     setModalVis(!modalVis);
   };
 
+  /**
+   * Determines the type of item being toggled in order to retrieve the appropriate image
+   * @param {*} itemType: Id of item informate to be toggled
+   */
   const setAndtoggle = (itemType) => {
     setModalImage(itemImages[itemType]);
+    
     toggleVisible();
   };
 
@@ -234,7 +239,6 @@ const styles = StyleSheet.create({
     margin: 10,
     fontSize: 32,
     fontWeight: "bold",
-    borderSize: 5,
     borderRadius: 20,
     padding: 5,
     backgroundColor: "#113b4d",
@@ -250,19 +254,10 @@ const styles = StyleSheet.create({
   },
   modal: {
     alignItems: "center",
-    // backgroundColor: "#FFFFFF",
-    // padding: 10,
-    // height: "30%",
-    // width: "80%",
-    // borderRadius: 5,
-    // borderWidth: 5,
     paddingLeft: 110,
     paddingTop: 150,
-    // marginTop: 200,
-    // marginLeft: 40,
   },
   modalImage: {
-    // display: "flex",
     height: 550,
     width: 500,
     resizeMode: "contain",
