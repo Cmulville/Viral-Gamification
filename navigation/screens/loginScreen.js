@@ -75,7 +75,7 @@ export default function LoginScreen({ navigation }) {
         // console.log(error)
       });
 
-    //Add user database info to ga e
+    //Add user database info to game
     Axios.post("https://deco3801-betterlatethannever.uqcloud.net/userStats", {
       email: email,
     })
