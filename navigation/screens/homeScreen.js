@@ -27,7 +27,9 @@ export default function HomeScreen({}) {
   const minutes = parseInt(diffr.minutes());
   const seconds = parseInt(diffr.seconds());
   const endTime = hours * 60 * 60 + minutes * 60 + seconds;
-  console.log(endTime)
+  /**
+   * Displays the countdown of the current infection phase
+   */
   return (
     <View
       style={{

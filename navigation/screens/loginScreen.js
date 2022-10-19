@@ -76,7 +76,7 @@ export default function LoginScreen({ navigation }) {
         // console.log(error)
       });
 
-    //Add user database info to ga e
+    //Add user database info to game
     Axios.post("https://deco3801-betterlatethannever.uqcloud.net/userStats", {
       email: email,
     })
@@ -172,15 +172,18 @@ export default function LoginScreen({ navigation }) {
             onChangeText={(email) => setEmail(email)}
           />
         </View>
+
         <View style={styles.inputView}>
           <TextInput
             style={styles.TextInput}
             placeholder="Password"
             placeholderTextColor="#003f5c"
             onChangeText={(password) => setPassword(password)}
+            //The text does not show up in letters when logging in
             secureTextEntry={true}
           />
         </View>
+
         <View style={styles.circleView}>
           <CircleButton
             size={150}

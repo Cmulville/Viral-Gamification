@@ -21,10 +21,7 @@ import { tabContext } from "../../tabContext";
 
 export default function FriendScreen({ navigation }) {
   const [addUser, setAddUser] = useState("");
-  //const [friends, setFriends] = useState([]);
-  //const [user, setUser] = useState("");
   const [foundUser, setFoundUser] = useState([]);
-  //  const [requests, setRequests] = useState([]);
   const [iconName, setIconName] = useState("person-add-outline");
 
   const { username } = React.useContext(tabContext);
@@ -68,50 +65,6 @@ export default function FriendScreen({ navigation }) {
         console.log("searchUsers");
       });
   };
-
-  //  const getUser = async () => {
-  //    try {
-  //      const value = await AsyncStorage.getItem("user");
-  //      if (value != null) {
-  //        setUser(JSON.parse(value));
-  //      } else {
-  //        return null;
-  //      }
-  //    } catch (e) {
-  //      console.log(e);
-  //    }
-  //      console.log(user);
-  //  };
-
-  //Retrieves list of friends from the backend
-  //  const myFriends = () => {
-  //    Axios.post(
-  //      "https://deco3801-betterlatethannever.uqcloud.net/friends/approved",
-  //      {
-  //        username: user,
-  //      }
-  //    ).then((response) => {
-  //        console.log(response.data);
-  //        setFriends(response.data.friends);
-  //        console.log(response.data.friends);
-  //    });
-  //  };
-
-  //Shows the requests a user currently has from others.
-  //  const showRequests = () => {
-  //    Axios.post(
-  //      "https://deco3801-betterlatethannever.uqcloud.net/friends/requested",
-  //      {
-  //        username: user,
-  //      }
-  //    ).then((response) => {
-  //          console.log(response.data.friends);
-  //          setRequests(response.data.friends);
-  //
-  //    }).catch((err) => {
-  //        console.log("Error at showReqests");
-  //    });
-  //   };
 
   //Has an alert message to confirm request. Calls sendFriendRequest
   const makeRequest = () => {
@@ -219,6 +172,12 @@ export default function FriendScreen({ navigation }) {
       ]);
     }
   }
+
+  /**
+   *
+   *
+   * @returns A string containing the colour code of a friend
+   */
   function friendStatusColor() {
     if (friends.InfectionStatus == "Healthy") friendStatColor = "#05cf02";
     else if (friends.InfectionStatus == "Infected") friendStatColor = "#d3d3d3";
@@ -226,6 +185,11 @@ export default function FriendScreen({ navigation }) {
     return friendStatColor;
   }
 
+  /**
+   * Sends a request to remove a friend tuple in the FRIENDS Table
+   *
+   * @param {int} index the index to find the friend in the array
+   */
   function deleteFriend(index) {
     const message =
       "Are you sure you want to remove " +
@@ -258,7 +222,12 @@ export default function FriendScreen({ navigation }) {
 
   return (
     <ScrollView style={styles.pageView}>
-      <SearchBar searchPhrase={addUser} setSearchPhrase={setAddUser} />
+      <SearchBar
+        //To search for friends
+        searchPhrase={addUser}
+        setSearchPhrase={setAddUser}
+      />
+
       <View style={{ paddingBottom: 15 }}>
         <Button
           title="Search Friend"
@@ -266,7 +235,9 @@ export default function FriendScreen({ navigation }) {
           onPress={searchUsers}
         />
       </View>
+
       {foundUser.length != 0 ? (
+        //If there is users found for the username, list them
         <View style={styles.friendView}>
           <View style={styles.container}>
             <Text
@@ -307,11 +278,18 @@ export default function FriendScreen({ navigation }) {
         <View style={{ alignItems: "center", paddingBottom: 10 }}></View>
       )}
 
-      <View style={{ alignItems: "flex-start" }}>
+      <View
+        //Main title for Friends
+        style={{ alignItems: "flex-start" }}
+      >
         <Text style={styles.label}>CURRENT FRIENDS</Text>
       </View>
+
       {friends.length != 0 ? (
-        <View style={styles.friendView}>
+        <View
+          //displays your friends if you have any
+          style={styles.friendView}
+        >
           {friends.map((friend, index) => {
             return (
               <View style={styles.container}>
@@ -350,7 +328,10 @@ export default function FriendScreen({ navigation }) {
       </View>
 
       {requests.length != 0 ? (
-        <View style={styles.friendView}>
+        <View
+          //Displays any friend requests that people have sent you
+          style={styles.friendView}
+        >
           {requests.map((request, index) => {
             return (
               <View style={styles.container}>

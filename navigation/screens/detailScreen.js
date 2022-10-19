@@ -84,6 +84,9 @@ export default function DetailScreen({ navigation }) {
       </View>
     );
   }
+  /**
+   * Information about the user (username, points and status) as well as how long left of your immunity
+   */
   return (
     <ScrollView style={styles.container}>
       <View style={{ flex: 1, justifyContent: "flex-start" }}>

@@ -12,7 +12,6 @@ import {
   Button,
 } from "react-native";
 import * as Location from "expo-location";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import Axios from "axios";
 import { randomCirclePoint } from "random-location";
 import { tabContext } from "../../tabContext";
@@ -21,9 +20,7 @@ import { HealthyMap, InfectedMap, ImmuneMap } from "../../mapStyles";
 
 export default function MapScreen() {
   const UNIQUEITEMS = 6;
-  // constant that stores a pin and method (setpin) that changes it. values are just dummy data
-  const birsbane = { latitude: -27.4705, longitude: 153.026 };
-  const uq = { latitude: -27.4975, longitude: 153.0137 };
+  // constant that stores a pin that starts at UQ (lat, long)
   const [pin, setPin] = React.useState({
     latitude: -27.470125,
     longitude: 153.021072,
@@ -41,28 +38,23 @@ export default function MapScreen() {
   const [count, setCount] = React.useState(0);
   const [items, setItems] = React.useState([]);
 
-  const itemNames = {
-    0: "Sanitizer",
-    1: "Gloves",
-    2: "Face Mask",
-  };
+  const mapRef = React.createRef();
+
+  //coordinates that are used for the item functionality
+  const [initialCentre, setInitialCentre] = React.useState({
+    latitude: 0,
+    longitude: 0,
+  });
+
+  //The 3 statuses with their corresponding colours
   const statusColors = {
     Healthy: "#05cf02",
     Infected: "#f52718",
     Immune: "#0aefff",
   };
 
-  const getItemName = (itemType) => {
-    return itemNames[itemType];
-  };
-
-  const [initialCentre, setInitialCentre] = React.useState({
-    latitude: 0,
-    longitude: 0,
-  });
-
-  //Used for the pop up
-  // const [modalVis, setModalVis] = React.useState(true);
+  //constant that registers whether this is the first time the user has logged in
+  //If it is, a modal will pop up explaining the game with the messages below
   const [firstPage, setFirstPage] = React.useState(true);
   const healthy =
     "Avoid being infected by other players who are in the game. You will not " +
@@ -71,7 +63,6 @@ export default function MapScreen() {
     "Try not to infect others but make sure to collect items so that you can " +
     "cure yourself and gather points. You will not be able to see other people's location";
   const message1 = "Welcome! You have started off the game as " + status + "!";
-  const [seenBefore, setSeenBefore] = React.useState(0);
 
   //Retrieves list of friends from the backend
   const myFriends = () => {
@@ -91,9 +82,16 @@ export default function MapScreen() {
       });
   };
 
+  /**
+   * Calculates the distance of two objects 1 & 2 given their latitudes and longitudes
+   *
+   * @param {float} lat1 latitude of object 1
+   * @param {float} long1 longitude of object 1
+   * @param {float} lat2 latitude of object 2
+   * @param {float} long2 longitude of object 2
+   * @returns
+   */
   const calculateDistance = (lat1, long1, lat2, long2) => {
-    //birsbane is lat 1
-    //uq lat 2
     let R = 6371000; // metres
     let phi1 = (lat1 * Math.PI) / 180; // φ, λ in radians
     let phi2 = (lat2 * Math.PI) / 180;
@@ -110,20 +108,9 @@ export default function MapScreen() {
     return d;
   };
 
-  const errorAlert = () => {
-    Alert.alert("Invalid Login", "Login details did not exist", [
-      { text: "Cancel", style: "cancel" },
-      { text: "OK" },
-    ]);
-  };
-
-  const validAlert = () => {
-    Alert.alert("Valid Login", "User exists", [
-      { text: "Cancel", style: "cancel" },
-      { text: "OK" },
-    ]);
-  };
-
+  /**
+   * Sends a request to the server to update the users location
+   */
   const UpdateLocation = () => {
     // getUser();
     Axios.post(
@@ -134,17 +121,15 @@ export default function MapScreen() {
         longitude: pin.longitude,
       }
     )
-      .then((response) => {
-        if (response.data.message) {
-          errorAlert();
-        } else {
-          validAlert();
-        }
-      })
+      .then((response) => {})
       .catch((error) => {
         // console.log(error)
       });
 
+    /**
+     * Sends a request to see if there are any infected people near by, if there is the server will send back
+     * a status to say that the user has been infected
+     */
     if (status == "Healthy") {
       Axios.post(
         "https://deco3801-betterlatethannever.uqcloud.net/location/checkInfected",
@@ -161,6 +146,11 @@ export default function MapScreen() {
     }
   };
 
+  /**
+   * When the user walks near an item on the map, this function is called to say that the user has picked it up
+   *
+   * @param {int} itemtype The item to be added
+   */
   const addItem = (itemtype) => {
     Axios.post("https://deco3801-betterlatethannever.uqcloud.net/user/item", {
       itemid: itemtype,
@@ -181,6 +171,12 @@ export default function MapScreen() {
     console.log("post sent");
   };
 
+  /**
+   * If this is the first time this item is added for the user this function is called to create a new tuple
+   * in the database corresponding to the user and item
+   *
+   * @param {int} itemtype The item to be added
+   */
   const addNewItem = (itemtype) => {
     Axios.post(
       "https://deco3801-betterlatethannever.uqcloud.net/user/addNewItem",
@@ -195,6 +191,11 @@ export default function MapScreen() {
       .catch((error) => {});
   };
 
+  /**
+   * If the user has collected this item before this function is called to update the tuple
+   *
+   * @param {int} itemtype The item to be added
+   */
   const updateItem = (itemtype) => {
     Axios.post(
       "https://deco3801-betterlatethannever.uqcloud.net/user/updateItemCount",
@@ -211,6 +212,12 @@ export default function MapScreen() {
       });
   };
 
+  /**
+   * Gets the image that relates to the itemType number
+   *
+   * @param {int} itemType
+   * @returns The image that corresponds to the item
+   */
   function getItem(itemType) {
     if (itemType == 0) {
       return require("../../assets/images/mask.png");
@@ -236,6 +243,8 @@ export default function MapScreen() {
       return require("../../assets/images/Nebulizer.png");
     }
   }
+
+  //Maps itemType(int) to the respective item
   const itemMap = [
     "Mask",
     "Gloves",
@@ -244,6 +253,7 @@ export default function MapScreen() {
     "Paracetamol",
     "Nebulizer",
   ];
+
   // event that get asks for permission then gets the users inital location
   React.useEffect(() => {
     (async () => {
@@ -268,7 +278,13 @@ export default function MapScreen() {
   const borderStyle = { borderColor: statusColors[status] };
   return (
     <View style={styles.container}>
-      <Modal animationType={"slide"} transparent={true} visible={modalVis}>
+      <Modal
+        //This modal pops up if its the first time logging in
+        // An explanation of the rules of the game
+        animationType={"slide"}
+        transparent={true}
+        visible={modalVis}
+      >
         {firstPage ? (
           <View style={{ ...styles.modal, ...borderStyle }}>
             <View style={{ marginBottom: 25 }}>
@@ -336,8 +352,14 @@ export default function MapScreen() {
           </View>
         )}
       </Modal>
+
       <MapView
+        /**
+         * The Main function of this page being the map with items spawning on it and user locations
+         */
+        ref={mapRef}
         provider={"google"}
+        //Map changes according to your status
         customMapStyle={
           status == "Healthy"
             ? HealthyMap
@@ -357,6 +379,7 @@ export default function MapScreen() {
         //method that will update the location of user when it changes
         onUserLocationChange={(e) => {
           let new_points = 0;
+          //Changes user pin location
           setPin({
             latitude: e.nativeEvent.coordinate.latitude,
             longitude: e.nativeEvent.coordinate.longitude,
@@ -366,6 +389,7 @@ export default function MapScreen() {
           const nonCollectedItems = [];
 
           for (var i = 0; i < items.length; i++) {
+            //If you are within 20m of an item collect it
             if (
               calculateDistance(
                 items[i].latitude,
@@ -395,6 +419,10 @@ export default function MapScreen() {
             addPoints(new_points);
           }
 
+          /**
+           * Pans map region to your location and spawns more items if you move past a certain point
+           * from your initial spawn and thereafter if you keep moving
+           * */
           if (
             calculateDistance(
               initialCentre.latitude,
@@ -403,6 +431,13 @@ export default function MapScreen() {
               e.nativeEvent.coordinate.longitude
             ) > 300
           ) {
+            mapRef.current.animateToRegion({
+              latitude: e.nativeEvent.coordinate.latitude,
+              longitude: e.nativeEvent.coordinate.longitude,
+              latitudeDelta: 0.005,
+              longitudeDelta: 0.005,
+            });
+
             setInitialCentre({
               latitude: e.nativeEvent.coordinate.latitude,
               longitude: e.nativeEvent.coordinate.longitude,
@@ -410,6 +445,7 @@ export default function MapScreen() {
 
             const newItems = [];
 
+            //Keep items where they are if they are within 300m
             for (var i = 0; i < items.length; i++) {
               if (
                 calculateDistance(
@@ -417,12 +453,13 @@ export default function MapScreen() {
                   items[i].longitude,
                   e.nativeEvent.coordinate.latitude,
                   e.nativeEvent.coordinate.longitude
-                ) < 500
+                ) < 300
               ) {
                 newItems.push(items[i]);
               }
             }
 
+            //Spawn items if you have less than 7
             if (newItems.length < 7) {
               for (var x = newItems.length; x < 8; x++) {
                 const distance = Math.floor(Math.random() * 440) + 70;
@@ -440,53 +477,60 @@ export default function MapScreen() {
             setItems(newItems);
           }
 
+          //Updates location to the backend
           UpdateLocation();
         }}
       >
-        {friends.map((friend, index) => {
-          return (
-            <Marker
-              coordinate={{
-                latitude: friend.Latitude,
-                longitude: friend.Longitude,
-              }}
-              pinColor={statusColors[friend.InfectionStatus]}
-            >
-              <Callout>
-                <Text>
-                  Username: {friend.Username} {"\n"} Status:{" "}
-                  {friend.InfectionStatus}
-                </Text>
-              </Callout>
-            </Marker>
-          );
-        })}
+        {
+          // Spawn your friends on the map as markers
+          friends.map((friend, index) => {
+            return (
+              <Marker
+                coordinate={{
+                  latitude: friend.Latitude,
+                  longitude: friend.Longitude,
+                }}
+                pinColor={statusColors[friend.InfectionStatus]}
+              >
+                <Callout>
+                  <Text>
+                    Username: {friend.Username} {"\n"} Status:{" "}
+                    {friend.InfectionStatus}
+                  </Text>
+                </Callout>
+              </Marker>
+            );
+          })
+        }
 
-        {items.map((item) => {
-          return (
-            <Marker
-              coordinate={{
-                latitude: item.latitude,
-                longitude: item.longitude,
-              }}
-            >
-              {item.itemType != 3 ? (
-                <Image
-                  source={getItem(item.itemType)}
-                  style={{ height: 50, width: 70 }}
-                />
-              ) : (
-                <Image
-                  source={getItem(item.itemType)}
-                  style={{ height: 70, width: 40 }}
-                />
-              )}
-              <Callout>
-                <Text>{itemMap[item.itemType]}</Text>
-              </Callout>
-            </Marker>
-          );
-        })}
+        {
+          //spawns items on the map as their respective images
+          items.map((item) => {
+            return (
+              <Marker
+                coordinate={{
+                  latitude: item.latitude,
+                  longitude: item.longitude,
+                }}
+              >
+                {item.itemType != 3 ? (
+                  <Image
+                    source={getItem(item.itemType)}
+                    style={{ height: 50, width: 70 }}
+                  />
+                ) : (
+                  <Image
+                    source={getItem(item.itemType)}
+                    style={{ height: 70, width: 40 }}
+                  />
+                )}
+                <Callout>
+                  <Text>{itemMap[item.itemType]}</Text>
+                </Callout>
+              </Marker>
+            );
+          })
+        }
 
         <Marker
           // marker that shows the user location and is on top of the user icon from the MapView
@@ -497,7 +541,8 @@ export default function MapScreen() {
             <Text>{username}</Text>
           </Callout>
         </Marker>
-        <Circle //circle that is around the user, maybe can be used as the infection radius
+
+        <Circle //circle that is around the user, maybe can be used as the infection and collection radius
           center={pin}
           radius={20}
         />
@@ -505,12 +550,6 @@ export default function MapScreen() {
     </View>
   );
 }
-
-const statusColours = {
-  Cured: "#05cf02",
-  Infected: "#f52718",
-  Immune: "#0aefff",
-};
 
 const styles = StyleSheet.create({
   container: {
